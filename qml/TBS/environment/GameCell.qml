@@ -11,7 +11,14 @@ Rectangle
     color : "transparent"
 
     property bool active : true
+    property bool empty : true
+    property bool highlighted : false
+    property color highlightColor: "#77AAFFAA"
+
     property Actor occupiedBy: null
+
+    onOccupiedByChanged: empty = (occupiedBy == null);
+    onHighlightedChanged: color = (highlighted) ? highlightColor : "transparent";
 
     signal buttonClicked
 
@@ -26,4 +33,5 @@ Rectangle
                 destroy();
         }
     }
+
 }

@@ -44,4 +44,38 @@ Rectangle
         target.occupiedBy.anchors.fill = target.occupiedBy.parent;
     }
 
+    function clearCell(row, col)
+    {
+        var target = cellAt(row, col)
+        target.occupiedBy.destroy();
+    }
+
+    function highlightPossibleCells(row, col, enabled)
+    {
+        var currentCell = cellAt(row, col);
+        if (currentCell == null || !currentCell.active || currentCell.empty)
+            return;
+
+        var moveRange = currentCell.occupiedBy.movingRange
+        if (moveRange == 0)
+            return;
+
+        for (var i = - moveRange; i <= moveRange; i++)
+        {
+            if (i + col < 0)
+                continue;
+            if (i + col >= gameField.cols)
+                break;
+            for (var  j = Math.abs(i) - moveRange; j <= moveRange - Math.abs(i); j++)
+            {
+                if (j + row < 0)
+                    continue;
+                if (j + row >= gameField.rows)
+                    break;
+                cellAt(j + row, i + col).highlighted = enabled;
+            }
+        }
+        currentCell.highlighted = false;
+    }
+
 }
