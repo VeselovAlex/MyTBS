@@ -50,6 +50,8 @@ Rectangle
         target.occupiedBy.destroy();
     }
 
+
+
     function highlightPossibleCells(row, col, enabled)
     {
         var currentCell = cellAt(row, col);
@@ -64,7 +66,7 @@ Rectangle
         {
             if (i + col < 0)
                 continue;
-            if (i + col >= gameField.cols)
+            if (i + col >= gameField.columns)
                 break;
             for (var  j = Math.abs(i) - moveRange; j <= moveRange - Math.abs(i); j++)
             {
@@ -72,7 +74,9 @@ Rectangle
                     continue;
                 if (j + row >= gameField.rows)
                     break;
-                cellAt(j + row, i + col).highlighted = enabled;
+                var cell = cellAt(j + row, i + col);
+                if (cell.active && cell.empty)
+                    cell.highlighted = enabled;
             }
         }
         currentCell.highlighted = false;

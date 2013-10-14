@@ -20,6 +20,7 @@ Item {
         id : gameField
         rows: 7
         columns : 10
+        property var previousHighlighted : null
         onCellClicked:
         {
             var targetCell = cellAt(row, col)
@@ -27,10 +28,27 @@ Item {
             {
                 var swordsman = parent.actorComponents[0].createObject(targetCell);
                 occupyCell(swordsman, row, col);
+                if (previousHighlighted != null)
+                {
+                   highlightPossibleCells(previousHighlighted[0], previousHighlighted[1], false);
+                   previousHighlighted = null;
+                }
+
             }
             else
             {
-                highlightPossibleCells(row, col, true)
+                if (previousHighlighted == null)
+                {
+                    highlightPossibleCells(row, col, true);
+                    previousHighlighted = [row, col];
+                }
+                else
+                {
+                    highlightPossibleCells(previousHighlighted[0], previousHighlighted[1], false);
+                    highlightPossibleCells(row, col, true);
+                    previousHighlighted = [row, col];
+                }
+
             }
         }
 
