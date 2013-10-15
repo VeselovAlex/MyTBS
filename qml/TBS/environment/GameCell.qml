@@ -11,13 +11,13 @@ Rectangle
     color : "transparent"
 
     property bool active : true
-    property bool empty : true
+    property bool isEmpty : true
     property bool highlighted : false
     property color highlightColor: "#77AAFFAA"
 
     property Actor occupiedBy: null
 
-    onOccupiedByChanged: empty = (occupiedBy == null);
+    onOccupiedByChanged: isEmpty = (occupiedBy == null);
     onHighlightedChanged: color = (highlighted) ? highlightColor : "transparent";
 
     signal buttonClicked
@@ -28,10 +28,17 @@ Rectangle
         onClicked:
         {
             if (active)
+            {
                 parent.buttonClicked();
+            }
             else
                 destroy();
         }
     }
+    AttackBar
+    {
+        id: attackBar
+        z: parent.z
 
+    }
 }
