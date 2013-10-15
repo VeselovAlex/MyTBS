@@ -23,3 +23,6 @@ qtcAddDeployment()
 
 OTHER_FILES += \
     qml/TBS/actors/Swordsman.qml
+
+RESOURCES += \
+    res.qrc

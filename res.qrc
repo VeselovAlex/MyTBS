@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/TBS">
+        <file>qml/TBS/res/defenceButtonIcon.png</file>
+        <file>qml/TBS/res/exitButton.png</file>
+        <file>qml/TBS/res/ninjaSprite.png</file>
+        <file>qml/TBS/res/primaryAttackButtonIcon.png</file>
+        <file>qml/TBS/res/secondaryAttackButtonIcon.png</file>
+        <file>qml/TBS/res/skipButtonIcon.png</file>
+        <file>qml/TBS/res/woodBg.jpg</file>
+        <file>qml/TBS/res/woodBg.png</file>
+    </qresource>
+</RCC>
