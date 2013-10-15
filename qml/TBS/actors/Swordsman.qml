@@ -20,7 +20,7 @@ Actor
     idleSprite :
         Sprite
         {
-            source: "../../../../MyTBS/res/ninjaSprite.png";
+            source: "../res/ninjaSprite.png";
             frameCount: 13;
             frameWidth: 90;
             frameHeight: 100;

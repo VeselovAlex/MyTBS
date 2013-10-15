@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import "environment"
 import "actors"
+import "res"
 
 Item {
     width: 1200
@@ -11,7 +12,7 @@ Item {
     {
         id : bgImage
         anchors.fill: parent
-        source : "../../../MyTBS/res/woodBg.png"
+        source : "res/woodBg.png"
     }
 
     GameField
@@ -20,18 +21,30 @@ Item {
         id : gameField
         rows: 7
         columns : 10
+        cellSide: 80
         property var previousHighlighted : null
         onCellClicked:
         {
             var targetCell = cellAt(row, col)
-            if (targetCell.empty)
+            if (targetCell.isEmpty)
             {
-                var swordsman = parent.actorComponents[0].createObject(targetCell);
-                occupyCell(swordsman, row, col);
-                if (previousHighlighted != null)
+//                var swordsman = parent.actorComponents[0].createObject(targetCell);
+//                occupyCell(swordsman, row, col);
+//                if (previousHighlighted != null)
+//                {
+//                   highlightPossibleCells(previousHighlighted[0], previousHighlighted[1], false);
+//                   previousHighlighted = null;
+//                }
+                if (targetCell.highlighted)
                 {
-                   highlightPossibleCells(previousHighlighted[0], previousHighlighted[1], false);
-                   previousHighlighted = null;
+                    var swordsman = parent.actorComponents[0].createObject(targetCell);
+                    occupyCell(swordsman, row, col);
+                    if (previousHighlighted != null)
+                    {
+                       highlightPossibleCells(previousHighlighted[0], previousHighlighted[1], false);
+                       previousHighlighted = null;
+                    }
+
                 }
 
             }
@@ -50,8 +63,17 @@ Item {
                 }
 
             }
+
         }
 
+        Component.onCompleted: defaultActors();
+
+    }
+
+    function defaultActors()
+    {
+        var actor = actorComponents[0].createObject(gameField.cellAt(1,0));
+        gameField.occupyCell(actor, 1, 0)
     }
 
     Rectangle
@@ -64,7 +86,7 @@ Item {
         Image
         {
             anchors.fill: parent
-            source: "../../../MyTBS/res/exitButton.png"
+            source: "res/exitButton.png"
         }
         MouseArea
         {
@@ -76,5 +98,6 @@ Item {
             onClicked: Qt.quit();
         }
     }
+
 
 }
