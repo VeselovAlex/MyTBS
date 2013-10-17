@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/images/buttons">
+        <file>res/defenceButtonIcon.png</file>
+        <file>res/exitButton.png</file>
+        <file>res/primaryAttackButtonIcon.png</file>
+        <file>res/secondaryAttackButtonIcon.png</file>
+        <file>res/skipButtonIcon.png</file>
+    </qresource>
+    <qresource prefix="/images/sprites">
+        <file>res/ninjaSprite.png</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file>res/woodBg.png</file>
+    </qresource>
+</RCC>

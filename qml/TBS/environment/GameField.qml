@@ -3,7 +3,7 @@ import QtQuick 2.0
 Rectangle
 {
     id : gameField
-    property int cellSide: 100
+    property int cellSide: 80
     property alias rows : grid.rows
     property alias columns : grid.columns
 
@@ -28,6 +28,7 @@ Rectangle
                 onButtonClicked: gameField.cellClicked
                                  (Math.floor(index / gameField.columns),
                                   index % gameField.columns);
+
             }
         }
     }
@@ -49,13 +50,10 @@ Rectangle
         var target = cellAt(row, col)
         target.occupiedBy.destroy();
     }
-
-
-
     function highlightPossibleCells(row, col, enabled)
     {
         var currentCell = cellAt(row, col);
-        if (currentCell == null || !currentCell.active || currentCell.empty)
+        if (currentCell == null || !currentCell.active || currentCell.isEmpty)
             return;
 
         var moveRange = currentCell.occupiedBy.movingRange
@@ -75,7 +73,7 @@ Rectangle
                 if (j + row >= gameField.rows)
                     break;
                 var cell = cellAt(j + row, i + col);
-                if (cell.active && cell.empty)
+                if (cell.active && cell.isEmpty)
                     cell.highlighted = enabled;
             }
         }

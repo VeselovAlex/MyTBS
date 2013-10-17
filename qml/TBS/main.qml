@@ -11,8 +11,9 @@ Item {
     {
         id : bgImage
         anchors.fill: parent
-        source : "../../../MyTBS/res/woodBg.png"
+        source : "qrc:/images/res/woodBg.png"
     }
+
 
     GameField
     {
@@ -20,38 +21,43 @@ Item {
         id : gameField
         rows: 7
         columns : 10
+        cellSide: 80
         property var previousHighlighted : null
         onCellClicked:
         {
             var targetCell = cellAt(row, col)
-            if (targetCell.empty)
+            console.debug("Click on:" + targetCell.x + ";" + targetCell.y);
+            if (!targetCell.empty)
             {
-                var swordsman = parent.actorComponents[0].createObject(targetCell);
-                occupyCell(swordsman, row, col);
-                if (previousHighlighted != null)
-                {
-                   highlightPossibleCells(previousHighlighted[0], previousHighlighted[1], false);
-                   previousHighlighted = null;
-                }
-
+                attackMenu.parent = targetCell.occupiedBy;
+                attackMenu.z = targetCell.z + 1;
+                attackMenu.anchors.centerIn = attackMenu.parent
+                attackMenu.visible = true;
+                attackMenu.enabled = true;
             }
-            else
-            {
-                if (previousHighlighted == null)
-                {
-                    highlightPossibleCells(row, col, true);
-                    previousHighlighted = [row, col];
-                }
-                else
-                {
-                    highlightPossibleCells(previousHighlighted[0], previousHighlighted[1], false);
-                    highlightPossibleCells(row, col, true);
-                    previousHighlighted = [row, col];
-                }
 
-            }
         }
 
+        Component.onCompleted: defaultActors();
+
+    }
+
+    AttackBar
+    {
+        id : attackMenu
+        visible: false
+        width : gameField.cellSide * 3
+        //anchors.centerIn: parent
+        enabled: false
+        onPrAttackButtonClicked: console.debug("Primary Attack")
+        z : 1;
+    }
+
+
+    function defaultActors()
+    {
+        var actor = actorComponents[0].createObject(gameField.cellAt(1,2));
+        gameField.occupyCell(actor, 1, 2)
     }
 
     Rectangle
@@ -64,7 +70,7 @@ Item {
         Image
         {
             anchors.fill: parent
-            source: "../../../MyTBS/res/exitButton.png"
+            source: "qrc:/images/buttons/res/exitButton.png"
         }
         MouseArea
         {
@@ -76,5 +82,6 @@ Item {
             onClicked: Qt.quit();
         }
     }
+
 
 }

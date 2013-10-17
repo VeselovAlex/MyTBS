@@ -22,4 +22,8 @@ include(qtquick2applicationviewer/qtquick2applicationviewer.pri)
 qtcAddDeployment()
 
 OTHER_FILES += \
-    qml/TBS/actors/Swordsman.qml
+    qml/TBS/actors/Swordsman.qml \
+    qml/TBS/players/Player.qml
+
+RESOURCES += \
+    res.qrc
