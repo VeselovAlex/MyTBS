@@ -17,6 +17,7 @@ Item {
 
     GameField
     {
+        z: 0
         anchors.centerIn: parent
         id : gameField
         rows: 7
@@ -46,8 +47,7 @@ Item {
     {
         id : attackMenu
         visible: false
-        width : gameField.cellSide * 3
-        //anchors.centerIn: parent
+        width : gameField.cellSide * 1.5
         enabled: false
         onPrAttackButtonClicked: console.debug("Primary Attack")
         z : 1;
