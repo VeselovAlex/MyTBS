@@ -1,19 +1,38 @@
 import QtQuick 2.0
 import "environment"
+import "environment/buttons"
 import "actors"
+import "players"
+import "system"
 
-Item {
+Item
+{
     width: 1200
     height: 900
 
-    property var actorComponents : [Qt.createComponent("actors/Swordsman.qml")]
+    Factory
+    {
+        id : factory
+    }
+
     Image
     {
-        id : bgImage
         anchors.fill: parent
         source : "qrc:/images/res/woodBg.png"
     }
 
+    Player
+    {
+        id : player
+        money : 100000
+        commanderSkillPoints: 100500
+        onInitRequest:
+        {
+            var actor = factory.createActor(0, player);
+            player.buyNewUnit(actor, 1);
+            gameField.occupyCell(player.playerUnits[0], 1, 2);
+        }
+    }
 
     GameField
     {
@@ -23,65 +42,30 @@ Item {
         columns : 10
         cellSide: 80
         property var previousHighlighted : null
-        onCellClicked:
-        {
-            var targetCell = cellAt(row, col)
-            console.debug("Click on:" + targetCell.x + ";" + targetCell.y);
-            if (!targetCell.empty)
-            {
-                attackMenu.parent = targetCell.occupiedBy;
-                attackMenu.z = targetCell.z + 1;
-                attackMenu.anchors.centerIn = attackMenu.parent
-                attackMenu.visible = true;
-                attackMenu.enabled = true;
-            }
 
-        }
-
-        Component.onCompleted: defaultActors();
+        Component.onCompleted: defaultPlayerActors();
 
     }
 
-    AttackBar
+
+    function defaultPlayerActors()
     {
-        id : attackMenu
-        visible: false
-        width : gameField.cellSide * 3
-        //anchors.centerIn: parent
-        enabled: false
-        onPrAttackButtonClicked: console.debug("Primary Attack")
-        z : 1;
+        var actor = player.playerUnits[0];
+
     }
 
-
-    function defaultActors()
+    CloseButton
     {
-        var actor = actorComponents[0].createObject(gameField.cellAt(1,2));
-        gameField.occupyCell(actor, 1, 2)
-    }
-
-    Rectangle
-    {
-        id : exitButton
+        id : closeBtn
         width: 50
-        height: 50
         anchors.right: parent.right
-        color: "transparent"
-        Image
-        {
-            anchors.fill: parent
-            source: "qrc:/images/buttons/res/exitButton.png"
-        }
-        MouseArea
-        {
-            hoverEnabled: true
-            anchors.fill: parent
-
-            onHoveredChanged: parent.color = containsMouse ? "#40C0C0C0" : "transparent"
-            //цвет - "#OORRGGBB", где OO - прозрачность
-            onClicked: Qt.quit();
-        }
     }
 
+   LikeButton
+    {
+        id : like
+        width : 50
+        anchors.right: closeBtn.left
+    }
 
 }

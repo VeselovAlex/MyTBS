@@ -5,6 +5,7 @@
         <file>res/primaryAttackButtonIcon.png</file>
         <file>res/secondaryAttackButtonIcon.png</file>
         <file>res/skipButtonIcon.png</file>
+        <file>res/heartButton.png</file>
     </qresource>
     <qresource prefix="/images/sprites">
         <file>res/ninjaSprite.png</file>
