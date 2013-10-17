@@ -17,10 +17,14 @@ Actor
     secondaryAtackRange : 1
     secondaryAtackDamage : 50
 
+    moneyCosts : 50
+    spCosts : 20
+    count : 0
+
     idleSprite :
         Sprite
         {
-            source: "../res/ninjaSprite.png";
+            source: "qrc:/images/sprites/res/ninjaSprite.png";
             frameCount: 13;
             frameWidth: 90;
             frameHeight: 100;

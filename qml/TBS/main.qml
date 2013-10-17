@@ -1,7 +1,6 @@
 import QtQuick 2.0
 import "environment"
 import "actors"
-import "res"
 
 Item {
     width: 1200
@@ -12,8 +11,9 @@ Item {
     {
         id : bgImage
         anchors.fill: parent
-        source : "res/woodBg.png"
+        source : "qrc:/images/res/woodBg.png"
     }
+
 
     GameField
     {
@@ -26,42 +26,14 @@ Item {
         onCellClicked:
         {
             var targetCell = cellAt(row, col)
-            if (targetCell.isEmpty)
+            console.debug("Click on:" + targetCell.x + ";" + targetCell.y);
+            if (!targetCell.empty)
             {
-//                var swordsman = parent.actorComponents[0].createObject(targetCell);
-//                occupyCell(swordsman, row, col);
-//                if (previousHighlighted != null)
-//                {
-//                   highlightPossibleCells(previousHighlighted[0], previousHighlighted[1], false);
-//                   previousHighlighted = null;
-//                }
-                if (targetCell.highlighted)
-                {
-                    var swordsman = parent.actorComponents[0].createObject(targetCell);
-                    occupyCell(swordsman, row, col);
-                    if (previousHighlighted != null)
-                    {
-                       highlightPossibleCells(previousHighlighted[0], previousHighlighted[1], false);
-                       previousHighlighted = null;
-                    }
-
-                }
-
-            }
-            else
-            {
-                if (previousHighlighted == null)
-                {
-                    highlightPossibleCells(row, col, true);
-                    previousHighlighted = [row, col];
-                }
-                else
-                {
-                    highlightPossibleCells(previousHighlighted[0], previousHighlighted[1], false);
-                    highlightPossibleCells(row, col, true);
-                    previousHighlighted = [row, col];
-                }
-
+                attackMenu.parent = targetCell.occupiedBy;
+                attackMenu.z = targetCell.z + 1;
+                attackMenu.anchors.centerIn = attackMenu.parent
+                attackMenu.visible = true;
+                attackMenu.enabled = true;
             }
 
         }
@@ -70,10 +42,22 @@ Item {
 
     }
 
+    AttackBar
+    {
+        id : attackMenu
+        visible: false
+        width : gameField.cellSide * 3
+        //anchors.centerIn: parent
+        enabled: false
+        onPrAttackButtonClicked: console.debug("Primary Attack")
+        z : 1;
+    }
+
+
     function defaultActors()
     {
-        var actor = actorComponents[0].createObject(gameField.cellAt(1,0));
-        gameField.occupyCell(actor, 1, 0)
+        var actor = actorComponents[0].createObject(gameField.cellAt(1,2));
+        gameField.occupyCell(actor, 1, 2)
     }
 
     Rectangle
@@ -86,7 +70,7 @@ Item {
         Image
         {
             anchors.fill: parent
-            source: "res/exitButton.png"
+            source: "qrc:/images/buttons/res/exitButton.png"
         }
         MouseArea
         {

@@ -35,10 +35,4 @@ Rectangle
                 destroy();
         }
     }
-    AttackBar
-    {
-        id: attackBar
-        z: parent.z
-
-    }
 }
