@@ -39,6 +39,11 @@ Item
         sprites: [idleSprite, movingSprite, primaryAtackSprite, secondaryAtackSprite, dyingSprite]
     }
 
+    function turn()
+    {
+
+    }
+
     function hurt(damage)
     {
         if (averageArmor > 0)
@@ -47,7 +52,7 @@ Item
             if (averageArmor < 0) //Если количество единиц брони меньше чем полученный урон
             {
                 averageHealth += averageArmor; // вычтем излишек из запаса здоровья
-                averageArmor;
+                averageArmor = 0;
             }
         }
         else
