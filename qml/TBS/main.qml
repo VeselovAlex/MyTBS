@@ -21,6 +21,20 @@ Item
         source : "qrc:/images/res/woodBg.png"
     }
 
+
+    Player
+    {
+        id : enemy
+        money : 100000
+        commanderSkillPoints: 100500
+        isEnemy: true
+        onInitRequest:
+        {
+            var actor = factory.createActor(0, enemy);
+            enemy.buyNewUnit(actor, 1);
+            gameField.occupyCell(enemy.playerUnits[0], 5, 3);
+        }
+    }
     Player
     {
         id : player
@@ -31,6 +45,18 @@ Item
             var actor = factory.createActor(0, player);
             player.buyNewUnit(actor, 1);
             gameField.occupyCell(player.playerUnits[0], 1, 2);
+        }
+    }
+
+
+    TurnGenerator
+    {
+        players: [player, enemy]
+        Component.onCompleted:
+        {
+            console.debug(playerCount)
+            nextPlayerTurn();
+            nextPlayerTurn();
         }
     }
 

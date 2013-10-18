@@ -22,7 +22,8 @@ Item
 
     function makeTurn()
     {
-        for (var i = 0; i < freeCellIdx; i++)
+        console.debug("Player turn")
+        /*for (var i = 0; i < freeCellIdx; i++)
         {
             playerUnits[i].turn()
         }
@@ -30,7 +31,7 @@ Item
         {
             //Заканчиваем игру
             gameBelongsTo.end();
-        }
+        }*/
     }
 
 
