@@ -1,18 +1,63 @@
 import QtQuick 2.0
 import "environment"
+import "environment/buttons"
 import "actors"
-import "res"
+import "players"
+import "system"
 
-Item {
+Item
+{
     width: 1200
     height: 900
 
-    property var actorComponents : [Qt.createComponent("actors/Swordsman.qml")]
+    Factory
+    {
+        id : factory
+    }
+
     Image
     {
-        id : bgImage
         anchors.fill: parent
-        source : "res/woodBg.png"
+        source : "qrc:/images/res/woodBg.png"
+    }
+
+
+    Player
+    {
+        id : enemy
+        money : 100000
+        commanderSkillPoints: 100500
+        isEnemy: true
+        onInitRequest:
+        {
+            var actor = factory.createActor(0, enemy);
+            enemy.buyNewUnit(actor, 1);
+            gameField.occupyCell(enemy.playerUnits[0], 5, 3);
+        }
+    }
+    Player
+    {
+        id : player
+        money : 100000
+        commanderSkillPoints: 100500
+        onInitRequest:
+        {
+            var actor = factory.createActor(0, player);
+            player.buyNewUnit(actor, 1);
+            gameField.occupyCell(player.playerUnits[0], 1, 2);
+        }
+    }
+
+
+    TurnGenerator
+    {
+        players: [player, enemy]
+        Component.onCompleted:
+        {
+            console.debug(playerCount)
+            nextPlayerTurn();
+            nextPlayerTurn();
+        }
     }
 
     GameField
@@ -23,81 +68,30 @@ Item {
         columns : 10
         cellSide: 80
         property var previousHighlighted : null
-        onCellClicked:
-        {
-            var targetCell = cellAt(row, col)
-            if (targetCell.isEmpty)
-            {
-//                var swordsman = parent.actorComponents[0].createObject(targetCell);
-//                occupyCell(swordsman, row, col);
-//                if (previousHighlighted != null)
-//                {
-//                   highlightPossibleCells(previousHighlighted[0], previousHighlighted[1], false);
-//                   previousHighlighted = null;
-//                }
-                if (targetCell.highlighted)
-                {
-                    var swordsman = parent.actorComponents[0].createObject(targetCell);
-                    occupyCell(swordsman, row, col);
-                    if (previousHighlighted != null)
-                    {
-                       highlightPossibleCells(previousHighlighted[0], previousHighlighted[1], false);
-                       previousHighlighted = null;
-                    }
 
-                }
-
-            }
-            else
-            {
-                if (previousHighlighted == null)
-                {
-                    highlightPossibleCells(row, col, true);
-                    previousHighlighted = [row, col];
-                }
-                else
-                {
-                    highlightPossibleCells(previousHighlighted[0], previousHighlighted[1], false);
-                    highlightPossibleCells(row, col, true);
-                    previousHighlighted = [row, col];
-                }
-
-            }
-
-        }
-
-        Component.onCompleted: defaultActors();
+        Component.onCompleted: defaultPlayerActors();
 
     }
 
-    function defaultActors()
+
+    function defaultPlayerActors()
     {
-        var actor = actorComponents[0].createObject(gameField.cellAt(1,0));
-        gameField.occupyCell(actor, 1, 0)
+        var actor = player.playerUnits[0];
+
     }
 
-    Rectangle
+    CloseButton
     {
-        id : exitButton
+        id : closeBtn
         width: 50
-        height: 50
         anchors.right: parent.right
-        color: "transparent"
-        Image
-        {
-            anchors.fill: parent
-            source: "res/exitButton.png"
-        }
-        MouseArea
-        {
-            hoverEnabled: true
-            anchors.fill: parent
-
-            onHoveredChanged: parent.color = containsMouse ? "#40C0C0C0" : "transparent"
-            //цвет - "#OORRGGBB", где OO - прозрачность
-            onClicked: Qt.quit();
-        }
     }
 
+   LikeButton
+    {
+        id : like
+        width : 50
+        anchors.right: closeBtn.left
+    }
 
 }

@@ -42,7 +42,10 @@ Rectangle
     {
         var target = cellAt(row, col)
         target.occupiedBy = actor;
-        target.occupiedBy.anchors.fill = target.occupiedBy.parent;
+        target.occupiedBy.x = target.x + gameField.x;
+        target.occupiedBy.y = target.y + gameField.y;
+        target.occupiedBy.width = target.width;
+        target.occupiedBy.height = target.height;
     }
 
     function clearCell(row, col)
