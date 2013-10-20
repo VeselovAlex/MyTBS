@@ -1,3 +1,8 @@
+
+*.pro.user*
+*/TBS.pro.user
+build*/
+
 #################
 ## Eclipse
 #################
@@ -214,9 +219,3 @@ pip-log.txt
 #Mr Developer
 .mr.developer.cfg
 
-#############
-## QtCreator
-#############
-*.pro.user*
-*.user
-build*

@@ -20,12 +20,14 @@ Item
         anchors.fill: parent
         visible: false
     }
+
     OpacityMask
     {
         anchors.fill: parent
         source : bg
         maskSource: opMask
     }
+
     MouseArea
     {
         anchors.fill: parent

@@ -17,7 +17,6 @@ Rectangle
     {
         hoverEnabled: true
         anchors.fill: parent
-
         onHoveredChanged: parent.color = containsMouse ? "#40C0C0C0" : "transparent"
         //цвет - "#OORRGGBB", где OO - прозрачность
         onClicked: Qt.quit();

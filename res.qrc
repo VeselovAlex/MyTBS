@@ -8,7 +8,8 @@
         <file>res/heartButton.png</file>
     </qresource>
     <qresource prefix="/images/sprites">
-        <file>res/ninjaSprite.png</file>
+        <file>res/ninjaMovingSprite.png</file>
+        <file>res/ninjaMovingSpriteReverted.png</file>
     </qresource>
     <qresource prefix="/images">
         <file>res/woodBg.png</file>
