@@ -1,8 +1,6 @@
-
 *.pro.user*
 */TBS.pro.user
 build*/
-
 #################
 ## Eclipse
 #################
