@@ -23,15 +23,6 @@ Item
     function makeTurn()
     {
         console.debug("Player turn")
-        /*for (var i = 0; i < freeCellIdx; i++)
-        {
-            playerUnits[i].turn()
-        }
-        if (freeCellIdx == 0)
-        {
-            //Заканчиваем игру
-            gameBelongsTo.end();
-        }*/
     }
 
 

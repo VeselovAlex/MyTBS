@@ -62,6 +62,7 @@ Item
 
     GameField
     {
+        z: 0
         anchors.centerIn: parent
         id : gameField
         rows: 7
@@ -70,6 +71,10 @@ Item
         property var previousHighlighted : null
 
         Component.onCompleted: defaultPlayerActors();
+
+    }
+    AttackBar
+    {
 
     }
 
