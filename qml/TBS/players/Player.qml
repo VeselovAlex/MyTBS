@@ -1,13 +1,13 @@
 import QtQuick 2.0
 //Основной класс для всех игроков
-QtObject
+Item
 {
     id : player
     property bool isEnemy: false
-    property var playerUnits : null
+    property var playerUnits : Array
     readonly property int maxUnitCount : 5
     property int freeCellIdx : 0
-    property QtObject gameBelongsTo
+    property QtObject gameBelongsTo : parent
 
     property int money : 0
     property int level : 0
@@ -17,10 +17,13 @@ QtObject
     property int commanderSPSpent : 0
     property int commanderSPLeft : commanderSkillPoints - commanderSPSpent
 
+    signal initRequest();
+
 
     function makeTurn()
     {
-        for (var i = 0; i < freeCellIdx; i++)
+        console.debug("Player turn")
+        /*for (var i = 0; i < freeCellIdx; i++)
         {
             playerUnits[i].turn()
         }
@@ -28,7 +31,7 @@ QtObject
         {
             //Заканчиваем игру
             gameBelongsTo.end();
-        }
+        }*/
     }
 
 
@@ -61,12 +64,7 @@ QtObject
         }
     }
 
-    function initPlayer()
-    {
-
-    }
-
-    Component.onCompleted: initPlayer();
+    Component.onCompleted: initRequest();
 
 }
 

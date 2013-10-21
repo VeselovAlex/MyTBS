@@ -2,9 +2,9 @@ import QtQuick 2.0
 
 Actor
 {
+    id : swordsman
     health : 150
     armor : 100
-
 
     atackMultiplier : 1.2
     defenceMultiplier : 1.5
@@ -24,10 +24,10 @@ Actor
     idleSprite :
         Sprite
         {
-            source: "qrc:/images/sprites/res/ninjaSprite.png";
-            frameCount: 13;
-            frameWidth: 90;
-            frameHeight: 100;
+            source: "qrc:/images/sprites/res/ninjaMovingSprite" + (reverted ? "Reverted" : "") + ".png";
+            frameCount: 5;
+            frameWidth: 128;
+            frameHeight: 128;
             frameDuration: 80;
         }
 

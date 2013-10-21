@@ -1,9 +1,13 @@
 //Базовый класс для всех игровых персонажей
 
 import QtQuick 2.0
+import "../players"
 
 Item
 {
+    // При создании parent должен быть обьектом Player
+    property Player belongsTo : parent
+
     property int health
     property int armor
 
@@ -32,12 +36,18 @@ Item
     property Sprite secondaryAtackSprite
     property Sprite dyingSprite
 
+    //Свойства для корректного отображения (надо будет реализовать спрайты)
+    property bool reverted: belongsTo.isEnemy
+
     SpriteSequence
     {
         id : sprite
         anchors.fill: parent
+        antialiasing: true
         sprites: [idleSprite, movingSprite, primaryAtackSprite, secondaryAtackSprite, dyingSprite]
     }
+
+    function turn(){}
 
     function hurt(damage)
     {
@@ -47,7 +57,7 @@ Item
             if (averageArmor < 0) //Если количество единиц брони меньше чем полученный урон
             {
                 averageHealth += averageArmor; // вычтем излишек из запаса здоровья
-                averageArmor;
+                averageArmor = 0;
             }
         }
         else
