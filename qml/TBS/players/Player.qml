@@ -6,7 +6,7 @@ Item
     property bool isEnemy: false
     property var playerUnits : Array
     readonly property int maxUnitCount : 5
-    property int freeCellIdx : 0
+    property int unitCount : 0
     property QtObject gameBelongsTo : parent
 
     property int money : 0
@@ -23,21 +23,22 @@ Item
     function makeTurn()
     {
         console.debug("Player turn")
-        /*for (var i = 0; i < freeCellIdx; i++)
+        for (var i = 0; i < unitCount; i++)
         {
             playerUnits[i].turn()
         }
-        if (freeCellIdx == 0)
+        if (unitCount == 0)
         {
             //Заканчиваем игру
-            gameBelongsTo.end();
-        }*/
+            //gameBelongsTo.end();
+        }
+
     }
 
 
     function buyNewUnit(unit, numberToBy)
     {
-        if ((commanderSPLeft > 0) && (money > 0) && (numberToBy > 0) && (freeCellIdx < maxUnitCount))
+        if ((commanderSPLeft > 0) && (money > 0) && (numberToBy > 0) && (unitCount < maxUnitCount))
         {
             var count = Math.min(Math.floor(money / unit.moneyCosts),
                                  (Math.floor(commanderSPLeft / unit.spCosts)),
@@ -45,8 +46,8 @@ Item
             unit.count = count;
             player.money -= count * unit.moneyCosts;
             player.commanderSPSpent += count * unit.spCosts;
-            playerUnits[freeCellIdx] = unit;
-            freeCellIdx++;
+            playerUnits[unitCount] = unit;
+            unitCount++;
         }
     }
 

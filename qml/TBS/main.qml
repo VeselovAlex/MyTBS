@@ -22,7 +22,7 @@ Item
     }
 
 
-    Player
+    Player // need to use files
     {
         id : enemy
         money : 100000
@@ -30,9 +30,13 @@ Item
         isEnemy: true
         onInitRequest:
         {
-            var actor = factory.createActor(0, enemy);
-            enemy.buyNewUnit(actor, 1);
-            gameField.occupyCell(enemy.playerUnits[0], 5, 3);
+            for (var i = 0; i < maxUnitCount; i++)
+            {
+                var actor = factory.createActor(0, enemy);
+                enemy.buyNewUnit(actor, 1);
+                gameField.occupyCell(enemy.playerUnits[i], i + 1, gameField.columns - 1);
+            }
+
         }
     }
     Player
@@ -40,25 +44,30 @@ Item
         id : player
         money : 100000
         commanderSkillPoints: 100500
+        isEnemy: false
         onInitRequest:
         {
-            var actor = factory.createActor(0, player);
-            player.buyNewUnit(actor, 1);
-            gameField.occupyCell(player.playerUnits[0], 1, 2);
+            for (var i = 0; i < maxUnitCount; i++)
+            {
+                var actor = factory.createActor(0, player);
+                player.buyNewUnit(actor, 1);
+                gameField.occupyCell(player.playerUnits[i], i + 1, 0);
+            }
+
         }
     }
 
+//    AttackBar
+//    {
+//        id : attackMenu
+//        visible: false
+//        width : gameField.cellSide * 1.5
+//        enabled: false
+//        onPrAttackButtonClicked: console.debug("Primary Attack")
+//        z : 1;
+//    }
 
-    TurnGenerator
-    {
-        players: [player, enemy]
-        Component.onCompleted:
-        {
-            console.debug(playerCount)
-            nextPlayerTurn();
-            nextPlayerTurn();
-        }
-    }
+
 
     GameField
     {
@@ -70,21 +79,52 @@ Item
         cellSide: 80
         property var previousHighlighted : null
 
-        Component.onCompleted: defaultPlayerActors();
+        onCellClicked:
+        {
+            console.debug(row + ";" + col)
+        }
+
+//        }
+//        onCellClicked:
+//        {
+//            var targetCell = cellAt(row, col)
+//            console.debug("Click on:" + targetCell.x + ";" + targetCell.y);
+//            if (!targetCell.empty)
+//            {
+//                attackMenu.parent = targetCell.occupiedBy;
+//                attackMenu.z = targetCell.z + 1;
+//                attackMenu.anchors.centerIn = attackMenu.parent
+//                attackMenu.visible = true;
+//                attackMenu.enabled = true;
+//                if (targetCell.empty)
+//                {
+
+//                }
+//            }
+
+//        }
+
+        //Component.onCompleted: defaultPlayerActors();
 
     }
-    AttackBar
+
+
+//    function defaultPlayerActors()
+//    {
+//        var actor = player.playerUnits[0];
+
+//    }
+    TurnGenerator
     {
+        players : [player, enemy]
+        Component.onCompleted:
+        {
+            //console.debug(playerCount)
+            nextPlayerTurn();
+            //nextPlayerTurn();
+        }
 
     }
-
-
-    function defaultPlayerActors()
-    {
-        var actor = player.playerUnits[0];
-
-    }
-
     CloseButton
     {
         id : closeBtn

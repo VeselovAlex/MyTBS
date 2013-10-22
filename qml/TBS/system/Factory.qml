@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import "../environment"
 
 QtObject
 {
@@ -17,5 +18,7 @@ QtObject
         var ret = actorComponents[idx].createObject(parent);
         return ret;
     }
+
+
 
 }

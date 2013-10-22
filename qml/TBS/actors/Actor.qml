@@ -2,6 +2,7 @@
 
 import QtQuick 2.0
 import "../players"
+import "../environment"
 
 Item
 {
@@ -47,7 +48,17 @@ Item
         sprites: [idleSprite, movingSprite, primaryAtackSprite, secondaryAtackSprite, dyingSprite]
     }
 
-    function turn(){}
+    function turn()
+    {
+//        attackMenu.parent = targetCell.occupiedBy;
+//        attackMenu.z = targetCell.z + 1;
+//        attackMenu.anchors.centerIn = attackMenu.parent
+//        attackMenu.visible = true;
+//        attackMenu.enabled = true;
+        console.debug("I'm turning")
+        //var targetCell = cellAt();
+
+    }
 
     function hurt(damage)
     {
@@ -84,5 +95,14 @@ Item
     {
         sprite.jumpTo(secondaryAtackSprite.name);
         target.hurt(secondaryAtackDamage * atackMultiplier);
+    }
+    AttackBar
+    {
+        id : attackMenu
+        visible: false
+        width : gameField.cellSide * 1.5
+        enabled: false
+        //onPrAttackButtonClicked: console.debug("Primary Attack")
+        //z : 1;
     }
 }
