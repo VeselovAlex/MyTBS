@@ -12,6 +12,11 @@ Item
     signal sdAttackButtonClicked
     signal skipButtonClicked
 
+    signal moveButtonReleased
+    signal prAttackButtonReleased
+    signal sdAttackButtonReleased
+    signal skipButtonReleased
+
     Image
     {
         anchors.fill: parent
@@ -60,5 +65,18 @@ Item
         {
             onClicked: attackBar.skipButtonClicked();
         }
+    }
+
+    function enableAttackBar()
+    {
+        z = parent.z + 1;
+        anchors.centerIn = parent
+        visible = true;
+        enabled = true;
+    }
+    function disableAttackBar()
+    {
+        visible = false;
+        enabled = false;
     }
 }

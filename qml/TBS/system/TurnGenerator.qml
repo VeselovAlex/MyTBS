@@ -2,7 +2,7 @@ import QtQuick 2.0
 
 QtObject
 {
-    property var players : Array
+    property var players : []
 
     property int playerCount : players.length
 
@@ -12,6 +12,12 @@ QtObject
     function nextPlayerTurn()
     {
         players[currentTurnPlayer].makeTurn()
+        players[1].makeTurn()
     }
 
+    function startPlayersTurns()
+    {
+        console.debug("ololo");
+        nextPlayerTurn();
+    }
 }

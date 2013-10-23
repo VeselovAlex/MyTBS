@@ -18,11 +18,15 @@ Item
     property int commanderSPLeft : commanderSkillPoints - commanderSPSpent
 
     signal initRequest();
+    signal playerReady();
 
 
     function makeTurn()
     {
+        if (!isEnemy)
         console.debug("Player turn")
+        if (isEnemy)
+            console.debug("Enemy turn")
         for (var i = 0; i < unitCount; i++)
         {
             playerUnits[i].turn()

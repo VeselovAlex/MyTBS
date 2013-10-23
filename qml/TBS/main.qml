@@ -10,6 +10,9 @@ Item
     width: 1200
     height: 900
 
+    property int signEmitted : 0
+    signal playersReady;
+
     Factory
     {
         id : factory
@@ -21,24 +24,6 @@ Item
         source : "qrc:/images/res/woodBg.png"
     }
 
-
-    Player // need to use files
-    {
-        id : enemy
-        money : 100000
-        commanderSkillPoints: 100500
-        isEnemy: true
-        onInitRequest:
-        {
-            for (var i = 0; i < maxUnitCount; i++)
-            {
-                var actor = factory.createActor(0, enemy);
-                enemy.buyNewUnit(actor, 1);
-                gameField.occupyCell(enemy.playerUnits[i], i + 1, gameField.columns - 1);
-            }
-
-        }
-    }
     Player
     {
         id : player
@@ -53,22 +38,46 @@ Item
                 player.buyNewUnit(actor, 1);
                 gameField.occupyCell(player.playerUnits[i], i + 1, 0);
             }
+            playerReady();
 
         }
+        onPlayerReady:
+        {
+            signEmitted++;
+            console.debug(signEmitted);
+            if (signEmitted == 2)
+            {
+                playersReady();
+            }
+        }
+
     }
-
-//    AttackBar
-//    {
-//        id : attackMenu
-//        visible: false
-//        width : gameField.cellSide * 1.5
-//        enabled: false
-//        onPrAttackButtonClicked: console.debug("Primary Attack")
-//        z : 1;
-//    }
-
-
-
+    Player // need to use files
+    {
+        id : enemy
+        money : 100000
+        commanderSkillPoints: 100500
+        isEnemy: true
+        onInitRequest:
+        {
+            for (var i = 0; i < maxUnitCount; i++)
+            {
+                var actor = factory.createActor(0, enemy);
+                enemy.buyNewUnit(actor, 1);
+                gameField.occupyCell(enemy.playerUnits[i], i + 1, gameField.columns - 1);
+            }
+            playerReady();
+        }
+        onPlayerReady:
+        {
+            signEmitted++;
+            console.debug(signEmitted);
+            if (signEmitted == 2)
+            {
+                playersReady();
+            }
+        }
+    }
     GameField
     {
         z: 0
@@ -83,48 +92,27 @@ Item
         {
             console.debug(row + ";" + col)
         }
-
-//        }
-//        onCellClicked:
-//        {
-//            var targetCell = cellAt(row, col)
-//            console.debug("Click on:" + targetCell.x + ";" + targetCell.y);
-//            if (!targetCell.empty)
-//            {
-//                attackMenu.parent = targetCell.occupiedBy;
-//                attackMenu.z = targetCell.z + 1;
-//                attackMenu.anchors.centerIn = attackMenu.parent
-//                attackMenu.visible = true;
-//                attackMenu.enabled = true;
-//                if (targetCell.empty)
-//                {
-
-//                }
-//            }
-
-//        }
-
-        //Component.onCompleted: defaultPlayerActors();
-
+    }
+    onPlayersReady:
+    {
+        gen.startPlayersTurns();
     }
 
-
-//    function defaultPlayerActors()
-//    {
-//        var actor = player.playerUnits[0];
-
-//    }
     TurnGenerator
     {
+
+        id : gen
         players : [player, enemy]
-        Component.onCompleted:
+
+        /*Component.onCompleted:
         {
             //console.debug(playerCount)
+            if (player.state == Component.Ready)
             nextPlayerTurn();
             //nextPlayerTurn();
-        }
-
+        }*/
     }
+
     CloseButton
     {
         id : closeBtn

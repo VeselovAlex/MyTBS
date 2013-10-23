@@ -45,18 +45,18 @@ Item
         id : sprite
         anchors.fill: parent
         antialiasing: true
-        sprites: [idleSprite, movingSprite, primaryAtackSprite, secondaryAtackSprite, dyingSprite]
+        sprites: [idleSprite]//, movingSprite, primaryAtackSprite, secondaryAtackSprite, dyingSprite]
     }
 
     function turn()
     {
-//        attackMenu.parent = targetCell.occupiedBy;
-//        attackMenu.z = targetCell.z + 1;
-//        attackMenu.anchors.centerIn = attackMenu.parent
-//        attackMenu.visible = true;
-//        attackMenu.enabled = true;
-        console.debug("I'm turning")
-        //var targetCell = cellAt();
+        attackMenu.enableAttackBar();
+        console.debug("12345");
+//        onMoveButtonClicked:
+//        {
+
+//        }
+
 
     }
 
@@ -104,5 +104,9 @@ Item
         enabled: false
         //onPrAttackButtonClicked: console.debug("Primary Attack")
         //z : 1;
+        onMoveButtonClicked:
+        {
+
+        }
     }
 }
