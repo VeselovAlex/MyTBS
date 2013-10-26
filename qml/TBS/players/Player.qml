@@ -17,11 +17,13 @@ Item
     property int commanderSPSpent : 0
     property int commanderSPLeft : commanderSkillPoints - commanderSPSpent
 
+    property bool hasEndedTurn : false
+
     signal initRequest();
     signal playerReady();
 
 
-    function makeTurn()
+    /*function makeTurn()
     {
         if (!isEnemy)
         console.debug("Player turn")
@@ -37,6 +39,14 @@ Item
             //gameBelongsTo.end();
         }
 
+    }*/
+
+    function refreshState ()
+    {
+        for (var i = 0; i < maxUnitCount; i++)
+        {
+            playerUnits[i].hasEndedTurn = false;
+        }
     }
 
 

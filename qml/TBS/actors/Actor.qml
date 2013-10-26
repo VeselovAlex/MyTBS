@@ -30,6 +30,9 @@ Item
     property int averageHealth: health * count
     property int averageArmor: armor * count
 
+    property int curRow;
+    property int curCol;
+
     //Спрайты для анимации
     property Sprite idleSprite
     property Sprite movingSprite
@@ -40,6 +43,9 @@ Item
     //Свойства для корректного отображения (надо будет реализовать спрайты)
     property bool reverted: belongsTo.isEnemy
 
+    //
+    property bool hasEndedTurn : false
+
     SpriteSequence
     {
         id : sprite
@@ -48,9 +54,19 @@ Item
         sprites: [idleSprite]//, movingSprite, primaryAtackSprite, secondaryAtackSprite, dyingSprite]
     }
 
-    function turn()
+    /*function enableAtkBar()
     {
         attackMenu.enableAttackBar();
+    }
+
+    function disableAtkBar()
+    {
+        attackMenu.disableAttackBar();
+    }*/
+
+    function turn()
+    {
+        //attackMenu.enableAttackBar();
         console.debug("12345");
 //        onMoveButtonClicked:
 //        {
@@ -96,17 +112,16 @@ Item
         sprite.jumpTo(secondaryAtackSprite.name);
         target.hurt(secondaryAtackDamage * atackMultiplier);
     }
-    AttackBar
+    /*AttackBar
     {
         id : attackMenu
         visible: false
         width : gameField.cellSide * 1.5
         enabled: false
         //onPrAttackButtonClicked: console.debug("Primary Attack")
-        //z : 1;
-        onMoveButtonClicked:
-        {
+        z : 10;
 
-        }
-    }
+    }*/
+
+
 }

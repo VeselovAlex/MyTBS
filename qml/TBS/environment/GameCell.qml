@@ -27,12 +27,20 @@ Rectangle
         anchors.fill: parent
         onClicked:
         {
-            if (active)
+            /*if (active)
             {
                 parent.buttonClicked();
             }
             else
-                destroy();
+                destroy();*/
+            if (highlighted)
+            {
+                console.debug("highlighted")
+            }
+            else
+            {
+
+            }
         }
     }
 }

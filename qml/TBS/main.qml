@@ -37,6 +37,8 @@ Item
                 var actor = factory.createActor(0, player);
                 player.buyNewUnit(actor, 1);
                 gameField.occupyCell(player.playerUnits[i], i + 1, 0);
+                player.playerUnits[i].curRow = i + 1;
+                player.playerUnits[i].curCol = 0;
             }
             playerReady();
 
@@ -44,7 +46,6 @@ Item
         onPlayerReady:
         {
             signEmitted++;
-            console.debug(signEmitted);
             if (signEmitted == 2)
             {
                 playersReady();
@@ -71,15 +72,70 @@ Item
         onPlayerReady:
         {
             signEmitted++;
-            console.debug(signEmitted);
             if (signEmitted == 2)
             {
                 playersReady();
             }
         }
     }
+    //var players  = [player, enemy];
+    signal unitTurn (var curPlayer, var curUnit, var playersArray);
+    signal nextUnit (var curPlayer, var curUnit, var playersArray);
+    onPlayersReady:
+    {
+        var players  = [player, enemy];
+        /*var turnPlayerIndex = 0;
+        var turnUnitIndex = 0;
+        //players[turnPlayerIndex].playerUnits[turnUnitIndex].enableAtkBar();
+        attackMenu.enableAttackBar();
+        gameField.highlightPossibleCells(players[turnPlayerIndex].playerUnits[turnUnitIndex].curRow
+                                         , players[turnPlayerIndex].playerUnits[turnUnitIndex].curCol
+                                         , true);*/
+        unitTurn(0,0, players);
+
+    }
+
+    onUnitTurn:
+    {
+        attackMenu.enableAttackBar();
+        gameField.highlightPossibleCells(playersArray[curPlayer].playerUnits[curUnit].curRow
+                                         , playersArray[curPlayer].playerUnits[curUnit].curCol
+                                         , true);
+        //console.debug(playersArray[curPlayer].playerUnits[curUnit].curRow + ";" + playersArray[curPlayer].playerUnits[curUnit].curCol);
+        //обрабатываем хренотень с бара
+        /*if (curUnit < playersArray[curPlayer].maxUnitCount)
+        {
+            unitTurn(curPlayer, ++curUnit, playersArray);
+        }
+        else
+        {
+            unitTurn(1 - curPlayer, 0, playersArray);
+        }*/
+        //nextUnit(curPlayer, curUnit, playersArray);
+    }
+    onNextUnit:
+    {
+        if (curUnit < playersArray[curPlayer].maxUnitCount)
+        {
+            unitTurn(curPlayer, ++curUnit, playersArray);
+        }
+        else
+        {
+            unitTurn(1 - curPlayer, 0, playersArray);
+        }
+    }
+
+    AttackBar
+    {
+        id : attackMenu
+        visible: false
+        width : gameField.cellSide * 1.5
+        enabled: false
+    }
+
     GameField
     {
+
         z: 0
         anchors.centerIn: parent
         id : gameField
@@ -93,25 +149,25 @@ Item
             console.debug(row + ";" + col)
         }
     }
-    onPlayersReady:
+    /*onPlayersReady:
     {
         gen.startPlayersTurns();
-    }
+    }*/
 
-    TurnGenerator
+    /*TurnGenerator
     {
 
         id : gen
         players : [player, enemy]
 
-        /*Component.onCompleted:
+        Component.onCompleted:
         {
             //console.debug(playerCount)
             if (player.state == Component.Ready)
             nextPlayerTurn();
             //nextPlayerTurn();
-        }*/
-    }
+        }
+    }*/
 
     CloseButton
     {
