@@ -8,7 +8,7 @@ Rectangle
     height: width
     radius: Math.round(width / 3);
     property alias imageSource: btnImage.source
-    property alias btnClicked: mArea
+    //property alias btnClicked: mArea
     color: "transparent"
 
     Image
@@ -16,14 +16,16 @@ Rectangle
         id: btnImage
         anchors.fill: parent
     }
-    MouseArea
+    /*MouseArea
     {
+
         id: mArea
+
         hoverEnabled: true
         anchors.fill: parent
         preventStealing: true
         cursorShape: Qt.PointingHandCursor
         onHoveredChanged: parent.color = containsMouse ? "#40CF0721" : "transparent"
         //цвет - "#OORRGGBB", где OO - прозрачность
-    }
+    }*/
 }
