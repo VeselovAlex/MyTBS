@@ -31,8 +31,8 @@ Actor
             frameDuration: 80;
         }
 
-    primaryAtackSprite: null
+    /*primaryAtackSprite: null
     secondaryAtackSprite: null
     movingSprite:  null
-    dyingSprite: null
+    dyingSprite: null*/
 }

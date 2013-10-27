@@ -34,7 +34,7 @@ Item
         property bool enabled : false
         onClicked:
         {
-            bg.color = enabled ? "lightgrey" : "cyan";
+            bg.color = enabled ? "lightgrey" : "blue";
             enabled = !enabled;
         }
     }

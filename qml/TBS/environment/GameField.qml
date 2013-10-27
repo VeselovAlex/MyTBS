@@ -28,14 +28,15 @@ Rectangle
                 onButtonClicked: gameField.cellClicked
                                  (Math.floor(index / gameField.columns),
                                   index % gameField.columns);
-
             }
         }
     }
 
     function cellAt(row, col)
     {
-        return rep.itemAt(row * gameField.columns + col);
+        var cell = rep.itemAt(row * gameField.columns + col);
+        //cell.buttonClicked();
+        return cell;
     }
 
     function occupyCell(actor, row, col)
@@ -43,18 +44,21 @@ Rectangle
         var target = cellAt(row, col)
         target.occupiedBy = actor;
         target.occupiedBy.x = target.x + gameField.x;
-        target.occupiedBy.y = target.y + gameField.y;
+        target.occupiedBy.y = target.y + gameField.y// - cellSide; //костыль
         target.occupiedBy.width = target.width;
         target.occupiedBy.height = target.height;
     }
 
     function clearCell(row, col)
     {
-        var target = cellAt(row, col)
-        target.occupiedBy.destroy();
+        //var target = cellAt(row, col)
+        //target.occupiedBy.destroy();
+        cellAt (row,col).isEmpty = true;
     }
+
     function highlightPossibleCells(row, col, enabled)
     {
+
         var currentCell = cellAt(row, col);
         if (currentCell == null || !currentCell.active || currentCell.isEmpty)
             return;
@@ -82,5 +86,4 @@ Rectangle
         }
         currentCell.highlighted = false;
     }
-
 }

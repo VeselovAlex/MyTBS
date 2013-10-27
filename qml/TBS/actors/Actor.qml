@@ -2,6 +2,7 @@
 
 import QtQuick 2.0
 import "../players"
+import "../environment"
 
 Item
 {
@@ -29,6 +30,9 @@ Item
     property int averageHealth: health * count
     property int averageArmor: armor * count
 
+    property int curRow;
+    property int curCol;
+
     //Спрайты для анимации
     property Sprite idleSprite
     property Sprite movingSprite
@@ -44,10 +48,8 @@ Item
         id : sprite
         anchors.fill: parent
         antialiasing: true
-        sprites: [idleSprite, movingSprite, primaryAtackSprite, secondaryAtackSprite, dyingSprite]
+        sprites: [idleSprite]//, movingSprite, primaryAtackSprite, secondaryAtackSprite, dyingSprite]
     }
-
-    function turn(){}
 
     function hurt(damage)
     {
@@ -85,4 +87,5 @@ Item
         sprite.jumpTo(secondaryAtackSprite.name);
         target.hurt(secondaryAtackDamage * atackMultiplier);
     }
+
 }
