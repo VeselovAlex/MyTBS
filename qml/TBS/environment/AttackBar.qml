@@ -17,6 +17,11 @@ Item
     signal sdAttackButtonChosen
     signal skipButtonChosen
 
+    property bool moveButtonChosen : false
+    property bool prAttackButtonChosen : false
+    property bool sdAttackButtonChosen : false
+    property bool skipButtonChosen : false
+
     Image
     {
         anchors.fill: parent
@@ -92,28 +97,9 @@ Item
 
         }
     }
-    onMoveButtonClicked:
-    {
-        disableAttackBar()
-    }
-    onPrAttackButtonClicked:
-    {
-        disableAttackBar()
-    }
-    onSdAttackButtonClicked:
-    {
-        disableAttackBar()
-    }
-    onSkipButtonClicked:
-    {
-        disableAttackBar()
-
-    }
 
     function enableAttackBar()
     {
-        //z = parent.z + 1;
-        //anchors.centerIn = parent
         visible = true;
         enabled = true;
     }

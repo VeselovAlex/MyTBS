@@ -17,38 +17,8 @@ Item
     property int commanderSPSpent : 0
     property int commanderSPLeft : commanderSkillPoints - commanderSPSpent
 
-    property bool hasEndedTurn : false
-
     signal initRequest();
     signal playerReady();
-
-
-    /*function makeTurn()
-    {
-        if (!isEnemy)
-        console.debug("Player turn")
-        if (isEnemy)
-            console.debug("Enemy turn")
-        for (var i = 0; i < unitCount; i++)
-        {
-            playerUnits[i].turn()
-        }
-        if (unitCount == 0)
-        {
-            //Заканчиваем игру
-            //gameBelongsTo.end();
-        }
-
-    }*/
-
-    function refreshState ()
-    {
-        for (var i = 0; i < maxUnitCount; i++)
-        {
-            playerUnits[i].hasEndedTurn = false;
-        }
-    }
-
 
     function buyNewUnit(unit, numberToBy)
     {

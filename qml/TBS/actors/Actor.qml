@@ -43,37 +43,12 @@ Item
     //Свойства для корректного отображения (надо будет реализовать спрайты)
     property bool reverted: belongsTo.isEnemy
 
-    //
-    property bool hasEndedTurn : false
-
     SpriteSequence
     {
         id : sprite
         anchors.fill: parent
         antialiasing: true
         sprites: [idleSprite]//, movingSprite, primaryAtackSprite, secondaryAtackSprite, dyingSprite]
-    }
-
-    /*function enableAtkBar()
-    {
-        attackMenu.enableAttackBar();
-    }
-
-    function disableAtkBar()
-    {
-        attackMenu.disableAttackBar();
-    }*/
-
-    function turn()
-    {
-        //attackMenu.enableAttackBar();
-        console.debug("12345");
-//        onMoveButtonClicked:
-//        {
-
-//        }
-
-
     }
 
     function hurt(damage)
@@ -112,16 +87,5 @@ Item
         sprite.jumpTo(secondaryAtackSprite.name);
         target.hurt(secondaryAtackDamage * atackMultiplier);
     }
-    /*AttackBar
-    {
-        id : attackMenu
-        visible: false
-        width : gameField.cellSide * 1.5
-        enabled: false
-        //onPrAttackButtonClicked: console.debug("Primary Attack")
-        z : 10;
-
-    }*/
-
 
 }

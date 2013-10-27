@@ -1,5 +1,6 @@
 import QtQuick 2.0
 
+
 QtObject
 {
     property var players : []
@@ -9,7 +10,7 @@ QtObject
     property int firstPlayerIdx : 0
     property int currentTurnPlayer : firstPlayerIdx
 
-    function nextPlayerTurn()
+    /*function nextPlayerTurn()
     {
         players[currentTurnPlayer].makeTurn()
         players[1].makeTurn()
@@ -19,5 +20,5 @@ QtObject
     {
         console.debug("ololo");
         nextPlayerTurn();
-    }
+    }*/
 }
