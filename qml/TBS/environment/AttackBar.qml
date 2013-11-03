@@ -27,7 +27,7 @@ Item
         anchors.fill: parent
         source: "qrc:/images/buttons/res/attackBarBG.png"
     }
-    // ахнутнг. копипаста
+    // ахтунг. копипаста
     AttackBarButton
     {
         id: primaryAttackBtn

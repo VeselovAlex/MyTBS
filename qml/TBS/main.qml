@@ -8,7 +8,7 @@ import "system"
 Item
 {
     width: 1200
-    height: 900
+    height: 700
 
     Image
     {
@@ -32,11 +32,11 @@ Item
         anchors.right: parent.right
     }
 
-   LikeButton
+   /*LikeButton
     {
         id : like
         width : 50
         anchors.right: closeBtn.left
-    }
+    }*/
 
 }

@@ -6,7 +6,6 @@ Rectangle
     property int cellSide: 80
     property alias rows : grid.rows
     property alias columns : grid.columns
-
     signal cellClicked(int row, int col);
 
     color : "transparent"
@@ -44,16 +43,19 @@ Rectangle
         var target = cellAt(row, col)
         target.occupiedBy = actor;
         target.occupiedBy.x = target.x + gameField.x;
-        target.occupiedBy.y = target.y + gameField.y// - cellSide; //костыль
+        target.occupiedBy.y = target.y + gameField.y;
         target.occupiedBy.width = target.width;
         target.occupiedBy.height = target.height;
     }
 
     function clearCell(row, col)
     {
-        //var target = cellAt(row, col)
-        //target.occupiedBy.destroy();
         cellAt (row,col).isEmpty = true;
+    }
+
+    function destroyCell(row, col)
+    {
+        cellAt(row, col).occupiedBy.destroy();
     }
 
     function highlightPossibleCells(row, col, enabled)
@@ -63,17 +65,17 @@ Rectangle
         if (currentCell == null || !currentCell.active || currentCell.isEmpty)
             return;
 
-        var moveRange = currentCell.occupiedBy.movingRange
-        if (moveRange == 0)
+        var moveRangeLeft = currentCell.occupiedBy.movingRangeLeft
+        if (moveRangeLeft == 0)
             return;
 
-        for (var i = - moveRange; i <= moveRange; i++)
+        for (var i = - moveRangeLeft; i <= moveRangeLeft; i++)
         {
             if (i + col < 0)
                 continue;
             if (i + col >= gameField.columns)
                 break;
-            for (var  j = Math.abs(i) - moveRange; j <= moveRange - Math.abs(i); j++)
+            for (var  j = Math.abs(i) - moveRangeLeft; j <= moveRangeLeft - Math.abs(i); j++)
             {
                 if (j + row < 0)
                     continue;
