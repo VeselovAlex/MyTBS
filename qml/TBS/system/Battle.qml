@@ -105,6 +105,7 @@ Item
             gameField.highlightPossibleCells(players[curPlayer].playerUnits[curUnit].curRow
                                              , players[curPlayer].playerUnits[curUnit].curCol
                                              , false);
+            players[curPlayer].playerUnits[curUnit].movingRangeLeft = players[curPlayer].playerUnits[curUnit].movingRange
             nextUnit(curPlayer, curUnit);
         }
     }
