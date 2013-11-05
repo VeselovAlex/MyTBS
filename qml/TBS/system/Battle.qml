@@ -13,8 +13,8 @@ Item
     property int signEmitted : 0
     signal playersReady;
 
-    signal unitTurn ()
-    signal nextUnit ()
+    signal unitTurn()
+    signal nextUnit()
 
     property int rowClicked : 0
     property int colClicked : 0
@@ -26,7 +26,9 @@ Item
     {
 
         z: 0
-        anchors.centerIn: parent
+        x : Math.round((parent.width - cellSide * columns) / 2)
+        y : Math.round((parent.height - cellSide * rows) / 2)
+
         id : gameField
         rows: 7
         columns : 10
@@ -39,29 +41,41 @@ Item
             colClicked = col
             if (attackMenu.moveButtonChosen)
             {
-                if (cellAt(rowClicked, colClicked).isEmpty)
+                if (cellAt(rowClicked, colClicked).isEmpty && cellAt(rowClicked, colClicked).highlighted)
                 {
                     var tempRow = players[curPlayer].playerUnits[curUnit].curRow
                     var tempCol = players[curPlayer].playerUnits[curUnit].curCol
-                    occupyCell(players[curPlayer].playerUnits[curUnit], rowClicked, colClicked)
-
-                    players[curPlayer].playerUnits[curUnit].curRow = rowClicked
-                    players[curPlayer].playerUnits[curUnit].curCol = colClicked
-                    clearCell(tempRow, tempCol)
-                    attackMenu.moveButtonChosen = false
                     gameField.highlightPossibleCells(players[curPlayer].playerUnits[curUnit].curRow
                                                      , players[curPlayer].playerUnits[curUnit].curCol
                                                      , false);
-                    nextUnit();
+                    occupyCell(players[curPlayer].playerUnits[curUnit], rowClicked, colClicked)
+                    players[curPlayer].playerUnits[curUnit].curRow = rowClicked
+                    players[curPlayer].playerUnits[curUnit].curCol = colClicked
+
+                    clearCell(tempRow, tempCol)
+
+                    attackMenu.moveButtonChosen = false
+
+                    var horizOffset = Math.abs(tempCol - colClicked);
+                    var vertOffset = Math.abs(tempRow - rowClicked);
+                    players[curPlayer].playerUnits[curUnit].movingRangeLeft -= horizOffset + vertOffset;
+
+                    if (players[curPlayer].playerUnits[curUnit].movingRangeLeft > 0)
+                    {
+                        unitTurn();
+                    }
+                    else
+                    {
+                        players[curPlayer].playerUnits[curUnit].movingRangeLeft =
+                                players[curPlayer].playerUnits[curUnit].movingRange;
+                        nextUnit();
+                    }
                 }
                 else
                 {
 
                 }
             }
-
-            //console.debug("!!!" + players[curPlayer].playerUnits[curUnit].curRow + ";" + players[curPlayer].playerUnits[curUnit].curCol )
-            //console.debug (row + ";" + col)
         }
     }
     AttackBar
@@ -103,6 +117,7 @@ Item
         isEnemy: false
         onInitRequest:
         {
+            console.debug("creating player")
             for (var i = 0; i < maxUnitCount; i++)
             {
                 var actor = factory.createActor(0, player);
@@ -132,13 +147,14 @@ Item
         isEnemy: true
         onInitRequest:
         {
+            console.debug("creating enemy")
             for (var i = 0; i < maxUnitCount; i++)
             {
                 var actor = factory.createActor(0, enemy);
                 enemy.buyNewUnit(actor, 1);
                 gameField.occupyCell(enemy.playerUnits[i], i + 1, gameField.columns - 1);
-                player.playerUnits[i].curRow = i + 1;
-                player.playerUnits[i].curCol = gameField.columns - 1;
+                enemy.playerUnits[i].curRow = i + 1;
+                enemy.playerUnits[i].curCol = gameField.columns - 1;
             }
             playerReady();
         }
@@ -161,6 +177,7 @@ Item
 
     onUnitTurn:
     {
+        //проверка на смерть где-то должна быть
         attackMenu.enableAttackBar();
         gameField.highlightPossibleCells(players[curPlayer].playerUnits[curUnit].curRow
                                          , players[curPlayer].playerUnits[curUnit].curCol
@@ -172,7 +189,7 @@ Item
 
     onNextUnit:
     {
-        if (curUnit < players[curPlayer].maxUnitCount - 1)
+        if (curUnit < players[curPlayer].unitCount - 1)
         {
             ++curUnit
             unitTurn();

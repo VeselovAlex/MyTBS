@@ -16,6 +16,7 @@ Item
     property real defenceMultiplier : 1.0
 
     property int movingRange//радиус движения
+    property int movingRangeLeft : movingRange
 
     property int primaryAtackRange
     property int primaryAtackDamage
