@@ -1,13 +1,14 @@
 import QtQuick 2.0
+import "../system"
 //Основной класс для всех игроков
 Item
 {
-    id : player
-    property bool isEnemy: false
-    property var playerUnits : Array
+    //id : player
+    property bool isEnemy
+    //property var playerUnits : Array
     readonly property int maxUnitCount : 5
     property int unitCount : 0
-    property QtObject gameBelongsTo : parent
+    //property QtObject gameBelongsTo : parent
 
     property int money : 0
     property int level : 0
@@ -17,8 +18,7 @@ Item
     property int commanderSPSpent : 0
     property int commanderSPLeft : commanderSkillPoints - commanderSPSpent
 
-    signal initRequest();
-    signal playerReady();
+    //signal initRequest(var isItEnemy);
 
     function buyNewUnit(unit, numberToBy)
     {
@@ -28,8 +28,8 @@ Item
                                  (Math.floor(commanderSPLeft / unit.spCosts)),
                                  numberToBy);
             unit.count = count;
-            player.money -= count * unit.moneyCosts;
-            player.commanderSPSpent += count * unit.spCosts;
+            money -= count * unit.moneyCosts;
+            commanderSPSpent += count * unit.spCosts;
             playerUnits[unitCount] = unit;
             unitCount++;
         }
@@ -43,13 +43,14 @@ Item
                                  (Math.floor(commanderSPLeft / playerUnits[unitIdx].spCosts)),
                                  numberToBy);
             playerUnits[unitIdx].count = count;
-            player.money -= count * playerUnits[unitIdx].moneyCosts;
-            player.commanderSPSpent += count * playerUnits[unitIdx].spCosts;
+            money -= count * playerUnits[unitIdx].moneyCosts;
+            commanderSPSpent += count * playerUnits[unitIdx].spCosts;
 
         }
     }
 
-    Component.onCompleted: initRequest();
+
+    //Component.onCompleted: initRequest(isEnemy);
 
 }
 

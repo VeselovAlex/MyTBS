@@ -3,19 +3,19 @@ import QtQuick 2.0
 Actor
 {
     id : swordsman
-    health : 150
-    armor : 100
+    health : 2
+    armor : 1
 
-    atackMultiplier : 1.2
+    attackMultiplier : 1.2
     defenceMultiplier : 1.5
 
     movingRange : 2
 
-    primaryAtackRange : 2
-    primaryAtackDamage : 30
+    primaryAttackRange : 2
+    primaryAttackDamage : 30
 
-    secondaryAtackRange : 1
-    secondaryAtackDamage : 50
+    secondaryAttackRange : 1
+    secondaryAttackDamage : 50
 
     moneyCosts : 50
     spCosts : 20
@@ -31,8 +31,8 @@ Actor
             frameDuration: 80;
         }
 
-    /*primaryAtackSprite: null
-    secondaryAtackSprite: null
+    /*primaryAttackSprite: null
+    secondaryAttackSprite: null
     movingSprite:  null
     dyingSprite: null*/
 }

@@ -7,22 +7,23 @@ import "../environment"
 Item
 {
     // При создании parent должен быть обьектом Player
-    property Player belongsTo : parent
+    //property Player belongsTo : parent
+    property bool belongsToEnemy : false
 
     property int health
     property int armor
 
-    property real atackMultiplier : 1.0
+    property real attackMultiplier : 1.0
     property real defenceMultiplier : 1.0
 
     property int movingRange//радиус движения
     property int movingRangeLeft : movingRange
 
-    property int primaryAtackRange
-    property int primaryAtackDamage
+    property int primaryAttackRange
+    property int primaryAttackDamage
 
-    property int secondaryAtackRange
-    property int secondaryAtackDamage
+    property int secondaryAttackRange
+    property int secondaryAttackDamage
 
     property int moneyCosts //стоимость единицы в монетах
     property int spCosts //стоимость единицы в очках навыка командира
@@ -31,25 +32,26 @@ Item
     property int averageHealth: health * count
     property int averageArmor: armor * count
 
-    property int curRow;
-    property int curCol;
+    property int curRow : 0
+    property int curCol : 0
 
     //Спрайты для анимации
     property Sprite idleSprite
     property Sprite movingSprite
-    property Sprite primaryAtackSprite
-    property Sprite secondaryAtackSprite
+    property Sprite primaryAttackSprite
+    property Sprite secondaryAttackSprite
     property Sprite dyingSprite
 
     //Свойства для корректного отображения (надо будет реализовать спрайты)
-    property bool reverted: belongsTo.isEnemy
+    //property bool reverted: belongsTo.isEnemy
+    property bool reverted : belongsToEnemy
 
     SpriteSequence
     {
         id : sprite
         anchors.fill: parent
         antialiasing: true
-        sprites: [idleSprite]//, movingSprite, primaryAtackSprite, secondaryAtackSprite, dyingSprite]
+        sprites: [idleSprite]//, movingSprite, primaryAttackSprite, secondaryAttackSprite, dyingSprite]
     }
 
     function hurt(damage)
@@ -61,6 +63,8 @@ Item
             {
                 averageHealth += averageArmor; // вычтем излишек из запаса здоровья
                 averageArmor = 0;
+                if (averageHealth < 0)
+                    die();
             }
         }
         else
@@ -73,20 +77,20 @@ Item
 
     function die()
     {
-        sprite.jumpTo(dyingSprite.name)
+        //sprite.jumpTo(dyingSprite.name)
         destroy();
     }
 
-    function primaryAtack(target) // основная атака
+    function primaryAttack(target) // основная атака
     {
-        sprite.jumpTo(primaryAtackSprite.name);
-        target.hurt(primaryAtackDamage * atackMultiplier);
+        sprite.jumpTo(primaryAttackSprite.name);
+        target.hurt(primaryAttackDamage * AttackMultiplier);
     }
 
-    function secondaryAtack(target)// дополнительная атака
+    function secondaryAttack(target)// дополнительная атака
     {
-        sprite.jumpTo(secondaryAtackSprite.name);
-        target.hurt(secondaryAtackDamage * atackMultiplier);
+        sprite.jumpTo(secondaryAttackSprite.name);
+        target.hurt(secondaryAttackDamage * AttackMultiplier);
     }
 
 }

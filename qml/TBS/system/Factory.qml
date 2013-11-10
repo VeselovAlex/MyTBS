@@ -16,6 +16,11 @@ QtObject
     function createActor(idx, parent)
     {
         var ret = actorComponents[idx].createObject(parent);
+        if (parent.isEnemy)
+        {
+            ret.belongsToEnemy = true
+        }
+
         return ret;
     }
 
