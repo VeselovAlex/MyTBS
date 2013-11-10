@@ -5,7 +5,8 @@ Item
 {
     //id : player
     property bool isEnemy
-    //property var playerUnits : Array
+    property var playerUnits : []
+    //property list playerUnits : []
     readonly property int maxUnitCount : 5
     property int unitCount : 0
     //property QtObject gameBelongsTo : parent

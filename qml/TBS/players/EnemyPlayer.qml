@@ -5,5 +5,5 @@ Player
 {
     id : enemyPlayer
     isEnemy: true
-    property var playerUnits : Array
+    //property var playerUnits : Array
 }

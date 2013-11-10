@@ -4,6 +4,6 @@ Player
 {
     id : humanPlayer
     isEnemy : false
-    property var playerUnits : Array
+    //property var playerUnits : Array
 
 }

@@ -199,37 +199,9 @@ Item
         //Init.createUnits(player);
         /*Init.createUnits(enemy);
         Init.createUnits(player);*/
-        //Init.initTestEnemy()
-        //Init.initTestPlayer()
-        player.isEnemy = false;
-        console.debug("creating player")
-        for (var i = 0; i < player.maxUnitCount; i++)
-        {
-            var actor = factory.createActor(0, player);
-            player.buyNewUnit(actor, 1);
-            console.debug("01 " + player.playerUnits[i].curRow + ";" + player.playerUnits[i].curCol)
-            gameField.occupyCell(player.playerUnits[i], i + 1, 0);
-            console.debug("02 " + player.playerUnits[i].curRow + ";" + player.playerUnits[i].curCol)
-            player.playerUnits[i].curRow = i + 1;
-            player.playerUnits[i].curCol = 0;
-            console.debug("03 " + player.playerUnits[i].curRow + ";" + player.playerUnits[i].curCol)
-        }
+        Init.initTestEnemy()
+        Init.initTestPlayer()
 
-        console.debug("creating enemy")
-        enemy.isEnemy = true
-        for (var i1 = 0; i1 < enemy.maxUnitCount; i1++)
-        {
-            console.debug("0 " + enemy.playerUnits[i1].curRow + ";" + enemy.playerUnits[i1].curCol)
-            var actor1 = factory.createActor(0, enemy);
-            console.debug("1 " + enemy.playerUnits[i1].curRow + ";" + enemy.playerUnits[i1].curCol)
-            enemy.buyNewUnit(actor1, 1);
-            console.debug("2 " + enemy.playerUnits[i1].curRow + ";" + enemy.playerUnits[i1].curCol)
-            gameField.occupyCell(enemy.playerUnits[i1], i1 + 1, gameField.columns - 1);
-            console.debug("3 " + enemy.playerUnits[i1].curRow + ";" + enemy.playerUnits[i1].curCol)
-            enemy.playerUnits[i1].curRow = i1 + 1;
-            enemy.playerUnits[i1].curCol = gameField.columns - 1;
-            console.debug("4 " + enemy.playerUnits[i1].curRow + ";" + enemy.playerUnits[i1].curCol)
-        }
         playersReady();
     }
 
