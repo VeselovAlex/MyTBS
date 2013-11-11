@@ -4,10 +4,9 @@ Item
 {
     id : player
     property bool isEnemy: false
-    property var playerUnits : Array
+    property var playerUnits : []
     readonly property int maxUnitCount : 5
     property int unitCount : 0
-    property QtObject gameBelongsTo : parent
 
     property int money : 0
     property int level : 0
@@ -17,8 +16,6 @@ Item
     property int commanderSPSpent : 0
     property int commanderSPLeft : commanderSkillPoints - commanderSPSpent
 
-    signal initRequest();
-    signal playerReady();
 
     function buyNewUnit(unit, numberToBy)
     {
@@ -49,7 +46,10 @@ Item
         }
     }
 
-    Component.onCompleted: initRequest();
+    function makeTurn()
+    {
+        console.log((isEnemy ? "Enemy" : "Player") + " turns");
+    }
 
 }
 

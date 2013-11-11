@@ -1,8 +1,5 @@
 import QtQuick 2.0
-import "environment"
 import "environment/buttons"
-import "actors"
-import "players"
 import "system"
 
 Item

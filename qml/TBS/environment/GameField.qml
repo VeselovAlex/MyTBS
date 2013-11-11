@@ -24,9 +24,9 @@ Rectangle
             GameCell
             {
                 width: gameField.cellSide
-                onButtonClicked: gameField.cellClicked
-                                 (Math.floor(index / gameField.columns),
-                                  index % gameField.columns);
+                cellCol: index % gameField.columns
+                cellRow: Math.floor(index / gameField.columns)
+                onButtonClicked: gameField.cellClicked(cellRow,cellCol);
             }
         }
     }
@@ -40,6 +40,8 @@ Rectangle
 
     function occupyCell(actor, row, col)
     {
+        if (actor == undefined || actor == null)
+            return;
         var target = cellAt(row, col)
         target.occupiedBy = actor;
         target.occupiedBy.x = target.x + gameField.x;

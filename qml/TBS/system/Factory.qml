@@ -15,10 +15,6 @@ QtObject
 
     function createActor(idx, parent)
     {
-        var ret = actorComponents[idx].createObject(parent);
-        return ret;
+        return actorComponents[idx].createObject(parent);
     }
-
-
-
 }

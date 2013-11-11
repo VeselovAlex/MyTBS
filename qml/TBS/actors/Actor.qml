@@ -2,12 +2,10 @@
 
 import QtQuick 2.0
 import "../players"
-import "../environment"
 
 Item
 {
     // При создании parent должен быть обьектом Player
-    property Player belongsTo : parent
 
     property int health
     property int armor
@@ -31,9 +29,6 @@ Item
     property int averageHealth: health * count
     property int averageArmor: armor * count
 
-    property int curRow;
-    property int curCol;
-
     //Спрайты для анимации
     property Sprite idleSprite
     property Sprite movingSprite
@@ -42,7 +37,7 @@ Item
     property Sprite dyingSprite
 
     //Свойства для корректного отображения (надо будет реализовать спрайты)
-    property bool reverted: belongsTo.isEnemy
+    property bool reverted: parent.isEnemy
 
     SpriteSequence
     {

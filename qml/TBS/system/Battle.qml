@@ -2,27 +2,53 @@ import QtQuick 2.0
 import "../players"
 import "../actors"
 import "../environment"
+import "Init.js" as Init
 
 Item
 {
-    property var players : Array
+    id : battle
 
     property int curPlayer: 0
     property int curUnit: 0
 
-    property int signEmitted : 0
-    signal playersReady;
-
-    signal unitTurn()
-    signal nextUnit()
-
     property int rowClicked : 0
     property int colClicked : 0
+
     Factory
     {
         id : factory
+        Component.onCompleted:
+        {
+            Init.factoryLoaded = true;
+            console.log(Init.factoryLoaded ? "factory completed!" : "");
+            Init.componentIsLoaded();
+        }
+
     }
+
     GameField
+    {
+        id : gamefield
+        rows: 7
+        columns : 10
+        cellSide: 80
+        x : Math.round((parent.width - cellSide * columns) / 2)
+        y : Math.round((parent.height - cellSide * rows) / 2)
+        onCellClicked: console.debug("Cell clicked at " + row + ";" + col)
+        Component.onCompleted:
+        {
+            Init.gameFieldLoaded = true;
+            console.log(Init.gameFieldLoaded ? "gamefield completed!" : "");
+            Init.componentIsLoaded();
+        }
+    }
+
+    AttackBar
+    {
+        anchors.centerIn: parent;
+        width: 240
+    }
+    /*GameField
     {
 
         z: 0
@@ -35,7 +61,7 @@ Item
         cellSide: 80
         property var previousHighlighted : null
 
-        onCellClicked:
+        /*onCellClicked:
         {
             rowClicked = row
             colClicked = col
@@ -107,7 +133,8 @@ Item
                                              , false);
             nextUnit(curPlayer, curUnit);
         }
-    }
+    }*/
+
 
     Player
     {
@@ -115,92 +142,37 @@ Item
         money : 100000
         commanderSkillPoints: 100500
         isEnemy: false
-        onInitRequest:
+        Component.onCompleted:
         {
-            console.debug("creating player")
-            for (var i = 0; i < maxUnitCount; i++)
-            {
-                var actor = factory.createActor(0, player);
-                player.buyNewUnit(actor, 1);
-                gameField.occupyCell(player.playerUnits[i], i + 1, 0);
-                player.playerUnits[i].curRow = i + 1;
-                player.playerUnits[i].curCol = 0;
-            }
-            playerReady();
-
+            Init.playerLoaded = true;
+            Init.componentIsLoaded();
+            console.log(Init.playerLoaded ? "player completed!" : "");
         }
-        onPlayerReady:
-        {
-            signEmitted++;
-            if (signEmitted == 2)
-            {
-                playersReady();
-            }
-        }
-
     }
-    Player // need to use files
+
+    Player
     {
         id : enemy
         money : 100000
         commanderSkillPoints: 100500
         isEnemy: true
-        onInitRequest:
+        Component.onCompleted:
         {
-            console.debug("creating enemy")
-            for (var i = 0; i < maxUnitCount; i++)
-            {
-                var actor = factory.createActor(0, enemy);
-                enemy.buyNewUnit(actor, 1);
-                gameField.occupyCell(enemy.playerUnits[i], i + 1, gameField.columns - 1);
-                enemy.playerUnits[i].curRow = i + 1;
-                enemy.playerUnits[i].curCol = gameField.columns - 1;
-            }
-            playerReady();
-        }
-        onPlayerReady:
-        {
-            signEmitted++;
-            if (signEmitted == 2)
-            {
-                playersReady();
-            }
+            Init.enemyLoaded = true;
+            Init.componentIsLoaded();
+            console.log(Init.enemyLoaded ? "enemy completed!" : "");
         }
     }
 
-
-    onPlayersReady:
+    TurnGenerator
     {
-        players  = [player, enemy];
-        unitTurn()
+        id : generator
+        players: [player, enemy]
     }
 
-    onUnitTurn:
+    Component.onCompleted:
     {
-        //проверка на смерть где-то должна быть
-        attackMenu.enableAttackBar();
-        gameField.highlightPossibleCells(players[curPlayer].playerUnits[curUnit].curRow
-                                         , players[curPlayer].playerUnits[curUnit].curCol
-                                         , true);
-        console.debug(players[curPlayer].playerUnits[curUnit].curRow + ";" + players[curPlayer].playerUnits[curUnit].curCol);
-        //обрабатываем хренотень с бара
+        //console.log("battle loaded");
     }
-
-
-    onNextUnit:
-    {
-        if (curUnit < players[curPlayer].unitCount - 1)
-        {
-            ++curUnit
-            unitTurn();
-        }
-        else
-        {
-            curPlayer = 1 - curPlayer
-            curUnit = 0
-            unitTurn();
-        }
-    }
-
 
 }

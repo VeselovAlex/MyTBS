@@ -7,6 +7,8 @@ Item
 
     Text
     {
+        color: "blue"
+
         text: "Level: " + master.level +
               "\nMoney: " + master.money +
               "\nCommander skill: " + master.commanderSkillPoints

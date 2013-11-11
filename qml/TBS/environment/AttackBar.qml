@@ -26,24 +26,15 @@ Item
     {
         anchors.fill: parent
         source: "qrc:/images/buttons/res/attackBarBG.png"
+        opacity: 0.7
     }
-    // ахтунг. копипаста
     AttackBarButton
     {
         id: primaryAttackBtn
         anchors.centerIn: attackBar;
         anchors.horizontalCenterOffset: iconSize
         imageSource: "qrc:/images/buttons/res/primaryAttackButtonIcon.png"
-        MouseArea
-        {
-            onClicked: prAttackButtonClicked();
-            hoverEnabled: true
-            anchors.fill: parent
-            preventStealing: true
-            cursorShape: Qt.PointingHandCursor
-            onHoveredChanged: parent.color = containsMouse ? "#40CF0721" : "transparent"
-            //цвет - "#OORRGGBB", где OO - прозрачность
-        }
+        onAttackBarButtonClicked: prAttackButtonClicked()
     }
     AttackBarButton
     {
@@ -51,16 +42,7 @@ Item
         anchors.centerIn: attackBar;
         anchors.verticalCenterOffset: -iconSize
         imageSource: "qrc:/images/buttons/res/secondaryAttackButtonIcon.png"
-        MouseArea
-        {
-            onClicked: sdAttackButtonClicked();
-            hoverEnabled: true
-            anchors.fill: parent
-            preventStealing: true
-            cursorShape: Qt.PointingHandCursor
-            onHoveredChanged: parent.color = containsMouse ? "#40CF0721" : "transparent"
-            //цвет - "#OORRGGBB", где OO - прозрачность
-        }
+        onAttackBarButtonClicked: sdAttackButtonClicked()
     }
     AttackBarButton
     {
@@ -68,16 +50,7 @@ Item
         anchors.centerIn: attackBar;
         anchors.horizontalCenterOffset: -iconSize
         imageSource: "qrc:/images/buttons/res/moveButtonIcon.png"
-        MouseArea
-        {
-            onClicked: moveButtonClicked();
-            hoverEnabled: true
-            anchors.fill: parent
-            preventStealing: true
-            cursorShape: Qt.PointingHandCursor
-            onHoveredChanged: parent.color = containsMouse ? "#40CF0721" : "transparent"
-            //цвет - "#OORRGGBB", где OO - прозрачность
-        }
+        onAttackBarButtonClicked: moveButtonClicked()
     }
     AttackBarButton
     {
@@ -85,17 +58,7 @@ Item
         anchors.centerIn: attackBar;
         anchors.verticalCenterOffset: iconSize
         imageSource: "qrc:/images/buttons/res/skipButtonIcon.png"
-        MouseArea
-        {
-            onClicked: skipButtonClicked();
-            hoverEnabled: true
-            anchors.fill: parent
-            preventStealing: true
-            cursorShape: Qt.PointingHandCursor
-            onHoveredChanged: parent.color = containsMouse ? "#40CF0721" : "transparent"
-            //цвет - "#OORRGGBB", где OO - прозрачность
-
-        }
+        onAttackBarButtonClicked: skipButtonClicked()
     }
 
     function enableAttackBar()
