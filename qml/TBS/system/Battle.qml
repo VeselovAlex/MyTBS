@@ -21,7 +21,7 @@ Item
         Component.onCompleted:
         {
             Init.factoryLoaded = true;
-            console.log(Init.factoryLoaded ? "factory completed!" : "");
+            //console.log(Init.factoryLoaded ? "factory completed!" : "");
             Init.componentIsLoaded();
         }
 
@@ -39,23 +39,26 @@ Item
         {
             if (Turns.cellCoordsRequired)
             {
-                console.debug("Cell clicked at " + row + ";" + col);
-                //var cell = cellAt(row, col)
-                gamefield.cellCoords(row, col); //cell.x + gamefield.x, cell.y + gamefield.y);
+                //console.debug("Cell clicked at " + row + ";" + col);
+                if (cellAt(row, col).isEmpty)
+                    gamefield.cellCoords(row, col);
             }
-            /*if (Turns.targetActorRequired)
+            if (Turns.targetActorRequired)
             {
-                console.debug(cellAt(row, col).isEmpty ? "Empty" : cellAt(row, col).occupiedBy);
-                target(cellAt(row, col).occupiedBy);
-            }*/
+                //console.debug(cellAt(row, col).isEmpty ? "Empty" : cellAt(row, col).occupiedBy);
+                var cell = cellAt(row, col);
+                if (!cell.isEmpty)
+                    gamefield.target(cell.occupiedBy);
+            }
         }
 
         Component.onCompleted:
         {
             Turns.currentGameField = gamefield;
             cellCoords.connect(Turns.moveActorTo);
+            target.connect(Turns.attackActor);
             Init.gameFieldLoaded = true;
-            console.log(Init.gameFieldLoaded ? "gamefield completed!" : "");
+            //console.log(Init.gameFieldLoaded ? "gamefield completed!" : "");
             Init.componentIsLoaded();
         }
     }
@@ -69,7 +72,7 @@ Item
             disableAttackBar();
             Turns.attackBar = attackBar
             Init.attackBarLoaded = true;
-            console.log("AttackBar completed!");
+            //console.log("AttackBar completed!");
             Init.componentIsLoaded();
         }
     }
@@ -171,7 +174,7 @@ Item
         {
             Init.playerLoaded = true;
             Init.componentIsLoaded();
-            console.log(Init.playerLoaded ? "player completed!" : "");
+            //console.log(Init.playerLoaded ? "player completed!" : "");
         }
     }
 
@@ -185,7 +188,7 @@ Item
         {
             Init.enemyLoaded = true;
             Init.componentIsLoaded();
-            console.log(Init.enemyLoaded ? "enemy completed!" : "");
+            //console.log(Init.enemyLoaded ? "enemy completed!" : "");
         }
     }
 
