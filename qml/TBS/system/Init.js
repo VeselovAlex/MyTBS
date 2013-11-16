@@ -2,20 +2,23 @@ var factoryLoaded = false
 var gameFieldLoaded = false
 var playerLoaded = false
 var enemyLoaded = false
+var attackBarLoaded = false
+
+var playersInitialized = false
 
 function componentIsLoaded()
 {
-    if (factoryLoaded && gameFieldLoaded && playerLoaded && enemyLoaded)
-    {
+    if (factoryLoaded && gameFieldLoaded && playerLoaded && enemyLoaded && !playersInitialized)
         initPlayers();
+    if (playersInitialized && attackBarLoaded)
         generator.start();
-    }
 }
 
 function initPlayers()
 {
     initTestPlayer();
     initTestEnemy();
+    playersInitialized = true;
 }
 
 function initTestPlayer()
@@ -27,6 +30,7 @@ function initTestPlayer()
         player.buyNewUnit(actor, 1);
         gamefield.occupyCell(player.playerUnits[i], i + 1, 0);
     }
+    player.turnFinished.connect(generator.nextPlayerTurn);
 }
 
 function initTestEnemy()
@@ -38,4 +42,5 @@ function initTestEnemy()
         enemy.buyNewUnit(actor, 1);
         gamefield.occupyCell(enemy.playerUnits[i - 1], i + 1, gamefield.columns - 1);
     }
+    player.turnFinished.connect(generator.nextPlayerTurn);
 }

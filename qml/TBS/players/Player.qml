@@ -1,8 +1,9 @@
 import QtQuick 2.0
+import "../system/Turns.js" as PlayerTurns
 //Основной класс для всех игроков
 Item
 {
-    id : player
+    id : abstractPlayer
     property bool isEnemy: false
     property var playerUnits : []
     readonly property int maxUnitCount : 5
@@ -16,6 +17,7 @@ Item
     property int commanderSPSpent : 0
     property int commanderSPLeft : commanderSkillPoints - commanderSPSpent
 
+    signal turnFinished
 
     function buyNewUnit(unit, numberToBy)
     {
@@ -25,8 +27,8 @@ Item
                                  (Math.floor(commanderSPLeft / unit.spCosts)),
                                  numberToBy);
             unit.count = count;
-            player.money -= count * unit.moneyCosts;
-            player.commanderSPSpent += count * unit.spCosts;
+            abstractPlayer.money -= count * unit.moneyCosts;
+            abstractPlayer.commanderSPSpent += count * unit.spCosts;
             playerUnits[unitCount] = unit;
             unitCount++;
         }
@@ -40,8 +42,8 @@ Item
                                  (Math.floor(commanderSPLeft / playerUnits[unitIdx].spCosts)),
                                  numberToBy);
             playerUnits[unitIdx].count = count;
-            player.money -= count * playerUnits[unitIdx].moneyCosts;
-            player.commanderSPSpent += count * playerUnits[unitIdx].spCosts;
+            abstractPlayer.money -= count * playerUnits[unitIdx].moneyCosts;
+            abstractPlayer.commanderSPSpent += count * playerUnits[unitIdx].spCosts;
 
         }
     }
@@ -49,6 +51,8 @@ Item
     function makeTurn()
     {
         console.log((isEnemy ? "Enemy" : "Player") + " turns");
+        PlayerTurns.currentPlayer = abstractPlayer;
+        PlayerTurns.askForTurn();
     }
 
 }

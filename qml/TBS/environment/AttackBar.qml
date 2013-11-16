@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import "buttons"
+import "../system/Turns.js" as Turns
 
 Item
 {
@@ -11,16 +12,6 @@ Item
     signal prAttackButtonClicked
     signal sdAttackButtonClicked
     signal skipButtonClicked
-
-    signal moveButtonChosen
-    signal prAttackButtonChosen
-    signal sdAttackButtonChosen
-    signal skipButtonChosen
-
-    property bool moveButtonChosen : false
-    property bool prAttackButtonChosen : false
-    property bool sdAttackButtonChosen : false
-    property bool skipButtonChosen : false
 
     Image
     {
@@ -61,13 +52,17 @@ Item
         onAttackBarButtonClicked: skipButtonClicked()
     }
 
-    function enableAttackBar()
+    function enableAttackBar(X, Y)
     {
+        x = X;
+        y = Y;
         visible = true;
         enabled = true;
     }
     function disableAttackBar()
     {
+        x = -width;
+        y = -height;
         visible = false;
         enabled = false;
     }

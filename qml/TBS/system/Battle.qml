@@ -3,6 +3,7 @@ import "../players"
 import "../actors"
 import "../environment"
 import "Init.js" as Init
+import "Turns.js" as Turns
 
 Item
 {
@@ -34,9 +35,25 @@ Item
         cellSide: 80
         x : Math.round((parent.width - cellSide * columns) / 2)
         y : Math.round((parent.height - cellSide * rows) / 2)
-        onCellClicked: console.debug("Cell clicked at " + row + ";" + col)
+        onCellClicked:
+        {
+            if (Turns.cellCoordsRequired)
+            {
+                console.debug("Cell clicked at " + row + ";" + col);
+                //var cell = cellAt(row, col)
+                gamefield.cellCoords(row, col); //cell.x + gamefield.x, cell.y + gamefield.y);
+            }
+            /*if (Turns.targetActorRequired)
+            {
+                console.debug(cellAt(row, col).isEmpty ? "Empty" : cellAt(row, col).occupiedBy);
+                target(cellAt(row, col).occupiedBy);
+            }*/
+        }
+
         Component.onCompleted:
         {
+            Turns.currentGameField = gamefield;
+            cellCoords.connect(Turns.moveActorTo);
             Init.gameFieldLoaded = true;
             console.log(Init.gameFieldLoaded ? "gamefield completed!" : "");
             Init.componentIsLoaded();
@@ -45,8 +62,16 @@ Item
 
     AttackBar
     {
-        anchors.centerIn: parent;
+        id : attackBar
         width: 240
+        Component.onCompleted:
+        {
+            disableAttackBar();
+            Turns.attackBar = attackBar
+            Init.attackBarLoaded = true;
+            console.log("AttackBar completed!");
+            Init.componentIsLoaded();
+        }
     }
     /*GameField
     {

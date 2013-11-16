@@ -18,8 +18,8 @@ QtObject
     {
         players[currentTurnPlayer].makeTurn();
         turns++;
-        if (running)
-            nextPlayerTurn();
+//        if (running)
+//            nextPlayerTurn();
     }
 
     function start()
