@@ -2,25 +2,77 @@ import QtQuick 2.0
 import "../players"
 import "../actors"
 import "../environment"
-import "initPlayers.js" as Init
-import "turnManager.js" as TurnManager
+import "Init.js" as Init
+import "Turns.js" as Turns
 
 Item
 {
-    property var players : []
-
+    id : battle
     property int curPlayer: 0
     property int curUnit: 0
 
-    property int numPlayersReady : 0
-
     property int rowClicked : 0
     property int colClicked : 0
+
     Factory
     {
         id : factory
+        Component.onCompleted:
+        {
+            Init.factoryLoaded = true;
+            console.log(Init.factoryLoaded ? "factory completed!" : "");
+            Init.componentIsLoaded();
+        }
+
     }
+
     GameField
+    {
+        id : gamefield
+        rows: 7
+        columns : 10
+        cellSide: 80
+        x : Math.round((parent.width - cellSide * columns) / 2)
+        y : Math.round((parent.height - cellSide * rows) / 2)
+        onCellClicked:
+        {
+            if (Turns.cellCoordsRequired)
+            {
+                console.debug("Cell clicked at " + row + ";" + col);
+                //var cell = cellAt(row, col)
+                gamefield.cellCoords(row, col); //cell.x + gamefield.x, cell.y + gamefield.y);
+            }
+            /*if (Turns.targetActorRequired)
+            {
+                console.debug(cellAt(row, col).isEmpty ? "Empty" : cellAt(row, col).occupiedBy);
+                target(cellAt(row, col).occupiedBy);
+            }*/
+        }
+
+        Component.onCompleted:
+        {
+            Turns.currentGameField = gamefield;
+            cellCoords.connect(Turns.moveActorTo);
+            Init.gameFieldLoaded = true;
+            console.log(Init.gameFieldLoaded ? "gamefield completed!" : "");
+            Init.componentIsLoaded();
+        }
+    }
+
+    AttackBar
+    {
+        id : attackBar
+        width: 240
+        Component.onCompleted:
+        {
+            disableAttackBar();
+            Turns.attackBar = attackBar
+            Init.attackBarLoaded = true;
+            console.log("AttackBar completed!");
+            Init.componentIsLoaded();
+        }
+    }
+    /*GameField
     {
 
         z: 0
@@ -33,7 +85,7 @@ Item
         cellSide: 80
         property var previousHighlighted : null
 
-        onCellClicked:
+        /*onCellClicked:
         {
             rowClicked = row
             colClicked = col
@@ -75,59 +127,47 @@ Item
             nextUnit(curPlayer, curUnit);
 
         }
-    }
+    }*/
+
 
     HumanPlayer
     {
         id : player
         money : 100000
         commanderSkillPoints: 100500
+
+        isEnemy: false
+        Component.onCompleted:
+        {
+            Init.playerLoaded = true;
+            Init.componentIsLoaded();
+            console.log(Init.playerLoaded ? "player completed!" : "");
+        }
     }
-    EnemyPlayer
+
+    Player
     {
         id : enemy
         money : 100000
         commanderSkillPoints: 100500
-    }
-
-    Component.onCompleted :
-    {
-
-        Init.createUnits(enemy);
-        Init.createUnits(player);
-
-        playersReady();
-    }
-
-    function playersReady()
-    {
-        players  = [player, enemy];
-        unitTurn()
-    }
-
-    function unitTurn()
-    {
-        //проверка на смерть где-то должна быть
-        attackMenu.enableAttackBar();
-        gameField.highlightPossibleCells(players[curPlayer].playerUnits[curUnit].curRow
-                                         , players[curPlayer].playerUnits[curUnit].curCol
-                                         , true);
-        //обрабатываем хренотень с бара
-    }
-
-
-    function nextUnit()
-    {
-        if (curUnit < players[curPlayer].unitCount - 1)
+        isEnemy: true
+        Component.onCompleted:
         {
-            ++curUnit
-            unitTurn();
-        }
-        else
-        {
-            curPlayer = 1 - curPlayer
-            curUnit = 0
-            unitTurn();
+            Init.enemyLoaded = true;
+            Init.componentIsLoaded();
+            console.log(Init.enemyLoaded ? "enemy completed!" : "");
         }
     }
+
+    TurnGenerator
+    {
+        id : generator
+        players: [player, enemy]
+    }
+
+    Component.onCompleted:
+    {
+        //console.log("battle loaded");
+    }
+
 }

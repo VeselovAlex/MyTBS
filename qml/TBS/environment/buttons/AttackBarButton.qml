@@ -10,22 +10,22 @@ Rectangle
     property alias imageSource: btnImage.source
     //property alias btnClicked: mArea
     color: "transparent"
+    signal attackBarButtonClicked
 
     Image
     {
         id: btnImage
         anchors.fill: parent
     }
-    /*MouseArea
+    MouseArea
     {
-
-        id: mArea
-
         hoverEnabled: true
         anchors.fill: parent
+        propagateComposedEvents: true
         preventStealing: true
         cursorShape: Qt.PointingHandCursor
         onHoveredChanged: parent.color = containsMouse ? "#40CF0721" : "transparent"
         //цвет - "#OORRGGBB", где OO - прозрачность
-    }*/
+        onClicked: attackBarButtonClicked()
+    }
 }

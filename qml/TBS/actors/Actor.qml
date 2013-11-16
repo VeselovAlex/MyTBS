@@ -2,13 +2,10 @@
 
 import QtQuick 2.0
 import "../players"
-import "../environment"
 
 Item
 {
     // При создании parent должен быть обьектом Player
-    //property Player belongsTo : parent
-    property bool belongsToEnemy : false
 
     property int maxHp
     property int health : maxHp
@@ -33,19 +30,6 @@ Item
     property int averageHealth: health * count
     property int averageArmor: armor * count
 
-    property int curRow : 0
-    property int curCol : 0
-
-    HealthBar
-    {
-        id: healthBar
-        visible: true
-    }
-    function changeHpInfo()
-    {
-        healthBar.changeHpInfo(maxHp * count, averageHealth)
-    }
-
     //Спрайты для анимации
     property Sprite idleSprite
     property Sprite movingSprite
@@ -54,8 +38,8 @@ Item
     property Sprite dyingSprite
 
     //Свойства для корректного отображения (надо будет реализовать спрайты)
-    //property bool reverted: belongsTo.isEnemy
-    property bool reverted : belongsToEnemy
+
+    property bool reverted: parent.isEnemy
 
     SpriteSequence
     {

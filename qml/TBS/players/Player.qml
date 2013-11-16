@@ -1,13 +1,14 @@
 import QtQuick 2.0
-import "../system"
+
+import "../system/Turns.js" as PlayerTurns
 //Основной класс для всех игроков
 Item
 {
-    property bool isEnemy
+    id : abstractPlayer
+    property bool isEnemy: false
     property var playerUnits : []
     readonly property int maxUnitCount : 5
     property int unitCount : 0
-    property QtObject gameBelongsTo : parent
 
     property int money : 0
     property int level : 0
@@ -17,6 +18,9 @@ Item
     property int commanderSPSpent : 0
     property int commanderSPLeft : commanderSkillPoints - commanderSPSpent
 
+
+    signal turnFinished
+
     function buyNewUnit(unit, numberToBy)
     {
         if ((commanderSPLeft > 0) && (money > 0) && (numberToBy > 0) && (unitCount < maxUnitCount))
@@ -25,8 +29,9 @@ Item
                                  (Math.floor(commanderSPLeft / unit.spCosts)),
                                  numberToBy);
             unit.count = count;
-            money -= count * unit.moneyCosts;
-            commanderSPSpent += count * unit.spCosts;
+
+            abstractPlayer.money -= count * unit.moneyCosts;
+            abstractPlayer.commanderSPSpent += count * unit.spCosts;
             playerUnits[unitCount] = unit;
             unitCount++;
         }
@@ -40,11 +45,16 @@ Item
                                  (Math.floor(commanderSPLeft / playerUnits[unitIdx].spCosts)),
                                  numberToBy);
             playerUnits[unitIdx].count = count;
-            money -= count * playerUnits[unitIdx].moneyCosts;
-            commanderSPSpent += count * playerUnits[unitIdx].spCosts;
-
+            abstractPlayer.money -= count * playerUnits[unitIdx].moneyCosts;
+            abstractPlayer.commanderSPSpent += count * playerUnits[unitIdx].spCosts;
         }
     }
 
+    function makeTurn()
+    {
+        console.log((isEnemy ? "Enemy" : "Player") + " turns");
+        PlayerTurns.currentPlayer = abstractPlayer;
+        PlayerTurns.askForTurn();
+    }
 }
 

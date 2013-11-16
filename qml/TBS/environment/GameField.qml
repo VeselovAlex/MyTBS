@@ -1,4 +1,5 @@
 import QtQuick 2.0
+//import "../actors"
 
 Rectangle
 {
@@ -6,7 +7,10 @@ Rectangle
     property int cellSide: 80
     property alias rows : grid.rows
     property alias columns : grid.columns
+
     signal cellClicked(int row, int col);
+    signal cellCoords(int X, int Y);
+    //signal target(Actor actor); Нужно для реализации атаки
 
     color : "transparent"
 
@@ -24,9 +28,9 @@ Rectangle
             GameCell
             {
                 width: gameField.cellSide
-                onButtonClicked: gameField.cellClicked
-                                 (Math.floor(index / gameField.columns),
-                                  index % gameField.columns);
+                cellCol: index % gameField.columns
+                cellRow: Math.floor(index / gameField.columns)
+                onButtonClicked: gameField.cellClicked(cellRow,cellCol);
             }
         }
     }
@@ -42,6 +46,8 @@ Rectangle
     {
         var target = cellAt(row, col)
         target.occupiedBy = actor;
+        if (actor == null || actor == undefined)
+            return;
         target.occupiedBy.x = target.x + gameField.x;
         target.occupiedBy.y = target.y + gameField.y;
         target.occupiedBy.width = target.width;

@@ -1,32 +1,47 @@
-function logCurrentWidth()
+var factoryLoaded = false
+var gameFieldLoaded = false
+var playerLoaded = false
+var enemyLoaded = false
+var attackBarLoaded = false
+
+var playersInitialized = false
+
+function componentIsLoaded()
 {
-    console.log("width : " + width);
+    if (factoryLoaded && gameFieldLoaded && playerLoaded && enemyLoaded && !playersInitialized)
+        initPlayers();
+    if (playersInitialized && attackBarLoaded)
+        generator.start();
+}
+
+function initPlayers()
+{
+    initTestPlayer();
+    initTestEnemy();
+    playersInitialized = true;
 }
 
 function initTestPlayer()
 {
-    player.isEnemy = false;
     console.debug("creating player")
     for (var i = 0; i < player.maxUnitCount; i++)
     {
         var actor = factory.createActor(0, player);
         player.buyNewUnit(actor, 1);
-        gameField.occupyCell(player.playerUnits[i], i + 1, 0);
-        player.playerUnits[i].curRow = i + 1;
-        player.playerUnits[i].curCol = 0;
+
+        gamefield.occupyCell(player.playerUnits[i], i + 1, 0);
     }
+    player.turnFinished.connect(generator.nextPlayerTurn);
 }
 
 function initTestEnemy()
 {
     console.debug("creating enemy")
-    enemy.isEnemy = true
-    for (var i = 0; i < enemy.maxUnitCount; i++)
+    for (var i = 1; i < enemy.maxUnitCount; i++)
     {
         var actor = factory.createActor(0, enemy);
         enemy.buyNewUnit(actor, 1);
-        gameField.occupyCell(enemy.playerUnits[i], i + 1, gameField.columns - 1);
-        enemy.playerUnits[i].curRow = i + 1;
-        enemy.playerUnits[i].curCol = gameField.columns - 1;
+        gamefield.occupyCell(enemy.playerUnits[i - 1], i + 1, gamefield.columns - 1);
     }
+    player.turnFinished.connect(generator.nextPlayerTurn);
 }
