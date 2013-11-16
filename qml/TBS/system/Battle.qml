@@ -2,12 +2,12 @@ import QtQuick 2.0
 import "../players"
 import "../actors"
 import "../environment"
-//import "initPlayers.js" as Init
-import "Init.js" as Init
+import "initPlayers.js" as Init
+import "turnManager.js" as TurnManager
 
 Item
 {
-    property var players : Array
+    property var players : []
 
     property int curPlayer: 0
     property int curUnit: 0
@@ -37,98 +37,7 @@ Item
         {
             rowClicked = row
             colClicked = col
-            if (attackMenu.moveButtonChosen)
-            {
-                if (cellAt(rowClicked, colClicked).isEmpty && cellAt(rowClicked, colClicked).highlighted)
-                {
-                    var tempRow = players[curPlayer].playerUnits[curUnit].curRow
-                    var tempCol = players[curPlayer].playerUnits[curUnit].curCol
-                    gameField.highlightPossibleCells(players[curPlayer].playerUnits[curUnit].curRow
-                                                     , players[curPlayer].playerUnits[curUnit].curCol
-                                                     , false);
-                    occupyCell(players[curPlayer].playerUnits[curUnit], rowClicked, colClicked)
-                    players[curPlayer].playerUnits[curUnit].curRow = rowClicked
-                    players[curPlayer].playerUnits[curUnit].curCol = colClicked
-
-                    clearCell(tempRow, tempCol)
-
-                    attackMenu.moveButtonChosen = false
-
-                    var horizOffset = Math.abs(tempCol - colClicked);
-                    var vertOffset = Math.abs(tempRow - rowClicked);
-                    players[curPlayer].playerUnits[curUnit].movingRangeLeft -= horizOffset + vertOffset;
-
-                    if (players[curPlayer].playerUnits[curUnit].movingRangeLeft > 0)
-                    {
-                        unitTurn();
-                    }
-                    else
-                    {
-                        players[curPlayer].playerUnits[curUnit].movingRangeLeft =
-                                players[curPlayer].playerUnits[curUnit].movingRange;
-                        nextUnit();
-                    }
-                }
-                else
-                {
-
-                }
-            }
-            if (attackMenu.prAttackButtonChosen) //для дебага атакуют своих. Заменить потом, где надо curPlayer на 1 - curPlayer
-            {//реализовать обход препятствий
-                if (!cellAt(rowClicked, colClicked).isEmpty)
-                {
-
-                    var horizOffset1 = Math.abs(players[curPlayer].playerUnits[curUnit].curCol - colClicked);
-                    var vertOffset1 = Math.abs(players[curPlayer].playerUnits[curUnit].curRow - rowClicked);
-                    if (horizOffset1 + vertOffset1 <= players[curPlayer].playerUnits[curUnit].primaryAttackRange)
-                    {
-                        gameField.highlightPossibleCells(players[curPlayer].playerUnits[curUnit].curRow
-                                                         , players[curPlayer].playerUnits[curUnit].curCol
-                                                         , false);
-
-                        attackMenu.prAttackButtonChosen = false;
-
-                        for (var i = 0; i < players[curPlayer].unitCount; i++)
-                        {
-                            if (rowClicked == players[curPlayer].playerUnits[i].curRow &&
-                                    colClicked == players[curPlayer].playerUnits[i].curCol)
-                            {
-                                console.debug("pad" + players[curPlayer].playerUnits[curUnit].primaryAttackDamage)
-                                console.debug("hp" +  players[curPlayer].playerUnits[i].averageHealth)
-                                players[curPlayer].playerUnits[i].hurt(
-                                            players[curPlayer].playerUnits[curUnit].primaryAttackDamage);
-                                if (players[curPlayer].playerUnits[i].averageHealth <= 0)
-                                {
-                                    clearCell(players[curPlayer].playerUnits[i].curRow,
-                                              players[curPlayer].playerUnits[i].curCol)
-                                    for (var j = i; j < players[curPlayer].unitCount - 1; j++)
-                                    {
-                                        players[curPlayer].playerUnits[j] = players[curPlayer].playerUnits[j + 1]
-                                    }
-                                    players[curPlayer].unitCount--
-                                }
-
-                                console.debug("hp" +  players[curPlayer].playerUnits[i].averageHealth)
-                                break;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        unitTurn();
-                    }
-
-                    players[curPlayer].playerUnits[curUnit].movingRangeLeft =
-                            players[curPlayer].playerUnits[curUnit].movingRange;
-                    nextUnit();
-
-                }
-                else
-                {
-                    unitTurn();
-                }
-            }
+            TurnManager.makeTurn(rowClicked, colClicked) //или стоит передать инфу выше?
         }
     }
     AttackBar
@@ -152,6 +61,7 @@ Item
         onSdAttackButtonClicked:
         {
             disableAttackBar()
+            sdAttackButtonChosen = true;
         }
         onSkipButtonClicked:
         {
@@ -160,27 +70,13 @@ Item
             gameField.highlightPossibleCells(players[curPlayer].playerUnits[curUnit].curRow
                                              , players[curPlayer].playerUnits[curUnit].curCol
                                              , false);
-            players[curPlayer].playerUnits[curUnit].movingRangeLeft = players[curPlayer].playerUnits[curUnit].movingRange
+            players[curPlayer].playerUnits[curUnit].movingRangeLeft
+                    = players[curPlayer].playerUnits[curUnit].movingRange
             nextUnit(curPlayer, curUnit);
 
         }
     }
 
-    /*Player
-    {
-        id : player
-        money : 100000
-        commanderSkillPoints: 100500
-        //isEnemy: false
-    }
-    Player // need to use files
-    {
-        id : enemy
-        money : 100000
-        commanderSkillPoints: 100500
-        //isEnemy: true
-
-    }*/
     HumanPlayer
     {
         id : player
@@ -196,23 +92,12 @@ Item
 
     Component.onCompleted :
     {
-        //Init.createUnits(player);
-        /*Init.createUnits(enemy);
-        Init.createUnits(player);*/
-        Init.initTestEnemy()
-        Init.initTestPlayer()
+
+        Init.createUnits(enemy);
+        Init.createUnits(player);
 
         playersReady();
     }
-
-    /*function playerReady()
-    {
-        numPlayersReady++;
-        if (numPlayersReady == 2)
-        {
-            playersReady();
-        }
-    }*/
 
     function playersReady()
     {
@@ -227,8 +112,6 @@ Item
         gameField.highlightPossibleCells(players[curPlayer].playerUnits[curUnit].curRow
                                          , players[curPlayer].playerUnits[curUnit].curCol
                                          , true);
-
-        //console.debug(players[curPlayer].playerUnits[curUnit].curRow + ";" + players[curPlayer].playerUnits[curUnit].curCol);
         //обрабатываем хренотень с бара
     }
 
@@ -238,24 +121,13 @@ Item
         if (curUnit < players[curPlayer].unitCount - 1)
         {
             ++curUnit
-            /*console.debug("changing units")
-            console.debug("cu" + curUnit)
-            console.debug("cp" + curPlayer)
-            console.debug(players[curPlayer].playerUnits[curUnit].curRow +";"+ players[curPlayer].playerUnits[curUnit].curCol)
-*/
             unitTurn();
         }
         else
         {
             curPlayer = 1 - curPlayer
-            /*console.debug("changing players")
-            console.debug("cu" + curUnit)
-            console.debug("cp" + curPlayer)
-            console.debug(players[curPlayer].isEnemy)*/
             curUnit = 0
             unitTurn();
         }
     }
-
-
 }

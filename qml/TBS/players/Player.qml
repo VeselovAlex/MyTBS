@@ -3,13 +3,11 @@ import "../system"
 //Основной класс для всех игроков
 Item
 {
-    //id : player
     property bool isEnemy
     property var playerUnits : []
-    //property list playerUnits : []
     readonly property int maxUnitCount : 5
     property int unitCount : 0
-    //property QtObject gameBelongsTo : parent
+    property QtObject gameBelongsTo : parent
 
     property int money : 0
     property int level : 0
@@ -18,8 +16,6 @@ Item
     property int commanderSkillPoints : 0 //Устанавливает максимальное кол-во юнитов в подчинении пользователя
     property int commanderSPSpent : 0
     property int commanderSPLeft : commanderSkillPoints - commanderSPSpent
-
-    //signal initRequest(var isItEnemy);
 
     function buyNewUnit(unit, numberToBy)
     {
@@ -49,9 +45,6 @@ Item
 
         }
     }
-
-
-    //Component.onCompleted: initRequest(isEnemy);
 
 }
 

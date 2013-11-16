@@ -3,13 +3,13 @@ import QtQuick 2.0
 Actor
 {
     id : swordsman
-    health : 2
-    armor : 1
+    maxHp : 150
+    armor : 12
 
     attackMultiplier : 1.2
     defenceMultiplier : 1.5
 
-    movingRange : 2
+    movingRange : 5
 
     primaryAttackRange : 2
     primaryAttackDamage : 30

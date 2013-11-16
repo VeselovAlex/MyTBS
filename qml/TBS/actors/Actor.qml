@@ -10,7 +10,8 @@ Item
     //property Player belongsTo : parent
     property bool belongsToEnemy : false
 
-    property int health
+    property int maxHp
+    property int health : maxHp
     property int armor
 
     property real attackMultiplier : 1.0
@@ -34,6 +35,16 @@ Item
 
     property int curRow : 0
     property int curCol : 0
+
+    HealthBar
+    {
+        id: healthBar
+        visible: true
+    }
+    function changeHpInfo()
+    {
+        healthBar.changeHpInfo(maxHp * count, averageHealth)
+    }
 
     //Спрайты для анимации
     property Sprite idleSprite
