@@ -32,11 +32,4 @@ Item
         anchors.right: parent.right
     }
 
-   /*LikeButton
-    {
-        id : like
-        width : 50
-        anchors.right: closeBtn.left
-    }*/
-
 }
