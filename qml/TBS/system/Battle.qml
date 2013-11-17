@@ -32,9 +32,9 @@ Item
         id : gamefield
         rows: 7
         columns : 10
-        cellSide: 80
-        x : Math.round((parent.width - cellSide * columns) / 2)
-        y : Math.round((parent.height - cellSide * rows) / 2)
+        cellSide: 100
+        x : Math.round((battle.width - cellSide * columns) / 2)
+        y : Math.round((battle.height - cellSide * rows) / 2)
         onCellClicked:
         {
             if (Turns.cellCoordsRequired)
@@ -54,12 +54,17 @@ Item
 
         Component.onCompleted:
         {
+            console.log("Gamefield :" + gamefield.x + ";" + gamefield.y);
             Turns.currentGameField = gamefield;
             cellCoords.connect(Turns.moveActorTo);
             target.connect(Turns.attackActor);
             Init.gameFieldLoaded = true;
             //console.log(Init.gameFieldLoaded ? "gamefield completed!" : "");
             Init.componentIsLoaded();
+        }
+        Component.onDestruction:
+        {
+            Turns.disconnectAttackBar();
         }
     }
 
@@ -76,93 +81,6 @@ Item
             Init.componentIsLoaded();
         }
     }
-    /*GameField
-    {
-
-        z: 0
-        x : Math.round((parent.width - cellSide * columns) / 2)
-        y : Math.round((parent.height - cellSide * rows) / 2)
-
-        id : gameField
-        rows: 7
-        columns : 10
-        cellSide: 80
-        property var previousHighlighted : null
-
-        /*onCellClicked:
-        {
-            rowClicked = row
-            colClicked = col
-            if (attackMenu.moveButtonChosen)
-            {
-                if (cellAt(rowClicked, colClicked).isEmpty && cellAt(rowClicked, colClicked).highlighted)
-                {
-                    var tempRow = players[curPlayer].playerUnits[curUnit].curRow
-                    var tempCol = players[curPlayer].playerUnits[curUnit].curCol
-                    gameField.highlightPossibleCells(players[curPlayer].playerUnits[curUnit].curRow
-                                                     , players[curPlayer].playerUnits[curUnit].curCol
-                                                     , false);
-                    occupyCell(players[curPlayer].playerUnits[curUnit], rowClicked, colClicked)
-                    players[curPlayer].playerUnits[curUnit].curRow = rowClicked
-                    players[curPlayer].playerUnits[curUnit].curCol = colClicked
-
-                    clearCell(tempRow, tempCol)
-
-                    attackMenu.moveButtonChosen = false
-
-                    var horizOffset = Math.abs(tempCol - colClicked);
-                    var vertOffset = Math.abs(tempRow - rowClicked);
-                    players[curPlayer].playerUnits[curUnit].movingRangeLeft -= horizOffset + vertOffset;
-
-                    if (players[curPlayer].playerUnits[curUnit].movingRangeLeft > 0)
-                    {
-                        unitTurn();
-                    }
-                    else
-                    {
-                        players[curPlayer].playerUnits[curUnit].movingRangeLeft =
-                                players[curPlayer].playerUnits[curUnit].movingRange;
-                        nextUnit();
-                    }
-                }
-                else
-                {
-
-                }
-            }
-        }
-    }
-    AttackBar
-    {
-        id : attackMenu
-        width : gameField.cellSide * 1.5
-        anchors.left: parent.left
-        enabled: false
-        visible: false
-        onMoveButtonClicked:
-        {
-            disableAttackBar()
-            moveButtonChosen = true;
-
-        }
-        onPrAttackButtonClicked:
-        {
-            disableAttackBar()
-        }
-        onSdAttackButtonClicked:
-        {
-            disableAttackBar()
-        }
-        onSkipButtonClicked:
-        {
-            disableAttackBar();
-            gameField.highlightPossibleCells(players[curPlayer].playerUnits[curUnit].curRow
-                                             , players[curPlayer].playerUnits[curUnit].curCol
-                                             , false);
-            nextUnit(curPlayer, curUnit);
-        }
-    }*/
-
 
     Player
     {
@@ -175,6 +93,11 @@ Item
             Init.playerLoaded = true;
             Init.componentIsLoaded();
             //console.log(Init.playerLoaded ? "player completed!" : "");
+        }
+        Component.onDestruction:
+        {
+            Turns.disconnectAttackBar();
+            console.log("GF destruct");
         }
     }
 
@@ -190,6 +113,11 @@ Item
             Init.componentIsLoaded();
             //console.log(Init.enemyLoaded ? "enemy completed!" : "");
         }
+        Component.onDestruction:
+        {
+            Turns.disconnectAttackBar();
+            console.log("GF destruct");
+        }
     }
 
     TurnGenerator
@@ -200,7 +128,7 @@ Item
 
     Component.onCompleted:
     {
-        //console.log("battle loaded");
+        console.log("Battle width, height :" + battle.width + " " + battle.height);
     }
 
 }

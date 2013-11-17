@@ -1,25 +1,41 @@
 import QtQuick 2.0
+import QtQuick.Window 2.0
+import "environment"
 import "environment/buttons"
 import "system"
 
 Item
 {
-    width: 1200
-    height: 700
+    width: 1920
+    height: 1080
 
-    Image
+    readonly property url battleScreenPath : "environment/BattleScreen.qml"
+    readonly property url startScreenPath  : "environment/StartScreen.qml"
+
+    StartScreen
     {
-        anchors.fill: parent
-        source : "qrc:/images/res/woodBg.png"
+        id : startScreen
+        width: Screen.width
+        height : Screen.height
+        onPlayBtnClicked:
+        {
+            battleScreen.setSource(battleScreenPath);
+            visible = false;
+        }
     }
 
-
-    Battle
+    Loader
     {
-        id : battle
-        width : parent.width
-        height : parent.height
-        anchors.centerIn: parent
+        id : battleScreen
+        width: Screen.width
+        height: Screen.height
+    }
+
+    focus: true;
+    Keys.onEscapePressed: //Временно, пока нет соотв. кнопки
+    {
+        battleScreen.setSource("")
+        startScreen.visible = true;
     }
 
     CloseButton
@@ -29,11 +45,6 @@ Item
         anchors.right: parent.right
     }
 
-   /*LikeButton
-    {
-        id : like
-        width : 50
-        anchors.right: closeBtn.left
-    }*/
 
+    Component.onCompleted: console.debug(width + "x" + height)
 }
