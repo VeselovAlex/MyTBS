@@ -24,7 +24,7 @@ QtObject
 
     function start()
     {
-        console.debug("ololo");
+        //console.debug("ololo");
         nextPlayerTurn();
     }
 }

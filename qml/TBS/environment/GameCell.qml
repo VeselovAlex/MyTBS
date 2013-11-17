@@ -19,7 +19,7 @@ Rectangle
 
     property Actor occupiedBy: null
 
-    onOccupiedByChanged: {isEmpty = (occupiedBy == null); console.log(cellRow + " " + cellCol + (isEmpty ? "Empty" : "Occupied"))}
+    onOccupiedByChanged: isEmpty = (occupiedBy == null);
     onHighlightedChanged: color = (highlighted) ? highlightColor : "transparent";
 
     signal buttonClicked

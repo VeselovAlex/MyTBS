@@ -32,7 +32,7 @@ Item
 
             abstractPlayer.money -= count * unit.moneyCosts;
             abstractPlayer.commanderSPSpent += count * unit.spCosts;
-            playerUnits[unitCount] = unit;
+            abstractPlayer.playerUnits[unitCount] = unit;
             unitCount++;
         }
     }
@@ -54,7 +54,8 @@ Item
     {
         console.log((isEnemy ? "Enemy" : "Player") + " turns");
         PlayerTurns.currentPlayer = abstractPlayer;
-        PlayerTurns.askForTurn();
+        PlayerTurns.currentUnitIdx = 0;
+        PlayerTurns.nextUnitTurn();
     }
 }
 

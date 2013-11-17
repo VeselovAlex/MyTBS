@@ -1,5 +1,5 @@
 import QtQuick 2.0
-//import "../actors"
+import "../actors"
 
 Rectangle
 {
@@ -10,7 +10,7 @@ Rectangle
 
     signal cellClicked(int row, int col);
     signal cellCoords(int X, int Y);
-    //signal target(Actor actor); Нужно для реализации атаки
+    signal target(Actor actor);
 
     color : "transparent"
 

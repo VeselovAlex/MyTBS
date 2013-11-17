@@ -23,7 +23,7 @@ function initPlayers()
 
 function initTestPlayer()
 {
-    console.debug("creating player")
+    //console.debug("creating player")
     for (var i = 0; i < player.maxUnitCount; i++)
     {
         var actor = factory.createActor(0, player);
@@ -36,12 +36,12 @@ function initTestPlayer()
 
 function initTestEnemy()
 {
-    console.debug("creating enemy")
+    //console.debug("creating enemy")
     for (var i = 1; i < enemy.maxUnitCount; i++)
     {
         var actor = factory.createActor(0, enemy);
         enemy.buyNewUnit(actor, 1);
         gamefield.occupyCell(enemy.playerUnits[i - 1], i + 1, gamefield.columns - 1);
     }
-    player.turnFinished.connect(generator.nextPlayerTurn);
+    enemy.turnFinished.connect(generator.nextPlayerTurn);
 }
