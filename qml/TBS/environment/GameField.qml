@@ -10,7 +10,7 @@ Rectangle
 
     signal cellClicked(int row, int col);
     signal cellCoords(int X, int Y);
-    signal target(Actor actor);
+    signal target(var actor);
 
     color : "transparent"
 
@@ -30,7 +30,7 @@ Rectangle
                 width: gameField.cellSide
                 cellCol: index % gameField.columns
                 cellRow: Math.floor(index / gameField.columns)
-                onButtonClicked: gameField.cellClicked(cellRow,cellCol);
+                onButtonClicked: gameField.cellClicked(cellRow, cellCol);
             }
         }
     }

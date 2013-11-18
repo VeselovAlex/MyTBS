@@ -65,7 +65,7 @@ Item
     AttackBar
     {
         id : attackBar
-        width: 240
+        width: 120
         Component.onCompleted:
         {
             disableAttackBar();
@@ -148,7 +148,7 @@ Item
         }
     }
 
-    Player
+    EnemyPlayer
     {
         id : enemy
         money : 100000

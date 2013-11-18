@@ -18,8 +18,15 @@ Item
     property int commanderSPSpent : 0
     property int commanderSPLeft : commanderSkillPoints - commanderSPSpent
 
-
     signal turnFinished
+
+    function createConnection()
+    {
+        for (var i = 0; i < unitCount; i++)
+        {
+            playerUnits[i].died.connect(PlayerTurns.unitDied);
+        }
+    }
 
     function buyNewUnit(unit, numberToBy)
     {
@@ -57,5 +64,6 @@ Item
         PlayerTurns.currentUnitIdx = 0;
         PlayerTurns.nextUnitTurn();
     }
+
 }
 

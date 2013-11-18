@@ -9,7 +9,7 @@ Actor
     attackMultiplier : 1.2
     defenceMultiplier : 1.5
 
-    movingRange : 5
+    movingRange : 2
 
     primaryAttackRange : 2
     primaryAttackDamage : 30
