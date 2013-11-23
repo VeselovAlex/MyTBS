@@ -5,7 +5,6 @@ Actor
     id : swordsman
 
     type : "Swordsman"
-    health : 150
     maxHp : 150
     armor : 12
 

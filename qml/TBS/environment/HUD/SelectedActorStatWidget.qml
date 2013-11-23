@@ -56,7 +56,7 @@ Item
               "<br><b>Health:</b> " + selected.health + "/" + selected.averageHealth +
               "<br><b>Armor:</b> " + selected.armor + "/" + selected.averageArmor +
               "<br><b>Cost:</b> " + selected.moneyCosts + "$/" + selected.spCosts + " cp" +
-              "<br><b>Attack:</b> " + selected.primaryAtackDamage + "/" + selected.secondaryAtackDamage
+              "<br><b>Attack:</b> " + selected.primaryAttackDamage + "/" + selected.secondaryAttackDamage
 
     }
 
