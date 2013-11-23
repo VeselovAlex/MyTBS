@@ -105,14 +105,12 @@ function attackActor(actor)
 
 }
 
-
-
 var currentUnitIdx
-function nextUnitTurn() // при переключение на игрока с 0 юнитов падает
+function nextUnitTurn()
 {
-
-
     //console.log("currentUnitIdx: " + currentUnitIdx);
+    if (currentPlayer.unitCount == 0) // чтобы не падало. переделать!
+        return;
     if (currentUnitIdx >= currentPlayer.unitCount)
     {
         currentPlayer.turnFinished();
@@ -165,12 +163,12 @@ function occupyCellAt(actor, X, Y)
 
 function enableHighLight(row, col)
 {
-    currentGameField.highlightPossibleCells(row, col, true);
+    currentGameField.highlightPossibleCells(row, col, currentActor.movingRange, true);
 }
 
 function disableHighLigh(row, col)
 {
-    currentGameField.highlightPossibleCells(row, col, false);
+    currentGameField.highlightPossibleCells(row, col, currentActor.movingRange, false);
 }
 
 function getActorsRow()

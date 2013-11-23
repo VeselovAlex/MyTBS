@@ -46,6 +46,19 @@ Item
 
     signal died(var actor);
 
+    /*SequentialAnimation
+    {
+        property NumberAnimation moveX : {
+            target : actor;
+            property : "x";
+        }
+
+        property NumberAnimation moveY : {
+            target : actor;
+            property : "y";
+        }
+    }*/
+
     SpriteSequence
     {
         id : sprite
@@ -99,5 +112,6 @@ Item
         //sprite.jumpTo(secondaryAttackSprite.name);
         target.hurt(secondaryAttackDamage * attackMultiplier);
     }
+
 
 }
