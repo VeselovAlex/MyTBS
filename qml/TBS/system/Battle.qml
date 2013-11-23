@@ -148,8 +148,8 @@ Item
         }
     }
 
-    //EnemyPlayer
-    ComputerPlayer
+    EnemyPlayer
+    //ComputerPlayer
     {
         id : enemy
         money : 100000
