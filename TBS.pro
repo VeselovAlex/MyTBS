@@ -24,7 +24,10 @@ qtcAddDeployment()
 OTHER_FILES += \
     qml/TBS/actors/Swordsman.qml \
     qml/TBS/players/Player.qml \
-    qml/TBS/environment/buttons/AttackBarButton.qml
+    qml/TBS/environment/buttons/AttackBarButton.qml \
+    qml/TBS/environment/buttons/ScreenButton.qml
 
 RESOURCES += \
     res.qrc
+
+HEADERS +=

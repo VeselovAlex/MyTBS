@@ -1,24 +1,10 @@
 import QtQuick 2.0
 
-Rectangle
+ScreenButton
 {
     id : exitButton
-    width: 50
-    height: width
-    color: "transparent"
+    width: 200
 
-    Image
-    {
-        anchors.fill: parent
-        source: "qrc:/images/buttons/res/exitButton.png"
-    }
-
-    MouseArea
-    {
-        hoverEnabled: true
-        anchors.fill: parent
-        onHoveredChanged: parent.color = containsMouse ? "#40C0C0C0" : "transparent"
-        //цвет - "#OORRGGBB", где OO - прозрачность
-        onClicked: Qt.quit();
-    }
+    text : "Quit"
+    onClicked: Qt.quit();
 }

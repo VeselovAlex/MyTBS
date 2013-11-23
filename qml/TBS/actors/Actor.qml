@@ -7,6 +7,8 @@ Item
 {
     // При создании parent должен быть обьектом Player
 
+    property string type
+
     property int health
     property int armor
 
@@ -45,6 +47,20 @@ Item
         anchors.fill: parent
         antialiasing: true
         sprites: [idleSprite]//, movingSprite, primaryAtackSprite, secondaryAtackSprite, dyingSprite]
+    }
+    Text
+    {
+        anchors.right: parent.right
+        anchors.bottom:parent.bottom
+        anchors.margins: 3
+        style: Text.Outline
+        styleColor: "white"
+        text: count
+        color : "red"
+        font.bold: true
+        height: parent.height / 4
+        font.pixelSize: height
+        font.family: "Arial"
     }
 
     function hurt(damage)

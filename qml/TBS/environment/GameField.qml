@@ -38,7 +38,6 @@ Rectangle
     function cellAt(row, col)
     {
         var cell = rep.itemAt(row * gameField.columns + col);
-        //cell.buttonClicked();
         return cell;
     }
 
@@ -47,7 +46,12 @@ Rectangle
         var target = cellAt(row, col)
         target.occupiedBy = actor;
         if (actor == null || actor == undefined)
+        {
+            target.occupiedBy = null;
             return;
+        }
+        else
+            target.occupiedBy = actor;
         target.occupiedBy.x = target.x + gameField.x;
         target.occupiedBy.y = target.y + gameField.y;
         target.occupiedBy.width = target.width;

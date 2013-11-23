@@ -12,15 +12,20 @@ Item
     readonly property url battleScreenPath : "environment/BattleScreen.qml"
     readonly property url startScreenPath  : "environment/StartScreen.qml"
 
-    StartScreen
+    Image
+    {
+        anchors.fill: parent
+        source : "qrc:/images/res/woodBg.png"
+    }
+
+    Loader
     {
         id : startScreen
         width: Screen.width
         height : Screen.height
-        onPlayBtnClicked:
+        onLoaded:
         {
-            battleScreen.setSource(battleScreenPath);
-            visible = false;
+            item.playBtnClicked.connect(loadBattleScreen)
         }
     }
 
@@ -29,22 +34,23 @@ Item
         id : battleScreen
         width: Screen.width
         height: Screen.height
+        onLoaded:
+        {
+            item.returnToMenu.connect(loadStartScreen)
+        }
     }
 
-    focus: true;
-    Keys.onEscapePressed: //Временно, пока нет соотв. кнопки
+    function loadStartScreen()
     {
-        battleScreen.setSource("")
-        startScreen.visible = true;
+        battleScreen.setSource("");
+        startScreen.setSource(startScreenPath);
     }
 
-    CloseButton
+    function loadBattleScreen()
     {
-        id : closeBtn
-        width: 50
-        anchors.right: parent.right
+        battleScreen.setSource(battleScreenPath);
+        startScreen.setSource("");
     }
 
-
-    Component.onCompleted: console.debug(width + "x" + height)
+    Component.onCompleted: loadStartScreen();
 }

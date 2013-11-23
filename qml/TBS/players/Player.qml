@@ -52,6 +52,7 @@ Item
     {
         console.log((isEnemy ? "Enemy" : "Player") + " turns");
         PlayerTurns.currentPlayer = abstractPlayer;
+        PlayerTurns.playerStatWgt.update(PlayerTurns.currentPlayer);
         PlayerTurns.currentUnitIdx = 0;
         PlayerTurns.nextUnitTurn();
     }

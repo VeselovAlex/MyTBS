@@ -2,6 +2,7 @@ import QtQuick 2.0
 import "../players"
 import "../actors"
 import "../environment"
+import "../environment/HUD"
 import "Init.js" as Init
 import "Turns.js" as Turns
 
@@ -21,7 +22,6 @@ Item
         Component.onCompleted:
         {
             Init.factoryLoaded = true;
-            //console.log(Init.factoryLoaded ? "factory completed!" : "");
             Init.componentIsLoaded();
         }
 
@@ -34,18 +34,16 @@ Item
         columns : 10
         cellSide: 100
         x : Math.round((battle.width - cellSide * columns) / 2)
-        y : Math.round((battle.height - cellSide * rows) / 2)
+        y : cellSide
         onCellClicked:
         {
             if (Turns.cellCoordsRequired)
             {
-                //console.debug("Cell clicked at " + row + ";" + col);
                 if (cellAt(row, col).isEmpty)
                     gamefield.cellCoords(row, col);
             }
             if (Turns.targetActorRequired)
             {
-                //console.debug(cellAt(row, col).isEmpty ? "Empty" : cellAt(row, col).occupiedBy);
                 var cell = cellAt(row, col);
                 if (!cell.isEmpty)
                     gamefield.target(cell.occupiedBy);
@@ -54,12 +52,10 @@ Item
 
         Component.onCompleted:
         {
-            console.log("Gamefield :" + gamefield.x + ";" + gamefield.y);
             Turns.currentGameField = gamefield;
             cellCoords.connect(Turns.moveActorTo);
             target.connect(Turns.attackActor);
             Init.gameFieldLoaded = true;
-            //console.log(Init.gameFieldLoaded ? "gamefield completed!" : "");
             Init.componentIsLoaded();
         }
         Component.onDestruction:
@@ -77,7 +73,6 @@ Item
             disableAttackBar();
             Turns.attackBar = attackBar
             Init.attackBarLoaded = true;
-            //console.log("AttackBar completed!");
             Init.componentIsLoaded();
         }
     }
@@ -92,12 +87,10 @@ Item
         {
             Init.playerLoaded = true;
             Init.componentIsLoaded();
-            //console.log(Init.playerLoaded ? "player completed!" : "");
         }
         Component.onDestruction:
         {
             Turns.disconnectAttackBar();
-            console.log("GF destruct");
         }
     }
 
@@ -111,12 +104,10 @@ Item
         {
             Init.enemyLoaded = true;
             Init.componentIsLoaded();
-            //console.log(Init.enemyLoaded ? "enemy completed!" : "");
         }
         Component.onDestruction:
         {
             Turns.disconnectAttackBar();
-            console.log("GF destruct");
         }
     }
 
@@ -126,9 +117,26 @@ Item
         players: [player, enemy]
     }
 
-    Component.onCompleted:
+    SelectedActorStatWidget
     {
-        console.log("Battle width, height :" + battle.width + " " + battle.height);
-    }
+        id : actorStatWgt
+        width: 600
+        height: 200
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        anchors.margins: 10
 
+        Component.onCompleted: Turns.actorStatWgt = actorStatWgt
+    }
+    PlayerStatWidget
+    {
+        id : playerStatWgt
+        width: 300
+        height: 200
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.margins: 10
+
+        Component.onCompleted: Turns.playerStatWgt = playerStatWgt
+    }
 }

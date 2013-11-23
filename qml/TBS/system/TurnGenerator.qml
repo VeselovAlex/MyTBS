@@ -7,8 +7,6 @@ QtObject
 
     property int playerCount : players.length
 
-    property bool running: turns < 10//For debug only
-
     property int turns: 0//For debug only
 
     property int firstPlayerIdx : 0
@@ -18,13 +16,10 @@ QtObject
     {
         players[currentTurnPlayer].makeTurn();
         turns++;
-//        if (running)
-//            nextPlayerTurn();
     }
 
     function start()
     {
-        //console.debug("ololo");
         nextPlayerTurn();
     }
 }

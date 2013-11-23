@@ -3,6 +3,7 @@ import QtQuick 2.0
 Actor
 {
     id : swordsman
+    type : "Swordsman"
     health : 150
     armor : 100
 

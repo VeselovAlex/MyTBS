@@ -27,7 +27,10 @@ function initTestPlayer()
     for (var i = 0; i < player.maxUnitCount; i++)
     {
         var actor = factory.createActor(0, player);
-        player.buyNewUnit(actor, 1);
+        player.buyNewUnit(actor, i);
+    }
+    for (var i = 0; i < player.unitCount; i++)
+    {
         gamefield.occupyCell(player.playerUnits[i], i + 1, 0);
     }
     player.turnFinished.connect(generator.nextPlayerTurn);

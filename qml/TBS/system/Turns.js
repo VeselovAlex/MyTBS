@@ -7,6 +7,8 @@ var attackBar
 var currentPlayer
 var currentActor
 var currentGameField
+var actorStatWgt
+var playerStatWgt
 
 
 function askForTurn()
@@ -89,6 +91,7 @@ function nextUnitTurn()
         return;
     }
     currentActor = currentPlayer.playerUnits[currentUnitIdx++];//Если бы не баг, этого говна здесь бы не было
+    actorStatWgt.update(currentActor);
     askForTurn();
 }
 

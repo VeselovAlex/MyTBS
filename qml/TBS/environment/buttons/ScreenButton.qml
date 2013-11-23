@@ -8,6 +8,7 @@ Rectangle {
     border.color : "black"
     border.width: 1
     radius: Math.min(height, width) / 4
+    anchors.margins: 5
 
     gradient: Gradient {
         GradientStop {

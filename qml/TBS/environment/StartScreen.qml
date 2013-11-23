@@ -4,13 +4,8 @@ import "buttons"
 Item
 {
     signal playBtnClicked;
-    Image
-    {
-        id : bgImage
-        source : "qrc:/images/res/woodBg.png"
-        anchors.fill: parent
-    }
-    StartScreenButton
+
+    ScreenButton
     {
         id : playButton
         width : 200
@@ -19,4 +14,11 @@ Item
         onClicked: playBtnClicked();
     }
 
+    CloseButton
+    {
+        id : closeBtn
+        width: 200
+        anchors.top: playButton.bottom
+        anchors.horizontalCenter: playButton.horizontalCenter
+    }
 }
