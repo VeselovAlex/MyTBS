@@ -45,7 +45,7 @@ Item
         battleScreen.setSource("");
         startScreen.setSource(startScreenPath);
     }
-
+	
     function loadBattleScreen()
     {
         battleScreen.setSource(battleScreenPath);
@@ -53,4 +53,5 @@ Item
     }
 
     Component.onCompleted: loadStartScreen();
+
 }

@@ -9,7 +9,6 @@ import "Turns.js" as Turns
 Item
 {
     id : battle
-
     property int curPlayer: 0
     property int curUnit: 0
 
@@ -67,7 +66,7 @@ Item
     AttackBar
     {
         id : attackBar
-        width: 240
+        width: 120
         Component.onCompleted:
         {
             disableAttackBar();
@@ -76,12 +75,13 @@ Item
             Init.componentIsLoaded();
         }
     }
-
-    Player
+	
+    HumanPlayer
     {
         id : player
         money : 100000
         commanderSkillPoints: 100500
+
         isEnemy: false
         Component.onCompleted:
         {
@@ -94,7 +94,8 @@ Item
         }
     }
 
-    Player
+    EnemyPlayer
+    //ComputerPlayer
     {
         id : enemy
         money : 100000

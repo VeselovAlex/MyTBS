@@ -17,7 +17,7 @@ Item
     {
         anchors.fill: parent
         source: "qrc:/images/buttons/res/attackBarBG.png"
-        opacity: 0.5
+        opacity: 0.3
     }
     AttackBarButton
     {

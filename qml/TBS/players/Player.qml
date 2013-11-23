@@ -1,4 +1,5 @@
 import QtQuick 2.0
+
 import "../system/Turns.js" as PlayerTurns
 //Основной класс для всех игроков
 Item
@@ -19,6 +20,14 @@ Item
 
     signal turnFinished
 
+    function createConnection()
+    {
+        for (var i = 0; i < unitCount; i++)
+        {
+            playerUnits[i].died.connect(PlayerTurns.unitDied);
+        }
+    }
+
     function buyNewUnit(unit, numberToBy)
     {
         if ((commanderSPLeft > 0) && (money > 0) && (numberToBy > 0) && (unitCount < maxUnitCount))
@@ -27,6 +36,7 @@ Item
                                  (Math.floor(commanderSPLeft / unit.spCosts)),
                                  numberToBy);
             unit.count = count;
+
             abstractPlayer.money -= count * unit.moneyCosts;
             abstractPlayer.commanderSPSpent += count * unit.spCosts;
             abstractPlayer.playerUnits[unitCount] = unit;
@@ -44,7 +54,6 @@ Item
             playerUnits[unitIdx].count = count;
             abstractPlayer.money -= count * playerUnits[unitIdx].moneyCosts;
             abstractPlayer.commanderSPSpent += count * playerUnits[unitIdx].spCosts;
-
         }
     }
 

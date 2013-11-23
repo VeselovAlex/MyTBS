@@ -10,7 +10,7 @@ Rectangle
 
     signal cellClicked(int row, int col);
     signal cellCoords(int X, int Y);
-    signal target(Actor actor);
+    signal target(var actor);
 
     color : "transparent"
 
@@ -30,7 +30,7 @@ Rectangle
                 width: gameField.cellSide
                 cellCol: index % gameField.columns
                 cellRow: Math.floor(index / gameField.columns)
-                onButtonClicked: gameField.cellClicked(cellRow,cellCol);
+                onButtonClicked: gameField.cellClicked(cellRow, cellCol);
             }
         }
     }
@@ -67,8 +67,38 @@ Rectangle
     {
         cellAt(row, col).occupiedBy.destroy();
     }
+    function highlightPossibleCells(row, col, radius, enabled)
+    {
+        var currentCell = cellAt(row, col);
+        currentCell.highlighted = enabled;
+        if (radius === 0)
+            return;
 
-    function highlightPossibleCells(row, col, enabled)
+        if (row + 1 < gameField.rows && isHighlightable(cellAt(row + 1, col)))
+        {
+            highlightPossibleCells(row + 1, col, radius - 1, enabled);
+        }
+        if (col + 1 < gameField.columns && isHighlightable(cellAt(row, col + 1)))
+        {
+            highlightPossibleCells(row, col + 1, radius - 1, enabled);
+        }
+        if (row > 0  && isHighlightable(cellAt(row - 1, col)))
+        {
+            highlightPossibleCells(row - 1, col, radius - 1, enabled);
+        }
+        if (col > 0 && isHighlightable(cellAt(row, col - 1)))
+        {
+            highlightPossibleCells(row, col - 1, radius - 1, enabled);
+        }
+
+
+    }
+    function isHighlightable(cell)
+    {
+        return cell != null && cell.active && cell.isEmpty
+    }
+
+    /*function highlightPossibleCells(row, col, enabled)
     {
 
         var currentCell = cellAt(row, col);
@@ -97,5 +127,5 @@ Rectangle
             }
         }
         currentCell.highlighted = false;
-    }
+    }*/
 }
