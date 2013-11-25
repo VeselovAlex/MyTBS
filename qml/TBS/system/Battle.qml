@@ -121,8 +121,8 @@ Item
     SelectedActorStatWidget
     {
         id : actorStatWgt
-        width: 600
-        height: 200
+        width: parent.width / 4
+        height: parent.height / 5
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         anchors.margins: 10
@@ -132,8 +132,8 @@ Item
     PlayerStatWidget
     {
         id : playerStatWgt
-        width: 300
-        height: 200
+        width: parent.width / 8
+        height: actorStatWgt.height
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.margins: 10

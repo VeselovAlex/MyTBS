@@ -42,13 +42,13 @@ function moveActorTo(X, Y)
 {
     // Сделать в акторе метод move и переписать этот кусок
     disableHighLigh(currentActorRow, currentActorColumn);
-    occupyCellAt(null, currentActor.x, currentActor.y);
-    currentGameField.occupyCell(currentActor, X, Y);
+    occupyCellAt(null, currentActor.x, currentActor.y, true);
+    currentActor.moveTo(xCoordOf(Y), yCoordOf(X));
+    currentGameField.occupyCell(currentActor, X, Y, true);
     console.debug("Actor moves to " + X + ";" + Y);
     // радиус ходьбы равен 0??
     nextUnitTurn();
 }
-
 
 var primaryAttack = false
 var secondaryAttack = false
@@ -131,6 +131,19 @@ function nextUnitTurn()
     askForTurn();
 }
 
+function xCoordOf(col)
+{
+    var ret = (currentGameField.x + col * currentGameField.cellSide);
+    console.debug(ret);
+    return ret;
+}
+
+function yCoordOf(row)
+{
+    var ret = (currentGameField.y + row * currentGameField.cellSide);
+    console.debug(ret);
+    return ret;
+}
 
 var attackBarConnected = false
 

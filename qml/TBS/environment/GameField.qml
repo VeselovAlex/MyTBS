@@ -41,7 +41,7 @@ Rectangle
         return cell;
     }
 
-    function occupyCell(actor, row, col)
+    function occupyCell(actor, row, col, silent)
     {
         var target = cellAt(row, col)
         target.occupiedBy = actor;
@@ -52,6 +52,8 @@ Rectangle
         }
         else
             target.occupiedBy = actor;
+        if (silent)
+            return;
         target.occupiedBy.x = target.x + gameField.x;
         target.occupiedBy.y = target.y + gameField.y;
         target.occupiedBy.width = target.width;

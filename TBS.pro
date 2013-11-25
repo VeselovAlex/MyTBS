@@ -12,7 +12,8 @@ QML_IMPORT_PATH =
 # MOBILITY +=
 
 # The .cpp file which was generated for your project. Feel free to hack it.
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    sources/gamedatafile.cpp
 
 # Installation path
 # target.path =
@@ -30,4 +31,5 @@ OTHER_FILES += \
 RESOURCES += \
     res.qrc
 
-HEADERS +=
+HEADERS += \
+    sources/gamedatafile.h
