@@ -9,14 +9,14 @@ Item
     // При создании parent должен быть обьектом Player
     // перелопатить все, ибо ИС УГ
     id: actor
-    property int maxHp
-    property int health: maxHp
+    //property int maxHp
+    property int health
     property int armor
 
     property real attackMultiplier: 1.0
     property real defenceMultiplier: 1.0
 
-    property int movingRange//радиус движения
+    property int movingRange //радиус движения
     property int movingRangeLeft : movingRange
 
     property int primaryAttackRange
@@ -32,7 +32,7 @@ Item
     property int averageHealth: health * count
     property int averageArmor: armor * count
 
-    property bool isHealer: false
+    property bool isHealer
     //Спрайты для анимации
     property Sprite idleSprite
     property Sprite movingSprite
@@ -91,7 +91,7 @@ Item
             if (averageHealth < 0)
                 die();
         }
-        healthBar.changeHpInfo(maxHp, averageHealth)
+        healthBar.changeHpInfo(health * count, averageHealth)
     }
 
     function die()

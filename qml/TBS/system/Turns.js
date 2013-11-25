@@ -18,14 +18,18 @@ function askForTurn()
         connectAttackBar();
     attackBar.enableAttackBar(currentActor.x - (attackBar.width  - currentActor.width)  / 2,
                               currentActor.y - (attackBar.height - currentActor.height) / 2);
-    enableHighLight(currentActorRow, currentActorColumn);
-
+    currentActorRow =  getActorsRow(currentActor);
+    currentActorColumn =  getActorsCol(currentActor);
 }
 
 
 function needMove()
 {
     console.debug("Need move")
+    disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.secondaryAttackRange);
+    disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.primaryAttackRange);
+    enableHighLight(currentActorRow, currentActorColumn);
+
     askForCoords();
 }
 
@@ -39,12 +43,20 @@ function askForCoords()
 function moveActorTo(X, Y)
 {
     // Сделать в акторе метод move и переписать этот кусок
-    disableHighLigh(currentActorRow, currentActorColumn);
+    disableHighLight(currentActorRow, currentActorColumn);
     occupyCellAt(null, currentActor.x, currentActor.y);
     currentGameField.occupyCell(currentActor, X, Y);
     console.debug("Actor moves to " + X + ";" + Y);
-    // радиус ходьбы равен 0??
-    nextUnitTurn();
+    cellCoordsRequired = false;
+    currentActor.movingRangeLeft = currentActor.movingRangeLeft - getDistanceTravelled(currentActor);
+    if (currentActor.movingRangeLeft > 0)
+    {
+        askForTurn()
+    }
+    else
+    {
+        nextUnitTurn();
+    }
 }
 
 
@@ -55,6 +67,9 @@ function needPrAttack()
 {
     primaryAttack = true;
     secondaryAttack = false;
+    disableHighLight(currentActorRow, currentActorColumn);
+    disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.secondaryAttackRange);
+    enableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.primaryAttackRange);
     needAttack();
 }
 
@@ -62,6 +77,9 @@ function needSdAttack()
 {
     primaryAttack = false;
     secondaryAttack = true;
+    disableHighLight(currentActorRow, currentActorColumn);
+    disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.primaryAttackRange);
+    enableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.secondaryAttackRange);
     needAttack();
 }
 
@@ -81,36 +99,44 @@ function askForTarget()
 function attackActor(actor)
 {
     console.debug(primaryAttack ? "Primary attack!" : (secondaryAttack ? "Secondary attack!" : "Attack error!"));
-    if (primaryAttack)
+    if (currentGameField.cellAt(getActorsRow(actor), getActorsCol(actor)).highlighted)
     {
-        if (actor.parent != currentPlayer)
+        if (primaryAttack)
         {
-            currentActor.primaryAttack(actor);
-            nextUnitTurn();
+            if (actor.parent != currentPlayer)
+            {
+                currentActor.primaryAttack(actor);
+                disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.primaryAttackRange);
+                primaryAttack = false;
+                nextUnitTurn();
+            }
+        }
+        else if (secondaryAttack)
+        {
+            if (actor.parent != currentPlayer && !currentActor.isHealer)
+            {
+                currentActor.secondaryAttack(actor);
+                disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.secondaryAttackRange);
+                secondaryAttack = false
+                nextUnitTurn();
+            }
+            else if (actor.parent == currentPlayer && currentActor.isHealer)
+            {
+                currentActor.secondaryAttack(actor);
+                disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.secondaryAttackRange);
+                secondaryAttack = false
+                nextUnitTurn();
+            }
         }
     }
-    else if (secondaryAttack)
-    {
-        if (actor.parent != currentPlayer && !currentActor.isHealer)
-        {
-            currentActor.secondaryAttack(actor);
-            nextUnitTurn();
-        }
-        else if (actor.parent == currentPlayer && currentActor.isHealer)
-        {
-            currentActor.secondaryAttack(actor);
-            nextUnitTurn();
-        }
-    }
-
 }
 
-var currentUnitIdx
+var currentUnitIdx = 0
 function nextUnitTurn()
 {
-    //console.log("currentUnitIdx: " + currentUnitIdx);
     if (currentPlayer.unitCount == 0) // чтобы не падало. переделать!
         return;
+
     if (currentUnitIdx >= currentPlayer.unitCount)
     {
         currentPlayer.turnFinished();
@@ -118,16 +144,14 @@ function nextUnitTurn()
     }
     if (currentActorRow != null && currentActorColumn != null) // disable highlight after skipping turn
     {
-        disableHighLigh(currentActorRow, currentActorColumn);
+        disableHighLight(currentActorRow, currentActorColumn);
     }
-
     currentActor = currentPlayer.playerUnits[currentUnitIdx++];//Если бы не баг, этого говна здесь бы не было
-    currentActorRow =  getActorsRow();
-    currentActorColumn =  getActorsCol();
+    currentActor.movingRangeLeft = currentActor.movingRange
+
 
     askForTurn();
 }
-
 
 var attackBarConnected = false
 
@@ -163,32 +187,46 @@ function occupyCellAt(actor, X, Y)
 
 function enableHighLight(row, col)
 {
-    currentGameField.highlightPossibleCells(row, col, currentActor.movingRange, true);
+    currentGameField.highlightPossibleCells(row, col, currentActor.movingRangeLeft, true);
 }
 
-function disableHighLigh(row, col)
+function disableHighLight(row, col)
 {
-    currentGameField.highlightPossibleCells(row, col, currentActor.movingRange, false);
+    currentGameField.highlightPossibleCells(row, col, currentActor.movingRangeLeft, false);
 }
 
-function getActorsRow()
+function enableHighLightForAttack(row, col, radius)
 {
-    return Math.floor((currentActor.y - currentGameField.y) / currentGameField.cellSide);
+    currentGameField.highLightCellsForAttack(row, col, radius, true);
 }
 
-function getActorsCol()
+function disableHighLightForAttack(row, col, radius)
 {
-    return Math.floor((currentActor.x - currentGameField.x) / currentGameField.cellSide);
+    currentGameField.highLightCellsForAttack(row, col, radius, false);
 }
 
-function unitDied(actor) //подебажить
+function getActorsRow(actor)
+{
+    return Math.floor((actor.y - currentGameField.y) / currentGameField.cellSide);
+}
+
+function getActorsCol(actor)
+{
+    return Math.floor((actor.x - currentGameField.x) / currentGameField.cellSide);
+}
+
+function getDistanceTravelled(actor)
+{
+    return (Math.abs(currentActorColumn - getActorsCol(actor)) + Math.abs(currentActorRow - getActorsRow(actor)));
+}
+
+function unitDied(actor)
 {
     actor.parent.unitCount--;
     for (var i = 0; i < actor.parent.unitCount; i++)
     {
         if (actor.parent.playerUnits[i] == actor)
         {
-            console.debug("OLOLO")
             for (var j = i; j < actor.parent.unitCount; j++)
             {
                 actor.parent.playerUnits[j] = actor.parent.playerUnits[j + 1];

@@ -63,11 +63,12 @@ Rectangle
     {
         cellAt(row, col).occupiedBy.destroy();
     }
-    function highlightPossibleCells(row, col, radius, enabled)
+    function highlightPossibleCells(row, col, radius, enabled) // for moving
     {
         var currentCell = cellAt(row, col);
+        currentCell.highlightColor = "#77AAFFAA"
         currentCell.highlighted = enabled;
-        if (radius === 0)
+        if (radius <= 0)
             return;
 
         if (row + 1 < gameField.rows && isHighlightable(cellAt(row + 1, col)))
@@ -86,12 +87,58 @@ Rectangle
         {
             highlightPossibleCells(row, col - 1, radius - 1, enabled);
         }
-
-
     }
     function isHighlightable(cell)
     {
         return cell != null && cell.active && cell.isEmpty
+    }
+
+    function highLightCellsForAttack(row, col, radius, enabled)
+    {
+        var currentCell = cellAt(row, col);
+        if (currentCell == null || !currentCell.active || currentCell.isEmpty)
+            return;
+
+
+        if (radius == 0)
+            return;
+
+        for (var i = - radius; i <= radius; i++)
+        {
+            if (i + col < 0)
+                continue;
+            if (i + col >= gameField.columns)
+                break;
+            for (var  j = Math.abs(i) - radius; j <= radius - Math.abs(i); j++)
+            {
+                if (j + row < 0)
+                    continue;
+                if (j + row >= gameField.rows)
+                    break;
+                var cell = cellAt(j + row, i + col);
+                if (cell.active)
+                {
+                    if (!currentCell.occupiedBy.isHealer && (cell.isEmpty || currentCell.occupiedBy.parent !== cell.occupiedBy.parent))
+                    {
+                        cell.highlightColor = "#77FFAAAA";
+                        cell.highlighted = enabled;
+                    }
+                    else if (currentCell.occupiedBy.isHealer && (cell.isEmpty || currentCell.occupiedBy.parent === cell.occupiedBy.parent))
+                    {
+                        cell.highlightColor = "#77AAFFAA";
+                        cell.highlighted = enabled;
+                    }
+                }
+            }
+        }
+        if (currentCell.occupiedBy.isHealer)
+        {
+            currentCell.highlighted = true;
+        }
+        else
+        {
+            currentCell.highlighted = false;
+        }
     }
 
     /*function highlightPossibleCells(row, col, enabled)
