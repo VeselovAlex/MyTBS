@@ -3,8 +3,9 @@ import QtQuick 2.0
 Actor
 {
     id : swordsman
-    //maxHp : 150
+
     health : 150
+    type : "Swordsman"
     armor : 12
 
     attackMultiplier : 1.2

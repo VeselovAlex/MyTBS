@@ -12,7 +12,8 @@ QML_IMPORT_PATH =
 # MOBILITY +=
 
 # The .cpp file which was generated for your project. Feel free to hack it.
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    sources/gamedatafile.cpp
 
 # Installation path
 # target.path =
@@ -24,7 +25,11 @@ qtcAddDeployment()
 OTHER_FILES += \
     qml/TBS/actors/Swordsman.qml \
     qml/TBS/players/Player.qml \
-    qml/TBS/environment/buttons/AttackBarButton.qml
+    qml/TBS/environment/buttons/AttackBarButton.qml \
+    qml/TBS/environment/buttons/ScreenButton.qml
 
 RESOURCES += \
     res.qrc
+
+HEADERS += \
+    sources/gamedatafile.h

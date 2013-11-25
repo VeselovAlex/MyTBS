@@ -7,10 +7,12 @@ import "../environment/HUD"
 Item
 {
     // При создании parent должен быть обьектом Player
+
+    property string type
     // перелопатить все, ибо ИС УГ
     id: actor
-    //property int maxHp
     property int health
+
     property int armor
 
     property real attackMultiplier: 1.0
@@ -46,18 +48,28 @@ Item
 
     signal died(var actor);
 
-    /*SequentialAnimation
+    SequentialAnimation
     {
-        property NumberAnimation moveX : {
+        running: false;
+        id : moveAnimation
+        NumberAnimation
+        {
+            id : horizontalAnimation
             target : actor;
             property : "x";
+            duration: 1000
+            easing.type: Easing.InOutQuad
         }
 
-        property NumberAnimation moveY : {
+        NumberAnimation
+        {
+            id : verticalAnimation
             target : actor;
             property : "y";
+            duration: 1000
+            easing.type: Easing.InOutQuad
         }
-    }*/
+    }
 
     SpriteSequence
     {
@@ -72,8 +84,30 @@ Item
         id: healthBar
     }
 
+    Text
+    {
+        anchors.right: parent.right
+        anchors.bottom:parent.bottom
+        anchors.margins: 3
+        style: Text.Outline
+        styleColor: "white"
+        text: count
+        color : "red"
+        font.bold: true
+        height: parent.height / 4
+        font.pixelSize: height
+        font.family: "Arial"
+    }
+
+    BlowUpMsg
+    {
+        id : msg
+        startX : actor.x + actor.width * 2
+        startY : actor.y;
+    }
     function hurt(damage)
     {
+        msg.showMsg(damage.toString(), "#FFFF0000");
         if (averageArmor > 0)
         {
             averageArmor -= Math.round(defenceMultiplier * damage);
@@ -113,5 +147,11 @@ Item
         target.hurt(secondaryAttackDamage * attackMultiplier);
     }
 
+    function moveTo(X, Y)
+    {
+        horizontalAnimation.to = X;
+        verticalAnimation.to = Y;
+        moveAnimation.running = true;
+    }
 
 }

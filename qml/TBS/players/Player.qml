@@ -1,5 +1,5 @@
 import QtQuick 2.0
-
+import DataFile 1.0
 import "../system/Turns.js" as PlayerTurns
 //Основной класс для всех игроков
 Item
@@ -18,7 +18,21 @@ Item
     property int commanderSPSpent : 0
     property int commanderSPLeft : commanderSkillPoints - commanderSPSpent
 
+    property string dataFileSource
     signal turnFinished
+    File
+    {
+        id : file;
+    }
+
+    function savePlayerData()
+    {
+        file.loadFileForWriting(dataFileSource);
+        file.write(money.toString());
+        file.write(commanderSkillPoints.toString());
+        file.write(commanderSPLeft.toString());
+        file.close();
+    }
 
     function createConnection()
     {
@@ -61,6 +75,7 @@ Item
     {
         console.log((isEnemy ? "Enemy" : "Player") + " turns");
         PlayerTurns.currentPlayer = abstractPlayer;
+        PlayerTurns.playerStatWgt.update(PlayerTurns.currentPlayer);
         PlayerTurns.currentUnitIdx = 0;
         PlayerTurns.nextUnitTurn();
     }

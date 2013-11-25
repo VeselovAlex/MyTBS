@@ -7,6 +7,8 @@ var attackBar
 var currentPlayer
 var currentActor = null
 var currentGameField
+var actorStatWgt
+var playerStatWgt
 
 var currentActorRow = null;
 var currentActorColumn = null;
@@ -44,8 +46,9 @@ function moveActorTo(X, Y)
 {
     // Сделать в акторе метод move и переписать этот кусок
     disableHighLight(currentActorRow, currentActorColumn);
-    occupyCellAt(null, currentActor.x, currentActor.y);
-    currentGameField.occupyCell(currentActor, X, Y);
+    occupyCellAt(null, currentActor.x, currentActor.y)
+    currentActor.moveTo(xCoordOf(Y), yCoordOf(X));
+    currentGameField.occupyCell(currentActor, X, Y)
     console.debug("Actor moves to " + X + ";" + Y);
     cellCoordsRequired = false;
     currentActor.movingRangeLeft = currentActor.movingRangeLeft - getDistanceTravelled(currentActor);
@@ -58,7 +61,6 @@ function moveActorTo(X, Y)
         nextUnitTurn();
     }
 }
-
 
 var primaryAttack = false
 var secondaryAttack = false
@@ -149,8 +151,22 @@ function nextUnitTurn()
     currentActor = currentPlayer.playerUnits[currentUnitIdx++];//Если бы не баг, этого говна здесь бы не было
     currentActor.movingRangeLeft = currentActor.movingRange
 
-
+	actorStatWgt.update(currentActor);
     askForTurn();
+}
+
+function xCoordOf(col)
+{
+    var ret = (currentGameField.x + col * currentGameField.cellSide);
+    console.debug(ret);
+    return ret;
+}
+
+function yCoordOf(row)
+{
+    var ret = (currentGameField.y + row * currentGameField.cellSide);
+    console.debug(ret);
+    return ret;
 }
 
 var attackBarConnected = false
