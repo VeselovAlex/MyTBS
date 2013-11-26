@@ -71,9 +71,10 @@ Rectangle
     }
     function highlightPossibleCells(row, col, radius, enabled)
     {
+        console.debug("Highlight: " + enabled);
         var currentCell = cellAt(row, col);
         currentCell.highlighted = enabled;
-        if (radius === 0)
+        if (radius <= 0)
             return;
 
         if (row + 1 < gameField.rows && isHighlightable(cellAt(row + 1, col)))

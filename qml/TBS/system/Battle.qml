@@ -74,6 +74,7 @@ Item
             Init.attackBarLoaded = true;
             Init.componentIsLoaded();
         }
+        Component.onDestruction: console.debug("Destructed")
     }
 	
     HumanPlayer
@@ -139,5 +140,19 @@ Item
         anchors.margins: 10
 
         Component.onCompleted: Turns.playerStatWgt = playerStatWgt
+    }
+
+    Component.onDestruction:
+    {
+//        factory.destroy();
+//        gamefield.destroy();
+//        attackBar.destroy();
+//        player.destroy();
+//        enemy.destroy();
+//        generator.destroy();
+//        actorStatWgt.destroy();
+//        playerStatWgt.destroy();
+        Turns.reset();
+        Init.reset();
     }
 }

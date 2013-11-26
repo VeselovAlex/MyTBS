@@ -13,6 +13,21 @@ var playerStatWgt
 var currentActorRow = null;
 var currentActorColumn = null;
 
+function reset()
+{
+    cellCoordsRequired = false
+    targetActorRequired = false
+
+//    attackBar = null
+//    currentPlayer = null
+//    currentActor = null
+//    currentGameField = null
+//    actorStatWgt = null
+//    playerStatWgt = null
+
+    currentActorRow = null;
+    currentActorColumn = null;
+}
 
 function askForTurn()
 {
@@ -20,14 +35,13 @@ function askForTurn()
         connectAttackBar();
     attackBar.enableAttackBar(currentActor.x - (attackBar.width  - currentActor.width)  / 2,
                               currentActor.y - (attackBar.height - currentActor.height) / 2);
-    enableHighLight(currentActorRow, currentActorColumn);
-
 }
 
 
 function needMove()
 {
-    console.debug("Need move")
+    console.debug("Need move");
+    enableHighLight(currentActorRow, currentActorColumn);
     askForCoords();
 }
 
@@ -111,7 +125,7 @@ var currentUnitIdx
 function nextUnitTurn()
 {
     //console.log("currentUnitIdx: " + currentUnitIdx);
-    if (currentPlayer.unitCount == 0) // чтобы не падало. переделать!
+    if (currentPlayer.unitCount <= 0) // чтобы не падало. переделать!
         return;
     if (currentUnitIdx >= currentPlayer.unitCount)
     {
@@ -121,6 +135,8 @@ function nextUnitTurn()
     if (currentActorRow != null && currentActorColumn != null) // disable highlight after skipping turn
     {
         disableHighLigh(currentActorRow, currentActorColumn);
+        currentActorRow = null;
+        currentActorColumn = null;
     }
 
     currentActor = currentPlayer.playerUnits[currentUnitIdx++];//Если бы не баг, этого говна здесь бы не было

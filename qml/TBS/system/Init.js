@@ -6,6 +6,16 @@ var attackBarLoaded = false
 
 var playersInitialized = false
 
+function reset()
+{
+    factoryLoaded = false
+    gameFieldLoaded = false
+    playerLoaded = false
+    enemyLoaded = false
+    attackBarLoaded = false
+    playersInitialized = false
+}
+
 function componentIsLoaded()
 {
     if (factoryLoaded && gameFieldLoaded && playerLoaded && enemyLoaded && !playersInitialized)
@@ -36,7 +46,7 @@ function initTestPlayer()
     }
     player.turnFinished.connect(generator.nextPlayerTurn);
     player.createConnection();
-    player.savePlayerData();
+    //player.savePlayerData();
 }
 
 function initTestEnemy()
