@@ -136,7 +136,7 @@ function attackActor(actor)
 var currentUnitIdx = 0
 function nextUnitTurn()
 {
-    if (currentPlayer.unitCount == 0) // чтобы не падало. переделать!
+    if (currentPlayer.unitCount <= 0) // чтобы не падало. переделать!
         return;
 
     if (currentUnitIdx >= currentPlayer.unitCount)

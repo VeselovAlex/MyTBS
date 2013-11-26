@@ -104,7 +104,7 @@ Rectangle
             return;
 
 
-        if (radius == 0)
+        if (radius <= 0)
             return;
 
         for (var i = - radius; i <= radius; i++)

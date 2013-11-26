@@ -27,7 +27,7 @@ Item
         anchors.top: parent.top;
         anchors.bottom: parent.bottom
         font.family: "Comic Sans MS"
-        font.pixelSize: 22
+        font.pixelSize: 14
 
         text: "<b><u>" + (master.isEnemy ? "Enemy" : "Player") + "</b></u>" +
               "<br><b>Money:</b> " + master.money +

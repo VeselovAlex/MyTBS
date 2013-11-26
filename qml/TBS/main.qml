@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import QtQuick.Window 2.0
+import QtQuick.Window 2.1
 import "environment"
 import "environment/buttons"
 import "system"
@@ -7,7 +7,7 @@ import "system"
 Item
 {
     width: 1920
-    height: 1200
+    height: 1080
 
     readonly property url battleScreenPath : "environment/BattleScreen.qml"
     readonly property url startScreenPath  : "environment/StartScreen.qml"
