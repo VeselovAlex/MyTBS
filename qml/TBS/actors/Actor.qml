@@ -103,8 +103,8 @@ Item
     BlowUpMsg
     {
         id : msg
-        startX : actor.x + actor.width * 2
-        startY : actor.y;
+        startX : actor.width;
+        startY : actor.height / 2;
     }
     function hurt(damage)
     {
