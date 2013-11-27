@@ -37,12 +37,9 @@ function initTestPlayer()
     player.dataFileSource = "Test.txt";
     for (var i = 0; i < player.maxUnitCount; i++)
     {
-        var actor = factory.createActor(0, player);
-        player.buyNewUnit(actor, i);
-    }
-    for (var i = 0; i < player.unitCount; i++)
-    {
-        gamefield.occupyCell(player.playerUnits[i], i + 1, 0, false);
+        var actor = factory.createActor(1, player);
+        player.buyNewUnit(actor, 1);
+        gamefield.occupyCell(player.playerUnits[i], i + 1, 0)
     }
     player.turnFinished.connect(generator.nextPlayerTurn);
     player.createConnection();
@@ -55,8 +52,9 @@ function initTestEnemy()
     for (var i = 0; i < enemy.maxUnitCount; i++)
     {
         var actor = factory.createActor(0, enemy);
-        enemy.buyNewUnit(actor, 1);
-        gamefield.occupyCell(enemy.playerUnits[i], i + 1, gamefield.columns - 1, false);
+        enemy.buyNewUnit(actor, 2);
+        gamefield.occupyCell(enemy.playerUnits[i], i + 1, gamefield.columns - 1)
+
     }
     enemy.turnFinished.connect(generator.nextPlayerTurn);
     enemy.createConnection();

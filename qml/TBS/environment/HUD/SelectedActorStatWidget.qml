@@ -50,10 +50,10 @@ Item
         anchors.top: parent.top;
         anchors.bottom: parent.bottom
         font.family: "Comic Sans MS"
-        font.pixelSize: 22
+        font.pixelSize: 14
 
         text: "<b><u>" + selected.type + "</b></u>" +
-              "<br><b>Health:</b> " + selected.health + "/" + selected.averageHealth +
+              "<br><b>Health:</b> " + selected.health * selected.count + "/" + selected.averageHealth +
               "<br><b>Armor:</b> " + selected.armor + "/" + selected.averageArmor +
               "<br><b>Cost:</b> " + selected.moneyCosts + "$/" + selected.spCosts + " cp" +
               "<br><b>Attack:</b> " + selected.primaryAttackDamage + "/" + selected.secondaryAttackDamage

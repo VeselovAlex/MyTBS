@@ -13,7 +13,7 @@ Rectangle
     property bool active : true
     property bool isEmpty : true
     property bool highlighted : false
-    property color highlightColor: "#77AAFFAA"
+    property color highlightColor//: "#77AAFFAA"
     property int cellRow : 0
     property int cellCol : 0
 

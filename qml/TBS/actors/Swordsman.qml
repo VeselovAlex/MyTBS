@@ -4,8 +4,8 @@ Actor
 {
     id : swordsman
 
+    health : 150
     type : "Swordsman"
-    maxHp : 150
     armor : 12
 
     attackMultiplier : 1.2
@@ -14,14 +14,16 @@ Actor
     movingRange : 2
 
     primaryAttackRange : 2
-    primaryAttackDamage : 30
+    primaryAttackDamage : 50
 
-    secondaryAttackRange : 1
-    secondaryAttackDamage : 50
+    secondaryAttackRange : 4
+    secondaryAttackDamage : 30
 
     moneyCosts : 50
     spCosts : 20
     count : 0
+
+    isHealer: false
 
     idleSprite :
         Sprite

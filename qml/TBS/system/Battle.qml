@@ -31,7 +31,7 @@ Item
         id : gamefield
         rows: 7
         columns : 10
-        cellSide: 100
+        cellSide: Math.min(parent.width / (columns + 3), parent.height / (rows + 3))
         x : Math.round((battle.width - cellSide * columns) / 2)
         y : cellSide
         onCellClicked:
@@ -66,7 +66,7 @@ Item
     AttackBar
     {
         id : attackBar
-        width: 120
+        width: gamefield.cellSide * 1.5
         Component.onCompleted:
         {
             disableAttackBar();
@@ -96,7 +96,6 @@ Item
     }
 
     EnemyPlayer
-    //ComputerPlayer
     {
         id : enemy
         money : 100000
@@ -122,8 +121,8 @@ Item
     SelectedActorStatWidget
     {
         id : actorStatWgt
-        width: parent.width / 4
-        height: parent.height / 5
+        width: parent.width / 5
+        height: parent.height / 6
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         anchors.margins: 10

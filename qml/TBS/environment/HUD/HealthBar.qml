@@ -23,7 +23,7 @@ Item
     function changeHpInfo(maxHp, curHp)
     {
         greenBar.width = Math.round(curHp / maxHp * greenBar.width)
-        redBar.width = parent.width - greenBar.width
+        redBar.width = healthBar.width - greenBar.width
     }
 
 }

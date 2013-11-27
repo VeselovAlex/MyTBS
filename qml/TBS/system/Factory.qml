@@ -8,9 +8,11 @@ QtObject
     readonly property var actorComponents :
     [
         Qt.createComponent("../actors/Swordsman.qml"),
+        Qt.createComponent("../actors/Mage.qml")
     ]
     /* actorComponents contains components of:
      * 0 - Swordman
+     * 1 - Mage
      */
 
     function createActor(idx, parent)
