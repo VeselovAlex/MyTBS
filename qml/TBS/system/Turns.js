@@ -160,7 +160,7 @@ function nextUnitTurn()
     }
     if (currentActorRow != null && currentActorColumn != null) // disable highlight after skipping turn
     {
-        disableHighLigh(currentActorRow, currentActorColumn);
+        disableHighLight(currentActorRow, currentActorColumn);
         currentActorRow = null;
         currentActorColumn = null;
         disableHighLight(currentActorRow, currentActorColumn);
