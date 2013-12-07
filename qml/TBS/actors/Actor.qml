@@ -76,7 +76,8 @@ Item
         id : sprite
         anchors.fill: parent
         antialiasing: true
-        sprites: [idleSprite]//, movingSprite, primaryAttackSprite, secondaryAttackSprite, dyingSprite]
+        sprites: [idleSprite, movingSprite, dyingSprite]//, primaryAttackSprite, secondaryAttackSprite, dyingSprite]
+
     }
 
     HealthBar
@@ -128,7 +129,7 @@ Item
 
     function die()
     {
-        //sprite.jumpTo(dyingSprite.name)
+        sprite.jumpTo(dyingSprite.name)
         destroy();
         died(actor);
     }
@@ -147,9 +148,11 @@ Item
 
     function moveTo(X, Y)
     {
+        sprite.jumpTo(movingSprite.name)
         horizontalAnimation.to = X;
         verticalAnimation.to = Y;
         moveAnimation.running = true;
+        //sprite.jumpTo(idleSprite.name)
     }
 
 }
