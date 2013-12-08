@@ -51,7 +51,7 @@ function initTestEnemy()
     //console.debug("creating enemy")
     for (var i = 0; i < enemy.maxUnitCount; i++)
     {
-        var actor = factory.createActor(0, enemy);
+        var actor = factory.createActor(2, enemy);
         enemy.buyNewUnit(actor, 2);
         gamefield.occupyCell(enemy.playerUnits[i], i + 1, gamefield.columns - 1)
 

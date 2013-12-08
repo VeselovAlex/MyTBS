@@ -26,23 +26,42 @@ Actor
     isHealer: false
 
     idleSprite :
-        Sprite
-        {
-            source: "qrc:/images/sprites/res/ninjaMovingSprite" + (reverted ? "Reverted" : "") + ".png";
-            frameCount: 5;
-            frameWidth: 128;
-            frameHeight: 128;
-            frameDuration: 80;
-        }
-    movingSprite :
-        Sprite
-        {
-            source: "qrc:/images/sprites/res/ninjaMovingSprite" + (reverted ? "Reverted" : "") + ".png";
-            frameCount: 5;
-            frameWidth: 128;
-            frameHeight: 128;
-            frameDuration: 80;
-        }
+    Sprite
+    {
+        name: "idle"
+        //source: "qrc:/images/sprites/res/ninjaMovingSprite" + (reverted ? "Reverted" : "") + ".png";
+        source: "qrc:/images/sprites/res/swordsmanIdleSprite" + (reverted ? "Reverted" : "") + ".png";
+        frameCount: 1;
+        frameX: 35
+        frameWidth: 125;
+        frameHeight: 94;
+    }
+    movingSprite:
+    Sprite
+    {
+        name: "moving"
+        //source: "qrc:/images/sprites/res/ninjaMovingSprite" + (reverted ? "Reverted" : "") + ".png";
+        source: "qrc:/images/sprites/res/swordsmanMovingSprite" + (reverted ? "Reverted" : "") + ".png";
+        reverse: reverted
+        frameX: 35
+        frameCount: 8;
+        frameWidth: 125;
+        frameHeight: 94;
+        frameDuration: 100;
+    }
+    dyingSprite:
+    Sprite
+    {
+        name: "dying"
+        source: "qrc:/images/sprites/res/swordsmanDyingSprite" + (reverted ? "Reverted" : "") + ".png";
+        reverse: reverted
+        frameX: 35
+        frameCount: 7;
+        frameWidth: 120;
+        frameHeight: 94;
+        frameDuration: 100;
+    }
+
 
     /*primaryAttackSprite: null
     secondaryAttackSprite: null

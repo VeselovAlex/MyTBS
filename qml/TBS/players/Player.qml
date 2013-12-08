@@ -70,7 +70,6 @@ Item
             abstractPlayer.commanderSPSpent += count * playerUnits[unitIdx].spCosts;
         }
     }
-
     function makeTurn()
     {
         console.log((isEnemy ? "Enemy" : "Player") + " turns");

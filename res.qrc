@@ -17,6 +17,12 @@
         <file>res/mageMovingSpriteReverted.png</file>
         <file>res/mageDyingSprite.png</file>
         <file>res/mageDyingSpriteReverted.png</file>
+        <file>res/swordsmanMovingSprite.png</file>
+        <file>res/swordsmanMovingSpriteReverted.png</file>
+        <file>res/swordsmanIdleSprite.png</file>
+        <file>res/swordsmanIdleSpriteReverted.png</file>
+        <file>res/swordsmanDyingSprite.png</file>
+        <file>res/swordsmanDyingSpriteReverted.png</file>
     </qresource>
     <qresource prefix="/images">
         <file>res/woodBg.png</file>

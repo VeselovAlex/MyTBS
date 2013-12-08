@@ -19,7 +19,7 @@ Item
     property real defenceMultiplier: 1.0
 
     property int movingRange //радиус движения
-    property int movingRangeLeft : movingRange
+    property int movingRangeLeft: movingRange
 
     property int primaryAttackRange
     property int primaryAttackDamage
@@ -29,7 +29,7 @@ Item
 
     property int moneyCosts //стоимость единицы в монетах
     property int spCosts //стоимость единицы в очках навыка командира
-    property int count : 0 //кол-во юнитов
+    property int count: 0 //кол-во юнитов
 
     property int averageHealth: health * count
     property int averageArmor: armor * count
@@ -51,21 +51,20 @@ Item
     SequentialAnimation
     {
         running: false;
-        id : moveAnimation
+        id: moveAnimation
         NumberAnimation
         {
-            id : horizontalAnimation
-            target : actor;
-            property : "x";
+            id: horizontalAnimation
+            target: actor;
+            property: "x";
             duration: 1000
             easing.type: Easing.InOutQuad
         }
-
         NumberAnimation
         {
-            id : verticalAnimation
-            target : actor;
-            property : "y";
+            id: verticalAnimation
+            target: actor;
+            property: "y";
             duration: 1000
             easing.type: Easing.InOutQuad
         }
@@ -73,11 +72,10 @@ Item
 
     SpriteSequence
     {
-        id : sprite
+        id: sprite
         anchors.fill: parent
         antialiasing: true
         sprites: [idleSprite, movingSprite, dyingSprite]//, primaryAttackSprite, secondaryAttackSprite, dyingSprite]
-
     }
 
     HealthBar
@@ -88,12 +86,12 @@ Item
     Text
     {
         anchors.right: parent.right
-        anchors.bottom:parent.bottom
+        anchors.bottom: parent.bottom
         anchors.margins: 3
         style: Text.Outline
         styleColor: "white"
         text: count
-        color : "red"
+        color: "red"
         font.bold: true
         height: parent.height / 4
         font.pixelSize: height
@@ -106,25 +104,29 @@ Item
     }
     function hurt(damage)
     {
-        msg.showMsg(damage.toString(), "#FFFF0000");
-        if (averageArmor > 0)
-        {
-            averageArmor -= Math.round(defenceMultiplier * damage);
-            if (averageArmor < 0) //Если количество единиц брони меньше чем полученный урон
-            {
-                averageHealth += averageArmor; // вычтем излишек из запаса здоровья
-                averageArmor = 0;
+        msg.showMsg((damage > 0)? "-" + damage.toString() : "+" + Math.abs(damage).toString(), "#FFFF0000");
+        if (damage > 0) {
+            if (averageArmor > 0) {
+                averageArmor -= Math.round(defenceMultiplier * damage);
+                if (averageArmor < 0) //Если количество единиц брони меньше чем полученный урон
+                {
+                    averageHealth += averageArmor; // вычтем излишек из запаса здоровья
+                    averageArmor = 0;
+                    if (averageHealth < 0)
+                        die();
+                }
+            } else {
+                averageHealth -= Math.round(defenceMultiplier * damage);
                 if (averageHealth < 0)
                     die();
             }
+        } else {
+            averageHealth -= damage;
+            if (averageHealth > health * count)
+                averageHealth = health * count;
         }
-        else
-        {
-            averageHealth -= Math.round(defenceMultiplier * damage);
-            if (averageHealth < 0)
-                die();
-        }
-        healthBar.changeHpInfo(health * count, averageHealth)
+
+        healthBar.update(health * count, averageHealth)
     }
 
     function die()

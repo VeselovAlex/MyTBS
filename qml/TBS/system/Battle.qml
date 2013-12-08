@@ -79,10 +79,9 @@ Item
 	
     HumanPlayer
     {
-        id : player
-        money : 100000
+        id: player
+        money: 100000
         commanderSkillPoints: 100500
-
         isEnemy: false
         Component.onCompleted:
         {
@@ -97,8 +96,8 @@ Item
 
     EnemyPlayer
     {
-        id : enemy
-        money : 100000
+        id: enemy
+        money: 100000
         commanderSkillPoints: 100500
         isEnemy: true
         Component.onCompleted:

@@ -100,7 +100,7 @@ Rectangle
         return cell != null && cell.active && cell.isEmpty
     }
 
-    function highLightCellsForAttack(row, col, radius, enabled)
+    function highLightCellsForAttack(row, col, radius, enabled, attackType)
     {
         var currentCell = cellAt(row, col);
         if (currentCell == null || !currentCell.active || currentCell.isEmpty)
@@ -125,12 +125,15 @@ Rectangle
                 var cell = cellAt(j + row, i + col);
                 if (cell.active)
                 {
-                    if (!currentCell.occupiedBy.isHealer && (cell.isEmpty || currentCell.occupiedBy.parent !== cell.occupiedBy.parent))
+                    if ((!currentCell.occupiedBy.isHealer || (currentCell.occupiedBy.isHealer && attackType == "primary"))
+                            && (cell.isEmpty || currentCell.occupiedBy.parent !== cell.occupiedBy.parent))
+
                     {
                         cell.highlightColor = "#77FFAAAA";
                         cell.highlighted = enabled;
                     }
-                    else if (currentCell.occupiedBy.isHealer && (cell.isEmpty || currentCell.occupiedBy.parent === cell.occupiedBy.parent))
+                    else if (currentCell.occupiedBy.isHealer && attackType == "secondary"
+                             && (cell.isEmpty || currentCell.occupiedBy.parent === cell.occupiedBy.parent))
                     {
                         cell.highlightColor = "#77AAFFAA";
                         cell.highlighted = enabled;
@@ -138,7 +141,7 @@ Rectangle
                 }
             }
         }
-        if (currentCell.occupiedBy.isHealer)
+        if (currentCell.occupiedBy.isHealer && attackType == "secondary")
         {
             currentCell.highlighted = true;
         }

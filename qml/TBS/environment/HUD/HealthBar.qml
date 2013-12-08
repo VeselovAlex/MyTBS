@@ -20,9 +20,9 @@ Item
         height: parent.height
         color: "red"
     }
-    function changeHpInfo(maxHp, curHp)
+    function update(maxHp, curHp)
     {
-        greenBar.width = Math.round(curHp / maxHp * greenBar.width)
+        greenBar.width = Math.round(curHp / maxHp * healthBar.width)
         redBar.width = healthBar.width - greenBar.width
     }
 
