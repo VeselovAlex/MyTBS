@@ -38,13 +38,14 @@ Item
         {
             if (Turns.cellCoordsRequired)
             {
-                if (cellAt(row, col).isEmpty)
+                var cell = cellAt(row, col);
+                if (cell.isEmpty && cell.highlighted)
                     gamefield.cellCoords(row, col);
             }
             if (Turns.targetActorRequired)
             {
                 var cell = cellAt(row, col);
-                if (!cell.isEmpty)
+                if (!cell.isEmpty && cell.highlighted)
                     gamefield.target(cell.occupiedBy);
             }
         }

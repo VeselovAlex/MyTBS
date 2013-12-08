@@ -46,6 +46,7 @@ Item
     //Свойства для корректного отображения (надо будет реализовать спрайты)
 
     property bool reverted: parent.isEnemy
+    property int speed : 100
 
     signal died(var actor);
 
@@ -58,8 +59,7 @@ Item
             id : horizontalAnimation
             target : actor;
             property : "x";
-            duration: 1000
-            easing.type: Easing.InOutQuad
+            easing.type: Easing.Linear
         }
 
         NumberAnimation
@@ -67,9 +67,20 @@ Item
             id : verticalAnimation
             target : actor;
             property : "y";
-            duration: 1000
-            easing.type: Easing.InOutQuad
+            easing.type: Easing.Linear
         }
+        onStopped:
+        {
+            actor.x = horizontalAnimation.to;
+            actor.y = verticalAnimation.to;
+            sprite.jumpTo(idleSprite.name)
+        }
+    }
+
+    NumberAnimation {
+        id : dieAnimation; target : sprite;
+        property: "opacity"; to: 0; duration: dyingSprite.duration;
+        easing.type: Easing.InOutQuad; onStopped: {actor.destroy();}
     }
 
     SpriteSequence
@@ -130,8 +141,9 @@ Item
 
     function die()
     {
-        sprite.jumpTo(dyingSprite.name)
-        destroy();
+        sprite.jumpTo(dyingSprite.name);
+        msg.showMsg("Пиздец мне...","red");
+        dieAnimation.start();
         died(actor);
     }
 
@@ -151,9 +163,10 @@ Item
     {
         sprite.jumpTo(movingSprite.name)
         horizontalAnimation.to = X;
+        horizontalAnimation.duration = Math.round(X / width * speed)
         verticalAnimation.to = Y;
+        verticalAnimation.duration = Math.round(X / height * speed)
         moveAnimation.running = true;
-        //sprite.jumpTo(idleSprite.name)
     }
 
     function getStatAsString()

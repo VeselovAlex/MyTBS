@@ -17,14 +17,6 @@ function reset()
 {
     cellCoordsRequired = false
     targetActorRequired = false
-
-//    attackBar = null
-//    currentPlayer = null
-//    currentActor = null
-//    currentGameField = null
-//    actorStatWgt = null
-//    playerStatWgt = null
-
     currentActorRow = null;
     currentActorColumn = null;
 }
@@ -62,12 +54,13 @@ function moveActorTo(row, col)
         return;*/ // turned off for debug
     // Сделать в акторе метод move и переписать этот кусок
     disableHighLight(currentActorRow, currentActorColumn);
-    occupyCellAt(null, currentActor.x, currentActor.y)
+    attackBar.disableAttackBar();
+    currentGameField.occupyCell(null, currentActorRow, currentActorColumn, true);
+    currentGameField.occupyCell(currentActor, row, col, true);
     currentActor.moveTo(xCoordOf(col), yCoordOf(row));
-    currentGameField.occupyCell(currentActor, row, col)
     console.debug("Actor moves to " + row + ";" + col);
     cellCoordsRequired = false;
-    currentActor.movingRangeLeft = currentActor.movingRangeLeft - getDistanceTravelled(currentActor);
+    currentActor.movingRangeLeft = currentActor.movingRangeLeft - getDistanceTravelled(row, col);
     if (currentActor.movingRangeLeft > 0)
     {
         askForTurn()
@@ -249,9 +242,9 @@ function getActorsCol(actor)
     return Math.floor((actor.x - currentGameField.x) / currentGameField.cellSide);
 }
 
-function getDistanceTravelled(actor)
+function getDistanceTravelled(row, col)
 {
-    return (Math.abs(currentActorColumn - getActorsCol(actor)) + Math.abs(currentActorRow - getActorsRow(actor)));
+    return (Math.abs(currentActorColumn - col) + Math.abs(currentActorRow - row));
 }
 
 function unitDied(actor)
