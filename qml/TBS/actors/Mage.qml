@@ -29,11 +29,36 @@ Actor
     idleSprite :
         Sprite
         {
+            name: "idle"
             source: "qrc:/images/sprites/res/mageIdleSprite" + (reverted ? "Reverted" : "") + ".png";
             frameCount: 1;
             frameWidth: 102;
             frameHeight: 90;
-            frameDuration: 150;
+            //frameDuration: 150;
+        }
+    movingSprite:
+        Sprite
+        {
+            name: "moving"
+            source: "qrc:/images/sprites/res/mageMovingSprite" + (reverted ? "Reverted" : "") + ".png"
+            to: {"moving": 1}
+            reverse: reverted
+            frameCount: 7;
+            frameWidth: 102;
+            frameHeight: 75;
+            frameDuration: 120;
+        }
+    dyingSprite:
+        Sprite
+        {
+            name: "dying"
+            source: "qrc:/images/sprites/res/mageDyingSprite" + (reverted ? "Reverted" : "") + ".png"
+            reverse: reverted
+            //to: {"dying": 1}
+            frameCount: 10;
+            frameWidth: 102;
+            frameHeight: 106;
+            frameDuration: 180;
         }
 
     /*primaryAttackSprite: null

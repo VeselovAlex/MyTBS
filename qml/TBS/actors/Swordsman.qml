@@ -35,6 +35,15 @@ Actor
             frameHeight: 128;
             frameDuration: 80;
         }
+    movingSprite :
+        Sprite
+        {
+            source: "qrc:/images/sprites/res/ninjaMovingSprite" + (reverted ? "Reverted" : "") + ".png";
+            frameCount: 5;
+            frameWidth: 128;
+            frameHeight: 128;
+            frameDuration: 80;
+        }
 
     /*primaryAttackSprite: null
     secondaryAttackSprite: null

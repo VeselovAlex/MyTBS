@@ -69,10 +69,12 @@ Rectangle
     }
     function highlightPossibleCells(row, col, radius, enabled) // for moving
     {
+
         console.debug("Highlight: " + enabled);
         var currentCell = cellAt(row, col);
         currentCell.highlightColor = "#77AAFFAA"
         currentCell.highlighted = enabled;
+
         if (radius <= 0)
             return;
 

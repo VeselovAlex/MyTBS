@@ -22,21 +22,4 @@ Item
         anchors.top: playButton.bottom
         anchors.horizontalCenter: playButton.horizontalCenter
     }
-
-    ScreenButton
-    {
-        id : textMsg
-        width : 200
-        text : "test!"
-        anchors.top: closeBtn.bottom
-        anchors.horizontalCenter: playButton.horizontalCenter
-        onClicked: msg.showMsg("Test","#FF000000");
-    }
-
-    BlowUpMsg
-    {
-        id : msg
-        startX: 500
-        startY: 600
-    }
 }

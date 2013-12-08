@@ -35,8 +35,8 @@ function askForTurn()
         connectAttackBar();
     attackBar.enableAttackBar(currentActor.x - (attackBar.width  - currentActor.width)  / 2,
                               currentActor.y - (attackBar.height - currentActor.height) / 2);
-    currentActorRow =  getActorsRow(currentActor);
-    currentActorColumn =  getActorsCol(currentActor);
+    currentActorRow = getActorsRow(currentActor);
+    currentActorColumn = getActorsCol(currentActor);
 }
 
 
@@ -56,14 +56,16 @@ function askForCoords()
     console.log("Click any cell...");
 }
 
-function moveActorTo(X, Y)
+function moveActorTo(row, col)
 {
+    /*if (!currentGameField.cellAt(row, col).highlighted)
+        return;*/ // turned off for debug
     // Сделать в акторе метод move и переписать этот кусок
     disableHighLight(currentActorRow, currentActorColumn);
     occupyCellAt(null, currentActor.x, currentActor.y)
-    currentActor.moveTo(xCoordOf(Y), yCoordOf(X));
-    currentGameField.occupyCell(currentActor, X, Y)
-    console.debug("Actor moves to " + X + ";" + Y);
+    currentActor.moveTo(xCoordOf(col), yCoordOf(row));
+    currentGameField.occupyCell(currentActor, row, col)
+    console.debug("Actor moves to " + row + ";" + col);
     cellCoordsRequired = false;
     currentActor.movingRangeLeft = currentActor.movingRangeLeft - getDistanceTravelled(currentActor);
     if (currentActor.movingRangeLeft > 0)
@@ -160,9 +162,9 @@ function nextUnitTurn()
     }
     if (currentActorRow != null && currentActorColumn != null) // disable highlight after skipping turn
     {
+        disableHighLightForAttack(currentActorRow, currentActorColumn,
+                                  Math.max(currentActor.primaryAttackRange, currentActor.secondaryAttackRange));
         disableHighLight(currentActorRow, currentActorColumn);
-        disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.secondaryAttackRange);
-        disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.primaryAttackRange);
     }
     currentActor = currentPlayer.playerUnits[currentUnitIdx++];//Если бы не баг, этого говна здесь бы не было
     currentActor.movingRangeLeft = currentActor.movingRange

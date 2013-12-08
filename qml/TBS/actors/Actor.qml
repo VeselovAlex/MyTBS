@@ -77,7 +77,8 @@ Item
         id : sprite
         anchors.fill: parent
         antialiasing: true
-        sprites: [idleSprite]//, movingSprite, primaryAttackSprite, secondaryAttackSprite, dyingSprite]
+        sprites: [idleSprite, movingSprite, dyingSprite]//, primaryAttackSprite, secondaryAttackSprite, dyingSprite]
+
     }
 
     HealthBar
@@ -103,8 +104,6 @@ Item
     BlowUpMsg
     {
         id : msg
-        startX : actor.width;
-        startY : actor.height / 2;
     }
     function hurt(damage)
     {
@@ -131,7 +130,7 @@ Item
 
     function die()
     {
-        //sprite.jumpTo(dyingSprite.name)
+        sprite.jumpTo(dyingSprite.name)
         destroy();
         died(actor);
     }
@@ -150,9 +149,11 @@ Item
 
     function moveTo(X, Y)
     {
+        sprite.jumpTo(movingSprite.name)
         horizontalAnimation.to = X;
         verticalAnimation.to = Y;
         moveAnimation.running = true;
+        //sprite.jumpTo(idleSprite.name)
     }
 
     function getStatAsString()
