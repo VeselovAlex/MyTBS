@@ -23,6 +23,8 @@ Item
     function update(maxHp, curHp)
     {
         greenBar.width = Math.round(curHp / maxHp * healthBar.width)
+        if (greenBar.width < 0)
+            greenBar.width = 0
         redBar.width = healthBar.width - greenBar.width
     }
 
