@@ -3,6 +3,8 @@ import QtQuick 2.0
 Actor
 {
     id : mage
+    type : "Mage"
+    idx : 1
     //maxHp : 60
     health: 60
     armor : 4

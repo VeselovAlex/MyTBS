@@ -6,6 +6,7 @@ Actor
 
     health : 150
     type : "Swordsman"
+    idx : 0
     armor : 12
 
     attackMultiplier : 1.2

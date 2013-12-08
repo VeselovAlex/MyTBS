@@ -9,6 +9,7 @@ Item
     // При создании parent должен быть обьектом Player
 
     property string type
+    property int idx
     // перелопатить все, ибо ИС УГ
     id: actor
     property int health
@@ -152,6 +153,14 @@ Item
         horizontalAnimation.to = X;
         verticalAnimation.to = Y;
         moveAnimation.running = true;
+    }
+
+    function getStatAsString()
+    {
+        return  idx.toString()              + " " +
+                count.toString()            + " " +
+                averageHealth.toString()    + " " +
+                averageArmor.toString()     + " " ;
     }
 
 }

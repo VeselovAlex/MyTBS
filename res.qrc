@@ -12,6 +12,7 @@
         <file>res/ninjaMovingSprite.png</file>
         <file>res/ninjaMovingSpriteReverted.png</file>
         <file>res/mageIdleSprite.png</file>
+        <file>res/mageIdleSpriteReverted.png</file>
     </qresource>
     <qresource prefix="/images">
         <file>res/woodBg.png</file>

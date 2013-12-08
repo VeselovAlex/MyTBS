@@ -26,9 +26,29 @@ function componentIsLoaded()
 
 function initPlayers()
 {
-    initTestPlayer();
-    initTestEnemy();
+    initPlayer();
+    initEnemy();
     playersInitialized = true;
+}
+
+function initPlayer()
+{
+    console.debug("creating player")
+    player.dataFileSource = "Test.txt";
+    player.loadPlayerData(factory);
+    for (var i = 0; i < player.unitCount; i++)
+        gamefield.occupyCell(player.playerUnits[i], i + 1, 0);
+    player.turnFinished.connect(generator.nextPlayerTurn);
+    player.createConnection();
+}
+function initEnemy()
+{
+    enemy.dataFileSource = "EnemyTest.txt"
+    enemy.loadPlayerData(factory)
+    for (var i = 0; i < enemy.unitCount; i++)
+        gamefield.occupyCell(enemy.playerUnits[i], i + 1, gamefield.columns - 1)
+    enemy.turnFinished.connect(generator.nextPlayerTurn);
+    enemy.createConnection();
 }
 
 function initTestPlayer()
@@ -43,12 +63,13 @@ function initTestPlayer()
     }
     player.turnFinished.connect(generator.nextPlayerTurn);
     player.createConnection();
-    //player.savePlayerData();
+    player.loadPlayerData(factory);
 }
 
 function initTestEnemy()
 {
     //console.debug("creating enemy")
+    enemy.dataFileSource = "EnemyTest.txt"
     for (var i = 0; i < enemy.maxUnitCount; i++)
     {
         var actor = factory.createActor(0, enemy);

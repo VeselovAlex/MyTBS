@@ -143,14 +143,8 @@ Item
 
     Component.onDestruction:
     {
-//        factory.destroy();
-//        gamefield.destroy();
-//        attackBar.destroy();
-//        player.destroy();
-//        enemy.destroy();
-//        generator.destroy();
-//        actorStatWgt.destroy();
-//        playerStatWgt.destroy();
+        //player.savePlayerData();
+        //enemy.savePlayerData();
         Turns.reset();
         Init.reset();
     }

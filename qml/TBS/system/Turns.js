@@ -161,9 +161,8 @@ function nextUnitTurn()
     if (currentActorRow != null && currentActorColumn != null) // disable highlight after skipping turn
     {
         disableHighLight(currentActorRow, currentActorColumn);
-        currentActorRow = null;
-        currentActorColumn = null;
-        disableHighLight(currentActorRow, currentActorColumn);
+        disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.secondaryAttackRange);
+        disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.primaryAttackRange);
     }
     currentActor = currentPlayer.playerUnits[currentUnitIdx++];//Если бы не баг, этого говна здесь бы не было
     currentActor.movingRangeLeft = currentActor.movingRange
