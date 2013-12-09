@@ -3,6 +3,8 @@ import QtQuick 2.0
 Actor
 {
     id : mage
+    type : "Mage"
+    idx : 1
     //maxHp : 60
     health: 60
     armor : 4
@@ -52,6 +54,7 @@ Actor
             name: "dying"
             source: "qrc:/images/sprites/res/mageDyingSprite" + (reverted ? "Reverted" : "") + ".png"
             reverse: reverted
+            duration: frameCount * frameDuration
             //to: {"dying": 1}
             frameCount: 10;
             frameWidth: 102;

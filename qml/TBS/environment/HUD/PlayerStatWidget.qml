@@ -29,10 +29,9 @@ Item
         font.family: "Comic Sans MS"
         font.pixelSize: 14
 
-        text: "<b><u>" + (master.isEnemy ? "Enemy" : "Player") + "</b></u>" +
+        text: "<b><u>" + master.name + (master.isEnemy ? " Enemy" : " Player") + "</b></u>" +
               "<br><b>Money:</b> " + master.money +
-              "<br><b>CP:</b> " + master.commanderSPLeft
-                                        + "/" + master.commanderSkillPoints
+              "<br><b>CP:</b> " + master.commanderSPLeft + "/" + master.commanderSkillPoints
 
     }
 

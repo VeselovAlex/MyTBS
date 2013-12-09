@@ -15,6 +15,8 @@ Item
     property int rowClicked : 0
     property int colClicked : 0
 
+    signal winner(Player winner);
+
     Factory
     {
         id : factory
@@ -38,13 +40,14 @@ Item
         {
             if (Turns.cellCoordsRequired)
             {
-                if (cellAt(row, col).isEmpty)
+                var cell = cellAt(row, col);
+                if (cell.isEmpty && cell.highlighted)
                     gamefield.cellCoords(row, col);
             }
             if (Turns.targetActorRequired)
             {
                 var cell = cellAt(row, col);
-                if (!cell.isEmpty)
+                if (!cell.isEmpty && cell.highlighted)
                     gamefield.target(cell.occupiedBy);
             }
         }
@@ -83,6 +86,7 @@ Item
         money: 100000
         commanderSkillPoints: 100500
         isEnemy: false
+        onGameOver: parent.winner(enemy);
         Component.onCompleted:
         {
             Init.playerLoaded = true;
@@ -100,6 +104,7 @@ Item
         money: 100000
         commanderSkillPoints: 100500
         isEnemy: true
+        onGameOver: parent.winner(player);
         Component.onCompleted:
         {
             Init.enemyLoaded = true;
@@ -142,14 +147,8 @@ Item
 
     Component.onDestruction:
     {
-//        factory.destroy();
-//        gamefield.destroy();
-//        attackBar.destroy();
-//        player.destroy();
-//        enemy.destroy();
-//        generator.destroy();
-//        actorStatWgt.destroy();
-//        playerStatWgt.destroy();
+        //player.savePlayerData();
+        //enemy.savePlayerData();
         Turns.reset();
         Init.reset();
     }

@@ -4,7 +4,8 @@ Actor
 {
     id : mage
     //maxHp : 60
-    health: 60
+    idx: 2
+    health: 80
     armor : 4
 
     attackMultiplier : 1.2

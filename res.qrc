@@ -13,7 +13,6 @@
         <file>res/ninjaMovingSpriteReverted.png</file>
         <file>res/mageIdleSprite.png</file>
         <file>res/mageMovingSprite.png</file>
-        <file>res/mageIdleSpriteReverted.png</file>
         <file>res/mageMovingSpriteReverted.png</file>
         <file>res/mageDyingSprite.png</file>
         <file>res/mageDyingSpriteReverted.png</file>
@@ -23,6 +22,7 @@
         <file>res/swordsmanIdleSpriteReverted.png</file>
         <file>res/swordsmanDyingSprite.png</file>
         <file>res/swordsmanDyingSpriteReverted.png</file>
+        <file>res/mageIdleSpriteReverted.png</file>
     </qresource>
     <qresource prefix="/images">
         <file>res/woodBg.png</file>

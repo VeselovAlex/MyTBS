@@ -1,14 +1,16 @@
 import QtQuick 2.0
 import DataFile 1.0
+import "../system"
 import "../system/Turns.js" as PlayerTurns
 //Основной класс для всех игроков
 Item
 {
     id : abstractPlayer
+    property string name
     property bool isEnemy: false
     property var playerUnits : []
     readonly property int maxUnitCount : 5
-    property int unitCount : 0
+    property int unitCount : playerUnits.length
 
     property int money : 0
     property int level : 0
@@ -20,6 +22,7 @@ Item
 
     property string dataFileSource
     signal turnFinished
+    signal gameOver
     File
     {
         id : file;
@@ -31,8 +34,70 @@ Item
         file.write(money.toString());
         file.write(commanderSkillPoints.toString());
         file.write(commanderSPLeft.toString());
+        for (var i = 0; i < unitCount; i++)
+        {
+            file.write(playerUnits[i].getStatAsString());
+        }
+        file.write("finish");
         file.close();
     }
+    function loadPlayerData(factory)
+    {
+        file.loadFileForReading(dataFileSource);
+//        name = file.read();
+        money = parseInt(file.read());
+        commanderSkillPoints = parseInt(file.read());
+        commanderSPLeft = parseInt(file.read());
+        var string = file.read();
+        while (string != "finish" /*&& unitCount < maxUnitCount*/)
+        {
+            var idx = parseInt(string);
+            var actor = factory.createActor(idx, abstractPlayer);
+            if (actor == null)
+                console.debug("Error data reading");
+            console.debug(idx + ": " + actor.type);
+            string = file.read();
+            actor.count = parseInt(string);
+            string = file.read();
+            actor.averageHealth = parseInt(string);
+            string = file.read();
+            actor.averageArmor = parseInt(string);
+            playerUnits[unitCount++] = actor;
+            string = file.read();
+        }
+        console.debug("Loaded")
+        file.close();
+    }
+    /*function loadPlayerData(factory)
+    {
+        file.loadFileForReading(dataFileSource);
+        console.debug(parseInt(file.read()));
+        console.debug(parseInt(file.read()));
+        console.debug(parseInt(file.read()));
+        var string = file.read();
+        console.debug(string)
+        while (string != "finish" /* && unitCount < maxUnitCount)
+        {
+            console.debug("I'm in the loop")
+            var idx = parseInt(string);
+            console.debug(idx)
+            var actor = factory.createActor(idx);
+            if (actor == null)
+                console.debug("Error data reading");
+            console.debug(idx + ": " + actor.type);
+            string = file.read();
+            actor.count = parseInt(string);
+            string = file.read();
+            actor.averageHealth = parseInt(string);
+            string = file.read();
+            actor.averageArmor = parseInt(string);
+            //playerUnits[unitCount++] = actor;
+            console.debug(actor.count + " " + actor.averageHealth + " " + actor.averageArmor);
+            string = file.read();
+        }
+        console.debug("Loaded")
+        file.close();
+    }*/
 
     function createConnection()
     {
@@ -72,11 +137,21 @@ Item
     }
     function makeTurn()
     {
+        if (unitCount <= 0)
+        {
+            gameOver();
+            return;
+        }
+
         console.log((isEnemy ? "Enemy" : "Player") + " turns");
         PlayerTurns.currentPlayer = abstractPlayer;
         PlayerTurns.playerStatWgt.update(PlayerTurns.currentPlayer);
         PlayerTurns.currentUnitIdx = 0;
         PlayerTurns.nextUnitTurn();
+    }
+    function continueTurn()
+    {
+        PlayerTurns.continueTurn();
     }
 
 }
