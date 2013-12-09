@@ -32,7 +32,7 @@ Actor
         //source: "qrc:/images/sprites/res/ninjaMovingSprite" + (reverted ? "Reverted" : "") + ".png";
         source: "qrc:/images/sprites/res/swordsmanIdleSprite" + (reverted ? "Reverted" : "") + ".png";
         frameCount: 1;
-        frameX: 35
+        frameX: reverted? 35 : -35
         frameWidth: 125;
         frameHeight: 94;
     }
@@ -43,7 +43,7 @@ Actor
         //source: "qrc:/images/sprites/res/ninjaMovingSprite" + (reverted ? "Reverted" : "") + ".png";
         source: "qrc:/images/sprites/res/swordsmanMovingSprite" + (reverted ? "Reverted" : "") + ".png";
         reverse: reverted
-        frameX: 35
+        frameX: reverted? 35 : -35
         frameCount: 8;
         frameWidth: 125;
         frameHeight: 94;
@@ -55,7 +55,7 @@ Actor
         name: "dying"
         source: "qrc:/images/sprites/res/swordsmanDyingSprite" + (reverted ? "Reverted" : "") + ".png";
         reverse: reverted
-        frameX: 35
+        frameX: reverted? 35 : -35
         frameCount: 7;
         frameWidth: 120;
         frameHeight: 94;
