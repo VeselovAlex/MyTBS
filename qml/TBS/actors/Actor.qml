@@ -72,7 +72,8 @@ Item
         onStopped:
         {
             actor.x = horizontalAnimation.to;
-            actor.y = verticalAnimation.to;
+            actor.y = verticalAnimation.to
+            parent.continueTurn();
             sprite.jumpTo(idleSprite.name)
         }
     }

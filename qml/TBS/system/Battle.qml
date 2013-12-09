@@ -15,6 +15,8 @@ Item
     property int rowClicked : 0
     property int colClicked : 0
 
+    signal winner(Player winner);
+
     Factory
     {
         id : factory
@@ -83,8 +85,8 @@ Item
         id : player
         money : 100000
         commanderSkillPoints: 100500
-
         isEnemy: false
+        onGameOver: parent.winner(enemy);
         Component.onCompleted:
         {
             Init.playerLoaded = true;
@@ -102,6 +104,7 @@ Item
         money : 100000
         commanderSkillPoints: 100500
         isEnemy: true
+        onGameOver: parent.winner(player);
         Component.onCompleted:
         {
             Init.enemyLoaded = true;

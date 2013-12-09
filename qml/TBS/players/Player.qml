@@ -6,10 +6,11 @@ import "../system/Turns.js" as PlayerTurns
 Item
 {
     id : abstractPlayer
+    property string name
     property bool isEnemy: false
     property var playerUnits : []
     readonly property int maxUnitCount : 5
-    property int unitCount : 0
+    property int unitCount : playerUnits.length
 
     property int money : 0
     property int level : 0
@@ -21,6 +22,7 @@ Item
 
     property string dataFileSource
     signal turnFinished
+    signal gameOver
     File
     {
         id : file;
@@ -42,6 +44,7 @@ Item
     function loadPlayerData(factory)
     {
         file.loadFileForReading(dataFileSource);
+        name = file.read();
         money = parseInt(file.read());
         commanderSkillPoints = parseInt(file.read());
         commanderSPLeft = parseInt(file.read());
@@ -135,11 +138,21 @@ Item
 
     function makeTurn()
     {
+        if (unitCount <= 0)
+        {
+            gameOver();
+            return;
+        }
+
         console.log((isEnemy ? "Enemy" : "Player") + " turns");
         PlayerTurns.currentPlayer = abstractPlayer;
         PlayerTurns.playerStatWgt.update(PlayerTurns.currentPlayer);
         PlayerTurns.currentUnitIdx = 0;
         PlayerTurns.nextUnitTurn();
+    }
+    function continueTurn()
+    {
+        PlayerTurns.continueTurn();
     }
 
 }

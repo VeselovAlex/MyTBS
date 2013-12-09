@@ -60,10 +60,15 @@ function moveActorTo(row, col)
     currentActor.moveTo(xCoordOf(col), yCoordOf(row));
     console.debug("Actor moves to " + row + ";" + col);
     cellCoordsRequired = false;
+    console.debug(getDistanceTravelled(row, col))
     currentActor.movingRangeLeft = currentActor.movingRangeLeft - getDistanceTravelled(row, col);
+}
+
+function continueTurn()
+{
     if (currentActor.movingRangeLeft > 0)
     {
-        askForTurn()
+        askForTurn();
     }
     else
     {
@@ -242,7 +247,7 @@ function getActorsCol(actor)
     return Math.floor((actor.x - currentGameField.x) / currentGameField.cellSide);
 }
 
-function getDistanceTravelled(row, col)
+function  getDistanceTravelled(row, col)
 {
     return (Math.abs(currentActorColumn - col) + Math.abs(currentActorRow - row));
 }
