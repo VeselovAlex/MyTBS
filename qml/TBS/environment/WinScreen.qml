@@ -13,9 +13,9 @@ Item
         color : "yellow"
         style: Text.Outline
         styleColor: "lightgreen"
-        width: parent.width / 3
+        width: parent.width / 2
         height: parent.height / 5
-        elide: Text.ElideMiddle
+        horizontalAlignment: Text.AlignHCenter
         anchors.bottom: playButton.top
         anchors.horizontalCenter: playButton.horizontalCenter
         anchors.margins: 20
@@ -37,8 +37,8 @@ Item
         anchors.top: playButton.bottom
         anchors.horizontalCenter: playButton.horizontalCenter
     }
-    function congratulate(winner)
+    function congratulate(winnerName)
     {
-        msg.text = "Победитель - " + winner.name + " Подравляем!"
+        msg.text = "Победитель - " + winnerName + " Подравляем!"
     }
 }

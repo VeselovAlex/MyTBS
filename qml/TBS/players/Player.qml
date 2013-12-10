@@ -31,6 +31,7 @@ Item
     function savePlayerData()
     {
         file.loadFileForWriting(dataFileSource);
+        file.write(name);
         file.write(money.toString());
         file.write(commanderSkillPoints.toString());
         file.write(commanderSPLeft.toString());
@@ -49,13 +50,12 @@ Item
         commanderSkillPoints = parseInt(file.read());
         commanderSPLeft = parseInt(file.read());
         var string = file.read();
-        while (string != "finish" /*&& unitCount < maxUnitCount*/)
+        while (string !== "finish")
         {
             var idx = parseInt(string);
             var actor = factory.createActor(idx, abstractPlayer);
             if (actor == null)
-                console.debug("Error data reading");
-            console.debug(idx + ": " + actor.type);
+                console.log("Error data reading");
             string = file.read();
             actor.count = parseInt(string);
             string = file.read();
@@ -65,39 +65,9 @@ Item
             playerUnits[unitCount++] = actor;
             string = file.read();
         }
-        console.debug("Loaded")
+        console.log("Loaded " + name);
         file.close();
     }
-    /*function loadPlayerData(factory)
-    {
-        file.loadFileForReading(dataFileSource);
-        console.debug(parseInt(file.read()));
-        console.debug(parseInt(file.read()));
-        console.debug(parseInt(file.read()));
-        var string = file.read();
-        console.debug(string)
-        while (string != "finish" /* && unitCount < maxUnitCount)
-        {
-            console.debug("I'm in the loop")
-            var idx = parseInt(string);
-            console.debug(idx)
-            var actor = factory.createActor(idx);
-            if (actor == null)
-                console.debug("Error data reading");
-            console.debug(idx + ": " + actor.type);
-            string = file.read();
-            actor.count = parseInt(string);
-            string = file.read();
-            actor.averageHealth = parseInt(string);
-            string = file.read();
-            actor.averageArmor = parseInt(string);
-            //playerUnits[unitCount++] = actor;
-            console.debug(actor.count + " " + actor.averageHealth + " " + actor.averageArmor);
-            string = file.read();
-        }
-        console.debug("Loaded")
-        file.close();
-    }*/
 
     function createConnection()
     {
@@ -144,16 +114,19 @@ Item
             return;
         }
 
-        console.log((isEnemy ? "Enemy" : "Player") + " turns");
         PlayerTurns.currentPlayer = abstractPlayer;
         PlayerTurns.playerStatWgt.update(PlayerTurns.currentPlayer);
         PlayerTurns.currentUnitIdx = 0;
         PlayerTurns.nextUnitTurn();
+        turnExtension();
     }
     function continueTurn()
     {
         PlayerTurns.continueTurn();
     }
+    function turnExtension()
+    {
 
+    }
 }
 
