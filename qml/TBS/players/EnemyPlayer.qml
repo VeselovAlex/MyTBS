@@ -8,9 +8,7 @@ Player
 
     function turnExtension()
     {
-        AI.initAiData();
-        AI.getFieldData();
-        AI.logFieldData();
-        AI.logCurrentDamageMatrix();
+        AI.logData();
+        AI.unitTurn(playerUnits[0]);
     }
 }
