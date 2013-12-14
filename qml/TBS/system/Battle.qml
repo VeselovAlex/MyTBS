@@ -4,6 +4,7 @@ import "../actors"
 import "../environment"
 import "../environment/HUD"
 import "Init.js" as Init
+import "AI.js" as Ai
 import "Turns.js" as Turns
 
 Item
@@ -55,6 +56,9 @@ Item
         Component.onCompleted:
         {
             Turns.currentGameField = gamefield;
+            Ai.currentGamefield = gamefield;
+            Ai.fieldColumns = gamefield.columns;
+            Ai.fieldRows = gamefield.rows;
             cellCoords.connect(Turns.moveActorTo);
             target.connect(Turns.attackActor);
             Init.gameFieldLoaded = true;
@@ -86,9 +90,13 @@ Item
         money: 100000
         commanderSkillPoints: 100500
         isEnemy: false
-        onGameOver: parent.winner(enemy);
+        onGameOver:
+        {
+            parent.winner(enemy);
+        }
         Component.onCompleted:
         {
+            Ai.currentOpponent = player;
             Init.playerLoaded = true;
             Init.componentIsLoaded();
         }
@@ -104,7 +112,10 @@ Item
         money: 100000
         commanderSkillPoints: 100500
         isEnemy: true
-        onGameOver: parent.winner(player);
+        onGameOver:
+        {
+            parent.winner(player);
+        }
         Component.onCompleted:
         {
             Init.enemyLoaded = true;

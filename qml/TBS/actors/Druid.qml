@@ -54,6 +54,7 @@ Actor
             source: "qrc:/images/sprites/res/mageDyingSprite" + (reverted ? "Reverted" : "") + ".png"
             reverse: reverted
             //to: {"dying": 1}
+            duration: frameCount * frameDuration
             frameCount: 10;
             frameWidth: 102;
             frameHeight: 106;

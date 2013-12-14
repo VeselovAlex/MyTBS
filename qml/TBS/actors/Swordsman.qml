@@ -57,6 +57,7 @@ Actor
         source: "qrc:/images/sprites/res/swordsmanDyingSprite" + (reverted ? "Reverted" : "") + ".png";
         reverse: reverted
         frameX: reverted? 35 : -35
+        duration: frameCount * frameDuration
         frameCount: 7;
         frameWidth: 120;
         frameHeight: 94;

@@ -69,12 +69,12 @@ Rectangle
     {
         cellAt(row, col).occupiedBy.destroy();
     }
-    function highlightPossibleCells(row, col, radius, enabled) // for moving
+    function highlightPossibleCells(row, col, radius, enabled, color) // for moving
     {
 
 //        console.debug("Highlight: " + enabled);
         var currentCell = cellAt(row, col);
-        currentCell.highlightColor = "#77AAFFAA"
+        currentCell.highlightColor = color || "#77AAFFAA"
         currentCell.highlighted = enabled;
 
         if (radius <= 0)
@@ -82,19 +82,19 @@ Rectangle
 
         if (row + 1 < gameField.rows && isHighlightable(cellAt(row + 1, col)))
         {
-            highlightPossibleCells(row + 1, col, radius - 1, enabled);
+            highlightPossibleCells(row + 1, col, radius - 1, enabled, color);
         }
         if (col + 1 < gameField.columns && isHighlightable(cellAt(row, col + 1)))
         {
-            highlightPossibleCells(row, col + 1, radius - 1, enabled);
+            highlightPossibleCells(row, col + 1, radius - 1, enabled, color);
         }
         if (row > 0  && isHighlightable(cellAt(row - 1, col)))
         {
-            highlightPossibleCells(row - 1, col, radius - 1, enabled);
+            highlightPossibleCells(row - 1, col, radius - 1, enabled, color);
         }
         if (col > 0 && isHighlightable(cellAt(row, col - 1)))
         {
-            highlightPossibleCells(row, col - 1, radius - 1, enabled);
+            highlightPossibleCells(row, col - 1, radius - 1, enabled, color);
         }
     }
     function isHighlightable(cell)

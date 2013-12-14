@@ -33,7 +33,6 @@ function initPlayers()
 
 function initPlayer()
 {
-    console.debug("creating player")
     player.dataFileSource = "Test.txt";
     player.loadPlayerData(factory);
     for (var i = 0; i < player.unitCount; i++)
@@ -54,7 +53,6 @@ function initEnemy()
 
 function initTestPlayer()
 {
-    //console.debug("creating player")
     player.dataFileSource = "Test.txt";
     for (var i = 0; i < player.maxUnitCount; i++)
     {
@@ -69,7 +67,6 @@ function initTestPlayer()
 
 function initTestEnemy()
 {
-    //console.debug("creating enemy")
     enemy.dataFileSource = "EnemyTest.txt"
     for (var i = 0; i < enemy.maxUnitCount; i++)
     {

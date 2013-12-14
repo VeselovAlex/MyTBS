@@ -45,22 +45,16 @@ function askForCoords()
 {
     cellCoordsRequired = true;
     targetActorRequired = false;
-    console.log("Click any cell...");
 }
 
 function moveActorTo(row, col)
 {
-    /*if (!currentGameField.cellAt(row, col).highlighted)
-        return;*/ // turned off for debug
-    // Сделать в акторе метод move и переписать этот кусок
     disableHighLight(currentActorRow, currentActorColumn);
     attackBar.disableAttackBar();
     currentGameField.occupyCell(null, currentActorRow, currentActorColumn, true);
     currentGameField.occupyCell(currentActor, row, col, true);
     currentActor.moveTo(xCoordOf(col), yCoordOf(row));
-    console.debug("Actor moves to " + row + ";" + col);
     cellCoordsRequired = false;
-    console.debug(getDistanceTravelled(row, col))
     currentActor.movingRangeLeft = currentActor.movingRangeLeft - getDistanceTravelled(row, col);
 }
 
@@ -101,7 +95,6 @@ function needSdAttack()
 
 function needAttack()
 {
-    console.debug("Need attack!")
     askForTarget();
 }
 
@@ -109,12 +102,10 @@ function askForTarget()
 {
     cellCoordsRequired = false;
     targetActorRequired = true;
-    console.log("Click any actor...");
 }
 
 function attackActor(actor)
 {
-    console.debug(primaryAttack ? "Primary attack!" : (secondaryAttack ? "Secondary attack!" : "Attack error!"));
     if (currentGameField.cellAt(getActorsRow(actor), getActorsCol(actor)).highlighted)
     {
         if (primaryAttack)
@@ -150,9 +141,8 @@ function attackActor(actor)
 var currentUnitIdx = 0
 function nextUnitTurn()
 {
-    if (currentPlayer.unitCount <= 0) // чтобы не падало. переделать!
+    if (currentPlayer.unitCount <= 0)
         return;
-
     if (currentUnitIdx >= currentPlayer.unitCount)
     {
         currentPlayer.turnFinished();
@@ -174,16 +164,12 @@ function nextUnitTurn()
 
 function xCoordOf(col)
 {
-    var ret = (currentGameField.x + col * currentGameField.cellSide);
-    console.debug(ret);
-    return ret;
+    return (currentGameField.x + col * currentGameField.cellSide);
 }
 
 function yCoordOf(row)
 {
-    var ret = (currentGameField.y + row * currentGameField.cellSide);
-    console.debug(ret);
-    return ret;
+    return (currentGameField.y + row * currentGameField.cellSide);
 }
 
 var attackBarConnected = false
@@ -255,7 +241,11 @@ function  getDistanceTravelled(row, col)
 
 function unitDied(actor)
 {
-    actor.parent.unitCount--;
+    if (--actor.parent.unitCount == 0)
+    {
+        actor.parent.gameOver();
+        return;
+    }
     for (var i = 0; i < actor.parent.unitCount; i++)
     {
         if (actor.parent.playerUnits[i] == actor)
@@ -268,5 +258,7 @@ function unitDied(actor)
         }
 
     }
+    if (actor.parent.unitCount == 0)
+        actor.parent.gameOver();
 }
 
