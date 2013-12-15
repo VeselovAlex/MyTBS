@@ -10,7 +10,7 @@ Item
 
     property string type
     property int idx
-    // перелопатить все, ибо ИС УГ
+
     id: actor
     property int health
 
@@ -43,8 +43,6 @@ Item
     property Sprite secondaryAttackSprite
     property Sprite dyingSprite
 
-    //Свойства для корректного отображения (надо будет реализовать спрайты)
-
     property bool reverted: parent.isEnemy
     property int speed : 100
 
@@ -56,16 +54,16 @@ Item
         id: moveAnimation
         NumberAnimation
         {
-            id : horizontalAnimation
-            target : actor;
-            property : "x";
+            id: horizontalAnimation
+            target: actor;
+            property: "x";
             easing.type: Easing.Linear
         }
         NumberAnimation
         {
-            id : verticalAnimation
-            target : actor;
-            property : "y";
+            id: verticalAnimation
+            target: actor;
+            property: "y";
             easing.type: Easing.Linear
         }
         onStopped:
@@ -78,9 +76,32 @@ Item
     }
 
     NumberAnimation {
-        id : dieAnimation; target : sprite;
-        property: "opacity"; to: 0; duration: dyingSprite.duration;
-        easing.type: Easing.InOutQuad; onStopped: {actor.destroy();}
+        id: dieAnimation;
+        target: sprite;
+        property: "opacity";
+        to: 0;
+        duration: dyingSprite.duration;
+        easing.type: Easing.InOutQuad;
+        onStopped: {
+            actor.destroy();
+        }
+    }
+
+    NumberAnimation {
+        id: prAttackAnimation
+        target: sprite;
+        duration: primaryAttackSprite.duration;
+        onStopped: {
+            sprite.jumpTo(idleSprite.name)
+        }
+    }
+    NumberAnimation {
+        id: sdAttackAnimation
+        target: sprite;
+        duration: secondaryAttackSprite.duration;
+        onStopped: {
+            sprite.jumpTo(idleSprite.name)
+        }
     }
 
     SpriteSequence
@@ -88,7 +109,7 @@ Item
         id: sprite
         anchors.fill: parent
         antialiasing: true
-        sprites: [idleSprite, movingSprite, dyingSprite]//, primaryAttackSprite, secondaryAttackSprite, dyingSprite]
+        sprites: [idleSprite, movingSprite, dyingSprite, primaryAttackSprite, secondaryAttackSprite]
     }
 
     HealthBar
@@ -145,20 +166,21 @@ Item
     function die()
     {
         sprite.jumpTo(dyingSprite.name);
-        msg.showMsg("Пиздец мне...","red");
         dieAnimation.start();
         died(actor);
     }
 
     function primaryAttack(target) // основная атака
     {
-        //sprite.jumpTo(primaryAttackSprite.name);
+        sprite.jumpTo(primaryAttackSprite.name);
+        prAttackAnimation.start();
         target.hurt(primaryAttackDamage * attackMultiplier);
     }
 
     function secondaryAttack(target)// дополнительная атака, у хилеров - хил
     {
-        //sprite.jumpTo(secondaryAttackSprite.name);
+        sprite.jumpTo(secondaryAttackSprite.name);
+        sdAttackAnimation.start();
         target.hurt(secondaryAttackDamage * attackMultiplier);
     }
 

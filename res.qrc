@@ -11,20 +11,59 @@
     <qresource prefix="/images/sprites">
         <file>res/ninjaMovingSprite.png</file>
         <file>res/ninjaMovingSpriteReverted.png</file>
-        <file>res/mageIdleSprite.png</file>
-        <file>res/mageMovingSprite.png</file>
-        <file>res/mageMovingSpriteReverted.png</file>
         <file>res/mageDyingSprite.png</file>
         <file>res/mageDyingSpriteReverted.png</file>
-        <file>res/swordsmanMovingSprite.png</file>
-        <file>res/swordsmanMovingSpriteReverted.png</file>
-        <file>res/swordsmanIdleSprite.png</file>
-        <file>res/swordsmanIdleSpriteReverted.png</file>
+        <file>res/mageIdleSprite.png</file>
+        <file>res/mageIdleSpriteReverted.png</file>
+        <file>res/mageMovingSprite.png</file>
+        <file>res/mageMovingSpriteReverted.png</file>
+        <file>res/magePrimaryAttackSprite.png</file>
+        <file>res/magePrimaryAttackSpriteReverted.png</file>
+        <file>res/mageSecondaryAttackSprite.png</file>
+        <file>res/mageSecondaryAttackSpriteReverted.png</file>
         <file>res/swordsmanDyingSprite.png</file>
         <file>res/swordsmanDyingSpriteReverted.png</file>
-        <file>res/mageIdleSpriteReverted.png</file>
+        <file>res/swordsmanIdleSprite.png</file>
+        <file>res/swordsmanIdleSpriteReverted.png</file>
+        <file>res/swordsmanMovingSprite.png</file>
+        <file>res/swordsmanMovingSpriteReverted.png</file>
+        <file>res/swordsmanPrimaryAttackSprite.png</file>
+        <file>res/swordsmanPrimaryAttackSpriteReverted.png</file>
+        <file>res/swordsmanSecondaryAttackSprite.png</file>
+        <file>res/swordsmanSecondaryAttackSpriteReverted.png</file>
+        <file>res/druidMovingSprite.png</file>
+        <file>res/druidMovingSpriteReverted.png</file>
+        <file>res/druidDyingSprite.png</file>
+        <file>res/druidDyingSpriteReverted.png</file>
+        <file>res/druidIdleSprite.png</file>
+        <file>res/druidIdleSpriteReverted.png</file>
+        <file>res/druidSecondaryAttackSprite.png</file>
+        <file>res/druidSecondaryAttackSpriteReverted.png</file>
+        <file>res/druidPrimaryAttackSprite.png</file>
+        <file>res/druidPrimaryAttackSpriteReverted.png</file>
+        <file>res/archerDyingSprite.png</file>
+        <file>res/archerDyingSpriteReverted.png</file>
+        <file>res/archerIdleSprite.png</file>
+        <file>res/archerIdleSpriteReverted.png</file>
+        <file>res/archerMovingSprite.png</file>
+        <file>res/archerMovingSpriteReverted.png</file>
+        <file>res/archerPrimaryAttackSprite.png</file>
+        <file>res/archerSecondaryAttackSprite.png</file>
+        <file>res/archerSecondaryAttackSpriteReverted.png</file>
+        <file>res/archerPrimaryAttackSpriteReverted.png</file>
+        <file>res/trollDyingSprite.png</file>
+        <file>res/trollDyingSpriteReverted.png</file>
+        <file>res/trollIdleSprite.png</file>
+        <file>res/trollIdleSpriteReverted.png</file>
+        <file>res/trollMovingSprite.png</file>
+        <file>res/trollMovingSpriteReverted.png</file>
+        <file>res/trollPrimaryAttackSprite.png</file>
+        <file>res/trollPrimaryAttackSpriteReverted.png</file>
+        <file>res/trollSecondaryAttackSprite.png</file>
+        <file>res/trollSecondaryAttackSpriteReverted.png</file>
     </qresource>
     <qresource prefix="/images">
         <file>res/woodBg.png</file>
+        <file>res/BackGround.png</file>
     </qresource>
 </RCC>

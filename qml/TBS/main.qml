@@ -16,7 +16,8 @@ Item
     Image
     {
         anchors.fill: parent
-        source : "qrc:/images/res/woodBg.png"
+        //source : "qrc:/images/res/woodBg.png"
+        source : "qrc:/images/res/BackGround.png"
     }
 
     Loader
