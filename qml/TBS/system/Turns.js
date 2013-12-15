@@ -34,8 +34,9 @@ function askForTurn()
 
 function needMove()
 {
-    disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.secondaryAttackRange);
-    disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.primaryAttackRange);
+    console.debug("Need move")
+    disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.secondaryAttackRange, "secondary");
+    disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.primaryAttackRange, "primary");
     enableHighLight(currentActorRow, currentActorColumn);
     askForCoords();
 }
@@ -77,8 +78,8 @@ function needPrAttack()
     primaryAttack = true;
     secondaryAttack = false;
     disableHighLight(currentActorRow, currentActorColumn);
-    disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.secondaryAttackRange);
-    enableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.primaryAttackRange);
+    disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.secondaryAttackRange, "secondary");
+    enableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.primaryAttackRange, "primary");
     needAttack();
 }
 
@@ -87,8 +88,8 @@ function needSdAttack()
     primaryAttack = false;
     secondaryAttack = true;
     disableHighLight(currentActorRow, currentActorColumn);
-    disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.primaryAttackRange);
-    enableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.secondaryAttackRange);
+    disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.primaryAttackRange, "primary");
+    enableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.secondaryAttackRange, "secondary");
     needAttack();
 }
 
@@ -112,7 +113,7 @@ function attackActor(actor)
             if (actor.parent != currentPlayer)
             {
                 currentActor.primaryAttack(actor);
-                disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.primaryAttackRange);
+                disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.primaryAttackRange, "primary");
                 primaryAttack = false;
                 nextUnitTurn();
             }
@@ -122,14 +123,14 @@ function attackActor(actor)
             if (actor.parent != currentPlayer && !currentActor.isHealer)
             {
                 currentActor.secondaryAttack(actor);
-                disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.secondaryAttackRange);
+                disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.secondaryAttackRange, "secondary");
                 secondaryAttack = false
                 nextUnitTurn();
             }
             else if (actor.parent == currentPlayer && currentActor.isHealer)
             {
                 currentActor.secondaryAttack(actor);
-                disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.secondaryAttackRange);
+                disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.secondaryAttackRange, "secondary");
                 secondaryAttack = false
                 nextUnitTurn();
             }
@@ -150,7 +151,8 @@ function nextUnitTurn()
     if (currentActorRow != null && currentActorColumn != null) // disable highlight after skipping turn
     {
         disableHighLightForAttack(currentActorRow, currentActorColumn,
-                                  Math.max(currentActor.primaryAttackRange, currentActor.secondaryAttackRange));
+                                  Math.max(currentActor.primaryAttackRange, currentActor.secondaryAttackRange),
+                                  (currentActor.primaryAttackRange > currentActor.secondaryAttackRange)? "primary" : "secondary");
         disableHighLight(currentActorRow, currentActorColumn);
     }
     currentActor = currentPlayer.playerUnits[currentUnitIdx++];//Если бы не баг, этого говна здесь бы не было
@@ -212,14 +214,14 @@ function disableHighLight(row, col)
     currentGameField.highlightPossibleCells(row, col, currentActor.movingRangeLeft, false);
 }
 
-function enableHighLightForAttack(row, col, radius)
+function enableHighLightForAttack(row, col, radius, attackType)
 {
-    currentGameField.highLightCellsForAttack(row, col, radius, true);
+    currentGameField.highLightCellsForAttack(row, col, radius, true, attackType);
 }
 
-function disableHighLightForAttack(row, col, radius)
+function disableHighLightForAttack(row, col, radius, attackType)
 {
-    currentGameField.highLightCellsForAttack(row, col, radius, false);
+    currentGameField.highLightCellsForAttack(row, col, radius, false, attackType);
 }
 
 function getActorsRow(actor)
@@ -259,3 +261,4 @@ function unitDied(actor)
     if (actor.parent.unitCount == 0)
         actor.parent.gameOver();
 }
+

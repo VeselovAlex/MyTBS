@@ -19,10 +19,29 @@ Text
 
     ParallelAnimation
     {
-        id : animation;
-        ColorAnimation { target : textMsg; property : "color"; from : color; to: "transparent"; duration: 1000 }
-        ColorAnimation { target : textMsg; property : "styleColor"; from : styleColor; to: "transparent"; duration: 1000 }
-        NumberAnimation { target: textMsg; property: "y"; from : startY;to : startY - 100; duration: 1000;easing.type: Easing.InOutQuad }
+        id: animation
+        ColorAnimation {
+            target: textMsg;
+            property: "color";
+            from: color;
+            to: "transparent";
+            duration: 1000
+        }
+        ColorAnimation {
+            target: textMsg;
+            property: "styleColor";
+            from: styleColor;
+            to: "transparent";
+            duration: 1000
+        }
+        NumberAnimation {
+            target: textMsg;
+            property: "y";
+            from: startY;
+            to: startY - 100;
+            duration: 1000;
+            easing.type: Easing.InOutQuad
+        }
         onStopped: reset();
     }
 

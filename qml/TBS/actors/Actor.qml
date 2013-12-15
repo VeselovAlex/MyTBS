@@ -10,7 +10,7 @@ Item
 
     property string type
     property int idx
-    // перелопатить все, ибо ИС УГ
+
     id: actor
     property int health
 
@@ -20,7 +20,7 @@ Item
     property real defenceMultiplier: 1.0
 
     property int movingRange //радиус движения
-    property int movingRangeLeft : movingRange
+    property int movingRangeLeft: movingRange
 
     property int primaryAttackRange
     property int primaryAttackDamage
@@ -30,7 +30,7 @@ Item
 
     property int moneyCosts //стоимость единицы в монетах
     property int spCosts //стоимость единицы в очках навыка командира
-    property int count : 0 //кол-во юнитов
+    property int count: 0 //кол-во юнитов
 
     property int averageHealth: health * count
     property int averageArmor: armor * count
@@ -43,8 +43,6 @@ Item
     property Sprite secondaryAttackSprite
     property Sprite dyingSprite
 
-    //Свойства для корректного отображения (надо будет реализовать спрайты)
-
     property bool reverted: parent.isEnemy
     property int speed : 100
 
@@ -53,20 +51,19 @@ Item
     SequentialAnimation
     {
         running: false;
-        id : moveAnimation
+        id: moveAnimation
         NumberAnimation
         {
-            id : horizontalAnimation
-            target : actor;
-            property : "x";
+            id: horizontalAnimation
+            target: actor;
+            property: "x";
             easing.type: Easing.Linear
         }
-
         NumberAnimation
         {
-            id : verticalAnimation
-            target : actor;
-            property : "y";
+            id: verticalAnimation
+            target: actor;
+            property: "y";
             easing.type: Easing.Linear
         }
         onStopped:
@@ -79,18 +76,40 @@ Item
     }
 
     NumberAnimation {
-        id : dieAnimation; target : sprite;
-        property: "opacity"; to: 0; duration: dyingSprite.duration;
-        easing.type: Easing.InOutQuad; onStopped: {actor.destroy();}
+        id: dieAnimation;
+        target: sprite;
+        property: "opacity";
+        to: 0;
+        duration: dyingSprite.duration;
+        easing.type: Easing.InOutQuad;
+        onStopped: {
+            actor.destroy();
+        }
+    }
+
+    NumberAnimation {
+        id: prAttackAnimation
+        target: sprite;
+        duration: primaryAttackSprite.duration;
+        onStopped: {
+            sprite.jumpTo(idleSprite.name)
+        }
+    }
+    NumberAnimation {
+        id: sdAttackAnimation
+        target: sprite;
+        duration: secondaryAttackSprite.duration;
+        onStopped: {
+            sprite.jumpTo(idleSprite.name)
+        }
     }
 
     SpriteSequence
     {
-        id : sprite
+        id: sprite
         anchors.fill: parent
         antialiasing: true
-        sprites: [idleSprite, movingSprite, dyingSprite]//, primaryAttackSprite, secondaryAttackSprite, dyingSprite]
-
+        sprites: [idleSprite, movingSprite, dyingSprite, primaryAttackSprite, secondaryAttackSprite]
     }
 
     HealthBar
@@ -101,12 +120,12 @@ Item
     Text
     {
         anchors.right: parent.right
-        anchors.bottom:parent.bottom
+        anchors.bottom: parent.bottom
         anchors.margins: 3
         style: Text.Outline
         styleColor: "white"
         text: count
-        color : "red"
+        color: "red"
         font.bold: true
         height: parent.height / 4
         font.pixelSize: height
@@ -119,44 +138,49 @@ Item
     }
     function hurt(damage)
     {
-        msg.showMsg(damage.toString(), "#FFFF0000");
-        if (averageArmor > 0)
-        {
-            averageArmor -= Math.round(defenceMultiplier * damage);
-            if (averageArmor < 0) //Если количество единиц брони меньше чем полученный урон
-            {
-                averageHealth += averageArmor; // вычтем излишек из запаса здоровья
-                averageArmor = 0;
+        msg.showMsg((damage > 0)? "-" + damage.toString() : "+" + Math.abs(damage).toString(), "#FFFF0000");
+        if (damage > 0) {
+            if (averageArmor > 0) {
+                averageArmor -= Math.round(defenceMultiplier * damage);
+                if (averageArmor < 0) //Если количество единиц брони меньше чем полученный урон
+                {
+                    averageHealth += averageArmor; // вычтем излишек из запаса здоровья
+                    averageArmor = 0;
+                    if (averageHealth < 0)
+                        die();
+                }
+            } else {
+                averageHealth -= Math.round(defenceMultiplier * damage);
                 if (averageHealth < 0)
                     die();
             }
+        } else {
+            averageHealth -= damage;
+            if (averageHealth > health * count)
+                averageHealth = health * count;
         }
-        else
-        {
-            averageHealth -= Math.round(defenceMultiplier * damage);
-            if (averageHealth < 0)
-                die();
-        }
-        healthBar.changeHpInfo(health * count, averageHealth)
+
+        healthBar.update(health * count, averageHealth)
     }
 
     function die()
     {
         sprite.jumpTo(dyingSprite.name);
-        msg.showMsg("Пиздец мне...","red");
         dieAnimation.start();
         died(actor);
     }
 
     function primaryAttack(target) // основная атака
     {
-        //sprite.jumpTo(primaryAttackSprite.name);
+        sprite.jumpTo(primaryAttackSprite.name);
+        prAttackAnimation.start();
         target.hurt(primaryAttackDamage * attackMultiplier);
     }
 
     function secondaryAttack(target)// дополнительная атака, у хилеров - хил
     {
-        //sprite.jumpTo(secondaryAttackSprite.name);
+        sprite.jumpTo(secondaryAttackSprite.name);
+        sdAttackAnimation.start();
         target.hurt(secondaryAttackDamage * attackMultiplier);
     }
 

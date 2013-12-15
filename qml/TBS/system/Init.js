@@ -42,6 +42,7 @@ function initPlayer()
 }
 function initEnemy()
 {
+    console.debug("creating enemy")
     enemy.dataFileSource = "EnemyTest.txt"
     enemy.loadPlayerData(factory)
     for (var i = 0; i < enemy.unitCount; i++)
@@ -55,7 +56,7 @@ function initTestPlayer()
     player.dataFileSource = "Test.txt";
     for (var i = 0; i < player.maxUnitCount; i++)
     {
-        var actor = factory.createActor(1, player);
+        var actor = factory.createActor(0, player);
         player.buyNewUnit(actor, 1);
         gamefield.occupyCell(player.playerUnits[i], i + 1, 0)
     }

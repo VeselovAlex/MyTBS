@@ -42,7 +42,7 @@ Item
             if (Turns.cellCoordsRequired)
             {
                 var cell = cellAt(row, col);
-                if (cell.isEmpty && cell.highlighted)
+                //if (cell.isEmpty && cell.highlighted)
                     gamefield.cellCoords(row, col);
             }
             if (Turns.targetActorRequired)
@@ -86,8 +86,8 @@ Item
 	
     HumanPlayer
     {
-        id : player
-        money : 100000
+        id: player
+        money: 100000
         commanderSkillPoints: 100500
         isEnemy: false
         onGameOver:
@@ -108,8 +108,8 @@ Item
 
     EnemyPlayer
     {
-        id : enemy
-        money : 100000
+        id: enemy
+        money: 100000
         commanderSkillPoints: 100500
         isEnemy: true
         onGameOver:

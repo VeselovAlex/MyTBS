@@ -45,7 +45,7 @@ Item
     function loadPlayerData(factory)
     {
         file.loadFileForReading(dataFileSource);
-        name = file.read();
+//        name = file.read();
         money = parseInt(file.read());
         commanderSkillPoints = parseInt(file.read());
         commanderSPLeft = parseInt(file.read());
@@ -105,7 +105,6 @@ Item
             abstractPlayer.commanderSPSpent += count * playerUnits[unitIdx].spCosts;
         }
     }
-
     function makeTurn()
     {
         if (unitCount <= 0)

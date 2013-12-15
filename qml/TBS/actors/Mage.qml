@@ -2,39 +2,38 @@ import QtQuick 2.0
 
 Actor
 {
-    id : mage
-    type : "Mage"
-    idx : 1
-    //maxHp : 60
+    id: mage
+    type: "Mage"
+    idx: 1
+
     health: 60
-    armor : 4
+    armor: 4
 
-    attackMultiplier : 1.2
-    defenceMultiplier : 1.0
+    attackMultiplier: 1.2
+    defenceMultiplier: 1.0
 
-    movingRange : 2
+    movingRange: 2
 
-    primaryAttackRange : 2
-    primaryAttackDamage : 15
+    primaryAttackRange: 2
+    primaryAttackDamage: 20
 
-    secondaryAttackRange : 4
-    secondaryAttackDamage : 75
+    secondaryAttackRange: 4
+    secondaryAttackDamage: 80
 
-    moneyCosts : 50
-    spCosts : 20
-    count : 0
+    moneyCosts: 50
+    spCosts: 50
+    count: 0
 
     isHealer: false
 
-    idleSprite :
+    idleSprite:
         Sprite
         {
             name: "idle"
             source: "qrc:/images/sprites/res/mageIdleSprite" + (reverted ? "Reverted" : "") + ".png";
             frameCount: 1;
-            frameWidth: 102;
-            frameHeight: 90;
-            //frameDuration: 150;
+            frameWidth: 107;
+            frameHeight: 107;
         }
     movingSprite:
         Sprite
@@ -44,8 +43,8 @@ Actor
             to: {"moving": 1}
             reverse: reverted
             frameCount: 7;
-            frameWidth: 102;
-            frameHeight: 75;
+            frameWidth: 108;
+            frameHeight: 107;
             frameDuration: 120;
         }
     dyingSprite:
@@ -55,15 +54,37 @@ Actor
             source: "qrc:/images/sprites/res/mageDyingSprite" + (reverted ? "Reverted" : "") + ".png"
             reverse: reverted
             duration: frameCount * frameDuration
-            //to: {"dying": 1}
             frameCount: 10;
-            frameWidth: 102;
-            frameHeight: 106;
-            frameDuration: 180;
+            frameX: 15
+            frameWidth: 103;
+            frameHeight: 107;
+            frameDuration: 120;
+        }
+    primaryAttackSprite:
+        Sprite
+        {
+            name: "prAttack"
+            source: "qrc:/images/sprites/res/magePrimaryAttackSprite" + (reverted ? "Reverted" : "") + ".png"
+            reverse: reverted
+            duration: frameCount * frameDuration
+            frameCount: 6;
+            frameX: reverted? 35 : -10
+            frameWidth: 103;
+            frameHeight: 107;
+            frameDuration: 120;
+        }
+    secondaryAttackSprite:
+        Sprite
+        {
+            name: "sdAttack"
+            source: "qrc:/images/sprites/res/mageSecondaryAttackSprite" + (reverted ? "Reverted" : "") + ".png"
+            reverse: reverted
+            duration: frameCount * frameDuration
+            frameCount: 6;
+            frameX: reverted? 35 : -10
+            frameWidth: 103;
+            frameHeight: 107;
+            frameDuration: 120;
         }
 
-    /*primaryAttackSprite: null
-    secondaryAttackSprite: null
-    movingSprite:  null
-    dyingSprite: null*/
 }

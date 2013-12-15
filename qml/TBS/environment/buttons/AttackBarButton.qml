@@ -8,7 +8,6 @@ Rectangle
     height: width
     radius: Math.round(width / 3);
     property alias imageSource: btnImage.source
-    //property alias btnClicked: mArea
     color: "transparent"
     signal attackBarButtonClicked
 
