@@ -42,7 +42,7 @@ Item
             if (Turns.cellCoordsRequired)
             {
                 var cell = cellAt(row, col);
-                //if (cell.isEmpty && cell.highlighted)
+                if (cell.isEmpty && cell.highlighted)
                     gamefield.cellCoords(row, col);
             }
             if (Turns.targetActorRequired)
