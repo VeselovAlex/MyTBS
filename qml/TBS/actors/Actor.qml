@@ -12,6 +12,8 @@ Item
     property int idx
 
     id: actor
+    width : parent.width
+    height : parent.height
     property int health
 
     property int armor
@@ -32,8 +34,8 @@ Item
     property int spCosts //стоимость единицы в очках навыка командира
     property int count: 0 //кол-во юнитов
 
-    property int averageHealth: health * count
-    property int averageArmor: armor * count
+    property int averageHealth
+    property int averageArmor
 
     property bool isHealer
     //Спрайты для анимации
@@ -115,6 +117,9 @@ Item
     HealthBar
     {
         id: healthBar
+        width : actor.width - 4
+        anchors.horizontalCenter: actor.horizontalCenter
+        height : actor.height / 10
     }
 
     Text
@@ -159,8 +164,8 @@ Item
             if (averageHealth > health * count)
                 averageHealth = health * count;
         }
-
-        healthBar.update(health * count, averageHealth)
+        count = Math.ceil(averageHealth / health);
+        healthBar.update(averageHealth);
     }
 
     function die()
@@ -196,10 +201,15 @@ Item
 
     function getStatAsString()
     {
-        return  idx.toString()              + " " +
-                count.toString()            + " " +
-                averageHealth.toString()    + " " +
-                averageArmor.toString()     + " " ;
+        return  idx.toString()                                  + " " +
+                count.toString()                                + " " +
+                (health * count - averageHealth).toString()     + " " +
+                (armor * count - averageArmor).toString()       + " " ;
     }
 
+    function reload()
+    {
+        healthBar.maxHp = health * count;
+        healthBar.update(averageHealth);
+    }
 }

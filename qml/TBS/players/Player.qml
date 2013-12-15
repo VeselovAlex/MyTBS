@@ -45,7 +45,7 @@ Item
     function loadPlayerData(factory)
     {
         file.loadFileForReading(dataFileSource);
-//        name = file.read();
+        name = file.read();
         money = parseInt(file.read());
         commanderSkillPoints = parseInt(file.read());
         commanderSPLeft = parseInt(file.read());
@@ -59,9 +59,10 @@ Item
             string = file.read();
             actor.count = parseInt(string);
             string = file.read();
-            actor.averageHealth = parseInt(string);
+            actor.averageHealth = actor.health * actor.count - parseInt(string);
             string = file.read();
-            actor.averageArmor = parseInt(string);
+            actor.averageArmor = actor.armor * actor.count - parseInt(string);
+            actor.reload();
             playerUnits[unitCount++] = actor;
             string = file.read();
         }

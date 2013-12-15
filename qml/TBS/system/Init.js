@@ -33,17 +33,17 @@ function initPlayers()
 
 function initPlayer()
 {
-    player.dataFileSource = "Test.txt";
+    //player.dataFileSource = "Test.txt";
     player.loadPlayerData(factory);
     for (var i = 0; i < player.unitCount; i++)
         gamefield.occupyCell(player.playerUnits[i], i + 1, 0);
     player.turnFinished.connect(generator.nextPlayerTurn);
     player.createConnection();
+    player.savePlayerData();
 }
 function initEnemy()
 {
-    console.debug("creating enemy")
-    enemy.dataFileSource = "EnemyTest.txt"
+    //enemy.dataFileSource = "EnemyTest.txt"
     enemy.loadPlayerData(factory)
     for (var i = 0; i < enemy.unitCount; i++)
         gamefield.occupyCell(enemy.playerUnits[i], i + 1, gamefield.columns - 1)
@@ -53,24 +53,21 @@ function initEnemy()
 
 function initTestPlayer()
 {
-    player.dataFileSource = "Test.txt";
     for (var i = 0; i < player.maxUnitCount; i++)
     {
-        var actor = factory.createActor(0, player);
+        var actor = factory.createActor(i, player);
         player.buyNewUnit(actor, 1);
         gamefield.occupyCell(player.playerUnits[i], i + 1, 0)
     }
     player.turnFinished.connect(generator.nextPlayerTurn);
     player.createConnection();
-    player.loadPlayerData(factory);
 }
 
 function initTestEnemy()
 {
-    enemy.dataFileSource = "EnemyTest.txt"
     for (var i = 0; i < enemy.maxUnitCount; i++)
     {
-        var actor = factory.createActor(0, enemy);
+        var actor = factory.createActor(i, enemy);
         enemy.buyNewUnit(actor, 2);
         gamefield.occupyCell(enemy.playerUnits[i], i + 1, gamefield.columns - 1)
 

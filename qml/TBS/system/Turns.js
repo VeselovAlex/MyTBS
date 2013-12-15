@@ -34,7 +34,6 @@ function askForTurn()
 
 function needMove()
 {
-    console.debug("Need move")
     disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.secondaryAttackRange, "secondary");
     disableHighLightForAttack(currentActorRow, currentActorColumn, currentActor.primaryAttackRange, "primary");
     enableHighLight(currentActorRow, currentActorColumn);

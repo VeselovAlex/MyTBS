@@ -5,6 +5,9 @@ Item
     id: healthBar
     width: 80
     height: 5
+
+    property int maxHp
+
     Rectangle
     {
         id: greenBar
@@ -12,6 +15,7 @@ Item
         height: parent.height
         color: "green"
     }
+
     Rectangle
     {
         id :redBar
@@ -20,12 +24,15 @@ Item
         height: parent.height
         color: "red"
     }
-    function update(maxHp, curHp)
+
+    function update(curHp)
     {
-        greenBar.width = Math.round(curHp / maxHp * healthBar.width)
+        if (maxHp)
+            greenBar.width = Math.round(curHp / maxHp * healthBar.width)
+        else
+            greenBar.width = healthBar.width
         if (greenBar.width < 0)
             greenBar.width = 0
         redBar.width = healthBar.width - greenBar.width
     }
-
 }
