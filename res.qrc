@@ -7,6 +7,8 @@
         <file>res/heartButton.png</file>
         <file>res/attackBarBG.png</file>
         <file>res/moveButtonIcon.png</file>
+        <file>res/muteIcon.png</file>
+        <file>res/soundIcon.png</file>
     </qresource>
     <qresource prefix="/images/sprites">
         <file>res/ninjaMovingSprite.png</file>
@@ -20,5 +22,9 @@
     </qresource>
     <qresource prefix="/images">
         <file>res/woodBg.png</file>
+    </qresource>
+    <qresource prefix="/sounds">
+        <file>res/clickSound.wav</file>
+        <file>res/bgSoung.wav</file>
     </qresource>
 </RCC>

@@ -1,6 +1,8 @@
 import QtQuick 2.0
+import QtMultimedia 5.0
 
 Rectangle {
+    id : button
     signal clicked()
     width: 100
     height: 62
@@ -58,9 +60,16 @@ Rectangle {
         cursorShape: Qt.PointingHandCursor
         onClicked:
         {
-            parent.clicked();
+            sound.play();
         }
 
+    }
+
+    Audio
+    {
+        id : sound
+        source : "qrc:/sounds/res/clickSound.wav";
+        onStopped: button.clicked();
     }
 
 }

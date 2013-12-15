@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Window 2.1
+import QtMultimedia 5.0
 import "environment"
 import "environment/buttons"
 import "system"
@@ -17,6 +18,16 @@ Item
     {
         anchors.fill: parent
         source : "qrc:/images/res/woodBg.png"
+    }
+
+    MuteButton
+    {
+        width: 70;
+        height : width;
+        anchors.top : parent.top;
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.margins: 15
+        onMute: music.muted = enabled
     }
 
     Loader
@@ -53,6 +64,22 @@ Item
         }
     }
 
+    SoundEffect
+    {
+        id : music
+        source: "qrc:/sounds/res/bgSoung.wav"
+        loops: 3
+        volume : 0.8
+        onLoadedChanged:
+        {
+            music.play();
+        }
+        onLoopsRemainingChanged:
+        {
+            if (loopsRemaining <= 2)
+                loops += 50;
+        }
+    }
     function loadStartScreen()
     {
         battleScreen.setSource("");
@@ -75,6 +102,9 @@ Item
         winScreen.item.congratulate(winner);
     }
 
-    Component.onCompleted: loadStartScreen();
+    Component.onCompleted:
+    {
+        loadStartScreen();
+    }
 
 }

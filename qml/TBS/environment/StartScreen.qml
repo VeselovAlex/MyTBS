@@ -22,4 +22,5 @@ Item
         anchors.top: playButton.bottom
         anchors.horizontalCenter: playButton.horizontalCenter
     }
+
 }

@@ -23,12 +23,37 @@ Item
     ScreenButton
     {
         id : toMenuBtn
-        onClicked: parent.returnToMenu();
+        onClicked: quitConfirmDialog.show();
         text : "MAIN MENU"
         width: 200
         anchors.right: parent.right
         anchors.top : parent.top
         anchors.margins: 10
+    }
+
+    OKCancelDialog
+    {
+        id : quitConfirmDialog;
+        visible : false
+        text : "Are you sure?"
+
+        function show()
+        {
+            visible = true;
+            x = (parent.width - width) / 2;
+            y = (parent.height - height) / 2;
+            battle.enabled = false;
+            toMenuBtn.enabled = false;
+        }
+        function hide()
+        {
+            visible = false;
+            battle.enabled = true;
+            toMenuBtn.enabled = true;
+        }
+
+        onDeclined : hide();
+        onAccepted: parent.returnToMenu();
     }
 
 }
